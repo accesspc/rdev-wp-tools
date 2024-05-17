@@ -23,7 +23,7 @@
  * Domain Path:       /languages
  */
 
- if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Current plugin version.
@@ -31,14 +31,18 @@
 define( 'RDWT_VERSION', '1.0.0' );
 
 function activate_rdwt() {
+
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-activator.php';
 	RDWT_Activator::activate();
+
 }
 register_activation_hook( __FILE__, 'activate_rdwt' );
 
 function deactivate_rdwt() {
+
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-deactivator.php';
 	RDWT_Deactivator::deactivate();
+
 }
 register_deactivation_hook( __FILE__, 'deactivate_rdwt' );
 
@@ -63,4 +67,5 @@ function run_rdwt() {
 	$plugin->run();
 
 }
+
 run_rdwt();

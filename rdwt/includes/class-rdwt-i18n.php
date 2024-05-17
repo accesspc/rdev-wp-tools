@@ -28,7 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class RDWT_i18n {
 
-
 	/**
 	 * Load the plugin text domain for translation.
 	 *
@@ -43,7 +42,5 @@ class RDWT_i18n {
 		);
 
 	}
-
-
 
 }

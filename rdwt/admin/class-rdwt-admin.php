@@ -43,6 +43,24 @@ class RDWT_Admin {
 	private $version;
 
 	/**
+	 * The slug of this plugin settings.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $slug    Slug.
+	 */
+	public $slug = 'rdwt';
+
+	/**
+	 * The options of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $options    Options.
+	 */
+	protected $options;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -56,24 +74,53 @@ class RDWT_Admin {
 
 	}
 
+	public function build_admin_menu() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$capability = apply_filters( 'rdwt_required_capabilities', 'manage_options' );
+
+		add_menu_page(
+			__( 'Rdev WP Tools', 'rdwt'),
+			__( 'Rdev WP Tools', 'rdwt'),
+			$capability,
+			$this->slug,
+			array( &$this, 'display_admin_menu_page' ),
+			'',
+			80
+		);
+
+		add_submenu_page(
+			$this->slug,
+			__( 'Rdev', 'rdwt' ),
+			__( 'Settings', 'rdwt' ),
+			$capability,
+			'rdwt-settings',
+			array( &$this, 'display_admin_menu_settings' ),
+		);
+
+	}
+
+	public function display_admin_menu_page() {
+
+		require_once plugin_dir_path( __FILE__ ) . 'partials/rdwt-admin-display.php';
+
+	}
+
+	public function display_admin_menu_settings() {
+
+		require_once plugin_dir_path( __FILE__ ) . 'partials/rdwt-admin-display-settings.php';
+
+	}
+
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in RDWT_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The RDWT_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_style( $this->rdwt, plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
 
@@ -86,20 +133,8 @@ class RDWT_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in RDWT_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The RDWT_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->rdwt, plugin_dir_url( __FILE__ ) . 'js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
-
+		
 	}
 
 }

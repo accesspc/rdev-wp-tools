@@ -69,11 +69,13 @@ class RDWT {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
 		if ( defined( 'RDWT_VERSION' ) ) {
 			$this->version = RDWT_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
+
 		$this->plugin_name = 'rdwt';
 
 		$this->load_dependencies();
@@ -159,6 +161,8 @@ class RDWT {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'build_admin_menu' );
+
 	}
 
 	/**
@@ -183,7 +187,9 @@ class RDWT {
 	 * @since    1.0.0
 	 */
 	public function run() {
+
 		$this->loader->run();
+
 	}
 
 	/**
@@ -194,7 +200,9 @@ class RDWT {
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
+
 		return $this->plugin_name;
+
 	}
 
 	/**
@@ -204,7 +212,9 @@ class RDWT {
 	 * @return    RDWT_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
+
 		return $this->loader;
+
 	}
 
 	/**
@@ -214,7 +224,9 @@ class RDWT {
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
+
 		return $this->version;
+		
 	}
 
 }

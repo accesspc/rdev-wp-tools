@@ -15,6 +15,6 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
-  <h1 class="rdwt-title">RDev WP Tools</h1>
+  <h1 class="rdwt-title">Settings</h1>
   <h2 class="nav-tab-wrapper"></h2>
 </div>
