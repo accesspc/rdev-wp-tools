@@ -67,8 +67,8 @@ class RDevWT {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'RDevWT_VERSION' ) ) {
-			$this->version = RDevWT_VERSION;
+		if ( defined( 'RDEVWT_VERSION' ) ) {
+			$this->version = RDEVWT_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}

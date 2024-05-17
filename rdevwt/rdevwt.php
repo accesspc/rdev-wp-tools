@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'RDevWT_VERSION', '1.0.0' );
+define( 'RDEVWT_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
