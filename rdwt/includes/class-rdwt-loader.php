@@ -1,13 +1,15 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @link       http://example.com
  * @since      1.0.0
  *
- * @package    RDevWT
- * @subpackage RDevWT/includes
+ * @package    RDWT
+ * @subpackage RDWT/includes
  */
 
 /**
@@ -17,11 +19,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    RDevWT
- * @subpackage RDevWT/includes
+ * @package    RDWT
+ * @subpackage RDWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDevWT_Loader {
+class RDWT_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

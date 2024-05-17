@@ -5,11 +5,11 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @link       http://example.com
  * @since      1.0.0
  *
- * @package    RDevWT
- * @subpackage RDevWT/admin/partials
+ * @package    RDWT
+ * @subpackage RDWT/admin/partials
  */
 ?>
 

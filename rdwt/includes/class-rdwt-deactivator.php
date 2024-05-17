@@ -1,13 +1,15 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /**
  * Fired during plugin deactivation
  *
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @link       http://example.com
  * @since      1.0.0
  *
- * @package    RDevWT
- * @subpackage RDevWT/includes
+ * @package    RDWT
+ * @subpackage RDWT/includes
  */
 
 /**
@@ -16,11 +18,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    RDevWT
- * @subpackage RDevWT/includes
+ * @package    RDWT
+ * @subpackage RDWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDevWT_Deactivator {
+class RDWT_Deactivator {
 
 	/**
 	 * Short Description. (use period)

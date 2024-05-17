@@ -5,11 +5,11 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @link       http://example.com
  * @since      1.0.0
  *
- * @package    RDevWT
- * @subpackage RDevWT/public/partials
+ * @package    RDWT
+ * @subpackage RDWT/public/partials
  */
 ?>
 
