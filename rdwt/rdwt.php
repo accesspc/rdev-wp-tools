@@ -3,11 +3,6 @@
 /**
  * RDWT
  *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
  * @package           RDWT
  * @author            Robertas Reiciunas
  * @copyright         2024 Robertas Reiciunas
@@ -28,37 +23,23 @@
  * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
+ * Current plugin version.
  */
 define( 'RDWT_VERSION', '1.0.0' );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-rdwt-activator.php
- */
 function activate_rdwt() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-activator.php';
 	RDWT_Activator::activate();
 }
+register_activation_hook( __FILE__, 'activate_rdwt' );
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-rdwt-deactivator.php
- */
 function deactivate_rdwt() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-deactivator.php';
 	RDWT_Deactivator::deactivate();
 }
-
-register_activation_hook( __FILE__, 'activate_rdwt' );
 register_deactivation_hook( __FILE__, 'deactivate_rdwt' );
 
 /**
