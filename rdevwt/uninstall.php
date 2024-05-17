@@ -22,7 +22,7 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
+ * @package    RDevWT
  */
 
 // If uninstall not called from WordPress, then exit.

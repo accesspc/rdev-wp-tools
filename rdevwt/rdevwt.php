@@ -7,7 +7,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @package           RDWT
+ * @package           RDevWT
  * @author            Robertas Reiciunas
  * @copyright         2024 Robertas Reiciunas
  * @license           GPL-3.0
@@ -23,7 +23,7 @@
  * Author URI:        https://reiciunas.dev/
  * License:           GPL-v3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       rdwt
+ * Text Domain:       rdevwt
  * Domain Path:       /languages
  */
 
@@ -34,33 +34,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'RDWT_VERSION', '1.0.0' );
+define( 'RDevWT_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-rdwt-activator.php
+ * This action is documented in includes/class-rdevwt-activator.php
  */
-function activate_rdwt() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-activator.php';
-	RDWT_Activator::activate();
+function activate_rdevwt() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdevwt-activator.php';
+	RDevWT_Activator::activate();
 }
-register_activation_hook( __FILE__, 'activate_rdwt' );
+register_activation_hook( __FILE__, 'activate_rdevwt' );
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-rdwt-deactivator.php
+ * This action is documented in includes/class-rdevwt-deactivator.php
  */
-function deactivate_rdwt() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-deactivator.php';
-	RDWT_Deactivator::deactivate();
+function deactivate_rdevwt() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdevwt-deactivator.php';
+	RDevWT_Deactivator::deactivate();
 }
-register_deactivation_hook( __FILE__, 'deactivate_rdwt' );
+register_deactivation_hook( __FILE__, 'deactivate_rdevwt' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdevwt.php';
 
 /**
  * Begins execution of the plugin.
@@ -71,21 +71,21 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt.php';
  *
  * @since    1.0.0
  */
-function run_rdwt() {
+function run_rdevwt() {
 
-	$plugin = new RDWT();
+	$plugin = new RDevWT();
 	$plugin->run();
 
 }
-run_rdwt();
+run_rdevwt();
 
 /*
 
-add_action( 'init', array( 'RDWT', 'init' ) );
+add_action( 'init', array( 'RDevWT', 'init' ) );
 
 if ( is_admin() ) {
-	require_once( RDWT__PLUGIN_DIR . 'includes/class-rdwt-admin.php' );
-	add_action( 'init', array( 'RDWT_Admin', 'init' ) );
+	require_once( RDevWT__PLUGIN_DIR . 'includes/class-rdevwt-admin.php' );
+	add_action( 'init', array( 'RDevWT_Admin', 'init' ) );
 }
 
  */

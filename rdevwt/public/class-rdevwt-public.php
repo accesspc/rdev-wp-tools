@@ -6,8 +6,8 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
- * @subpackage RDWT/public
+ * @package    RDevWT
+ * @subpackage RDevWT/public
  */
 
 /**
@@ -16,20 +16,20 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    RDWT
- * @subpackage RDWT/public
+ * @package    RDevWT
+ * @subpackage RDevWT/public
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDWT_Public {
+class RDevWT_Public {
 
 	/**
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $rdwt    The ID of this plugin.
+	 * @var      string    $rdevwt    The ID of this plugin.
 	 */
-	private $rdwt;
+	private $rdevwt;
 
 	/**
 	 * The version of this plugin.
@@ -44,12 +44,12 @@ class RDWT_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $rdwt       The name of the plugin.
+	 * @param      string    $rdevwt       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $rdwt, $version ) {
+	public function __construct( $rdevwt, $version ) {
 
-		$this->rdwt = $rdwt;
+		$this->rdevwt = $rdevwt;
 		$this->version = $version;
 
 	}
@@ -65,15 +65,15 @@ class RDWT_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in RDWT_Loader as all of the hooks are defined
+		 * defined in RDevWT_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The RDWT_Loader will then create the relationship
+		 * The RDevWT_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->rdwt, plugin_dir_url( __FILE__ ) . 'css/rdwt-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->rdevwt, plugin_dir_url( __FILE__ ) . 'css/rdevwt-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class RDWT_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in RDWT_Loader as all of the hooks are defined
+		 * defined in RDevWT_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The RDWT_Loader will then create the relationship
+		 * The RDevWT_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->rdwt, plugin_dir_url( __FILE__ ) . 'js/rdwt-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->rdevwt, plugin_dir_url( __FILE__ ) . 'js/rdevwt-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 

@@ -6,8 +6,8 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDWT_Loader {
+class RDevWT_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

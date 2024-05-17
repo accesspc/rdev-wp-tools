@@ -9,8 +9,8 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDWT_i18n {
+class RDevWT_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class RDWT_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'rdwt',
+			'rdevwt',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

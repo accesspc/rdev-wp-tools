@@ -6,8 +6,8 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDWT_Activator {
+class RDevWT_Activator {
 
 	/**
 	 * Short Description. (use period)

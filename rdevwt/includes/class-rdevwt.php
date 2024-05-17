@@ -9,8 +9,8 @@
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  * @since      1.0.0
  *
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    RDWT
- * @subpackage RDWT/includes
+ * @package    RDevWT
+ * @subpackage RDevWT/includes
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  */
-class RDWT {
+class RDevWT {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class RDWT {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      RDWT_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      RDevWT_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,9 +44,9 @@ class RDWT {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $rdwt    The string used to uniquely identify this plugin.
+	 * @var      string    $rdevwt    The string used to uniquely identify this plugin.
 	 */
-	protected $rdwt;
+	protected $rdevwt;
 
 	/**
 	 * The current version of the plugin.
@@ -67,12 +67,12 @@ class RDWT {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'RDWT_VERSION' ) ) {
-			$this->version = RDWT_VERSION;
+		if ( defined( 'RDevWT_VERSION' ) ) {
+			$this->version = RDevWT_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->rdwt = 'rdwt';
+		$this->rdevwt = 'rdevwt';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class RDWT {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - RDWT_Loader. Orchestrates the hooks of the plugin.
-	 * - RDWT_i18n. Defines internationalization functionality.
-	 * - RDWT_Admin. Defines all hooks for the admin area.
-	 * - RDWT_Public. Defines all hooks for the public side of the site.
+	 * - RDevWT_Loader. Orchestrates the hooks of the plugin.
+	 * - RDevWT_i18n. Defines internationalization functionality.
+	 * - RDevWT_Admin. Defines all hooks for the admin area.
+	 * - RDevWT_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,33 +103,33 @@ class RDWT {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rdwt-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rdevwt-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rdwt-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rdevwt-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rdwt-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rdevwt-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rdwt-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rdevwt-public.php';
 
-		$this->loader = new RDWT_Loader();
+		$this->loader = new RDevWT_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the RDWT_i18n class in order to set the domain and to register the hook
+	 * Uses the RDevWT_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class RDWT {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new RDWT_i18n();
+		$plugin_i18n = new RDevWT_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,7 +152,7 @@ class RDWT {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new RDWT_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new RDevWT_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -168,7 +168,7 @@ class RDWT {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new RDWT_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new RDevWT_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -192,14 +192,14 @@ class RDWT {
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
-		return $this->rdwt;
+		return $this->rdevwt;
 	}
 
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    RDWT_Loader    Orchestrates the hooks of the plugin.
+	 * @return    RDevWT_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
