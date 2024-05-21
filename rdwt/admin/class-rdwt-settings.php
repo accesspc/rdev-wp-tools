@@ -111,13 +111,74 @@ class RDWT_Settings {
 	public function add_settings() {
 		// If no options exist, create them
 		if ( ! get_option( 'rdwt_options' ) ) {
-			update_option( 'rdwt_options', $this->get_default_options() );
+			update_option( 'rdwt_options', self::get_default_options() );
 		}
 
 		register_setting(
 			'rdwt_plugin_options',
 			'rdwt_options',
 			array( $this, 'validate_settings')
+		);
+
+		add_settings_section(
+			'rdwt-settings-ga-section',
+			__( 'Google Analytics Settings', 'rdwt' ),
+			array( $this, 'render_section_ga' ),
+			'rdwt-settings'
+		);
+
+		add_settings_field(
+			'ga_enable',
+			__( 'Enable', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-ga-section',
+			array(
+				'id' => 'ga_enable',
+				'page' => 'rdwt_options',
+				'classes' => array(),
+				'type' => 'checkbox',
+			)
+		);
+
+		add_settings_field(
+			'ga_id',
+			__( 'GA Tracking ID', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-ga-section',
+			array(
+				'id' => 'ga_id',
+				'page' => 'rdwt_options',
+				'classes' => array(),
+				'type' => 'text',
+				'desc' => __( 'Googla Analytics Tracking ID', 'rdwt' ),
+				'sub_desc' => __( 'Sub description', 'rdwt' )
+			)
+		);
+
+		add_settings_field(
+			'ga_location',
+			__( 'Tracking code location', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-ga-section',
+			array(
+				'id' => 'ga_location',
+				'page' => 'rdwt_options',
+				'classes' => array(),
+				'type' => 'radio',
+				'options' => array(
+					array(
+						'value' => 'header',
+						'desc' => __( 'Include tracking code in page head', 'rdwt' )
+					),
+					array(
+						'value' => 'footer',
+						'desc' => __( 'Include tracking code in page footer', 'rdwt' )
+					),
+				)
+			)
 		);
 	}
 
@@ -162,7 +223,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function display_admin_settings() {
-		$rdwt_options = get_option( 'rdwt_options', $this->get_default_options() );
+		$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/display-settings.php';
 	}
@@ -214,9 +275,9 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function ga_init() {
-		$rdwt_options = get_option( 'rdwt_options', $this->get_default_options() );
+		$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
 
-		if ( $rdwt_options[ 'ga_enable' ] ) {
+		if ( isset( $rdwt_options[ 'ga_enable'] ) && $rdwt_options[ 'ga_enable' ] ) {
 
 			$location = isset($rdwt_options[ 'ga_location' ]) ? $rdwt_options[ 'ga_location' ] : 'header';
 
@@ -225,7 +286,6 @@ class RDWT_Settings {
 			} else {
 				add_action( 'wp_footer', array( &$this, 'ga_tracking_code' ) );
 			}
-
 		}
 	}
 
@@ -237,7 +297,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function ga_tracking_code() {
-		$rdwt_options = get_option( 'rdwt_options', $this->get_default_options() );
+		$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/ga-code.php';
 	}
@@ -261,6 +321,106 @@ class RDWT_Settings {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Settings section callback.
+	 *
+	 * @access	public
+	 * @return	int
+	 * @since		1.0.0
+	 */
+	public function render_section_ga() {
+
+	}
+
+	/**
+	 * Settings field callback.
+	 *
+	 * @access	public
+	 * @return	int
+	 * @since		1.0.0
+	 */
+	public function render_settings_field( $args ) {
+		self::set_name_and_value( $args );
+		extract( $args, EXTR_SKIP );
+
+		$args = wp_parse_args( $args, array( 'classes' => array() ) );
+
+		if ( empty( $args[ 'id' ] ) || empty( $args[ 'page' ] ) ) {
+			return;
+		}
+
+		switch ($type) {
+			case 'checkbox':
+				?>
+				<input 
+					type="checkbox" 
+					id="<?php echo esc_attr( $args['id'] ); ?>" 
+					name="<?php echo esc_attr( $name ); ?>" 
+					value="1" 
+					class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+					<?php if ( isset( $args['value'] ) ) checked( '1', $args['value'] ); ?>
+				/>
+				<?php
+				break;
+
+			case 'radio':
+
+				foreach( $options as $option ) {
+					?>
+					<input 
+						type="radio" 
+						id="<?php echo esc_attr( $args['id'] ); ?>" 
+						name="<?php echo esc_attr( $name ); ?>" 
+						value="<?php echo esc_attr( $option['value'] ); ?>" 
+						class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+						<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?> />
+					<?php
+					esc_html_e( $option['desc'], 'rdwt' );
+					?><br /><?php
+				}
+				break;
+
+			case 'text':
+
+				?>
+				<input 
+					type="text" 
+					id="<?php echo esc_attr( $args['id'] ); ?>" 
+					name="<?php echo esc_attr( $name ); ?>" 
+					value="<?php echo esc_attr( $value ); ?>" 
+					class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+				/>
+				<?php
+				break;
+		}
+
+		if ( isset( $sub_desc ) && ! empty( $sub_desc ) ) {
+			echo wp_kses_post( $sub_desc );
+		}
+
+		if ( ! empty( $desc ) ) : ?>
+		<p class="description"><?php echo wp_kses_post( $desc ); ?></p>
+		<?php endif;
+	}
+
+	/**
+	 * Set name and value from settings / options.
+	 *
+	 * @access	private
+	 * @return	void
+	 * @since		1.0.0
+	 */
+	private function set_name_and_value( &$args ) {
+		if ( ! isset( $args['name'] ) ) {
+			$args['name'] = sprintf( '%s[%s]', esc_attr( $args['page'] ), esc_attr( $args['id'] ) );
+		}
+
+		if ( ! isset( $args['value'] ) ) {
+			$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
+			$args['value'] = $rdwt_options[ $args['id'] ];
+		}
 	}
 
 	/**
