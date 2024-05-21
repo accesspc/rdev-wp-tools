@@ -28,44 +28,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * Current plugin version.
  */
+define( 'RDWT_DIR', plugin_dir_path( __FILE__ ) );
+define( 'RDWT_SLUG', basename( dirname( __FILE__ ) ) );
 define( 'RDWT_VERSION', '1.0.0' );
 
-function activate_rdwt() {
+require_once 'includes/class-rdwt.php';
 
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-activator.php';
-	RDWT_Activator::activate();
+$rdwt = new RDWT();
 
-}
-register_activation_hook( __FILE__, 'activate_rdwt' );
+register_activation_hook( __FILE__, array( 'RDWT_Settings', 'activate' ) );
 
-function deactivate_rdwt() {
-
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-rdwt-deactivator.php';
-	RDWT_Deactivator::deactivate();
-
-}
-register_deactivation_hook( __FILE__, 'deactivate_rdwt' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-rdwt.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_rdwt() {
-
-	$plugin = new RDWT();
-	$plugin->run();
-
-}
-
-run_rdwt();
+register_deactivation_hook( __FILE__, array( 'RDWT_Settings', 'deactivate' ) );

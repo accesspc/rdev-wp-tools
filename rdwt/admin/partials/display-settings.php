@@ -17,7 +17,7 @@ if ( ! function_exists( 'add_action' ) ) die() ;
       <div class="meta-box-sortables ui-sortable">
         <div id="rdwt-settings" class="postbox">
 
-          <h2><?php esc_html_e( 'Plugin Settings', 'rdwt' ); ?></h2>
+          <h2><?php esc_html_e( 'Google Analytics Settings', 'rdwt' ); ?></h2>
 
           <div class="panel">
             <table class="widefat">
@@ -39,7 +39,7 @@ if ( ! function_exists( 'add_action' ) ) die() ;
                   <input id="rdwt_options[ga_id]" name="rdwt_options[ga_id]" type="text" size="30" maxlength="30" value="<?php if ( isset($rdwt_options['ga_id'])) echo esc_attr( $rdwt_options['ga_id']); ?>">
                 </td>
               </tr>
-              
+
               <tr>
                 <th>
                   <label for="rdwt_options[ga_location]"><?php esc_html_e( 'Tracking code location', 'rdwt' ); ?></label>
@@ -56,17 +56,15 @@ if ( ! function_exists( 'add_action' ) ) die() ;
                   </label>
                 </td>
               </tr>
-              
-            </table>
-          </div>
 
-          <div class="footer">
-            <?php submit_button(); ?>
+            </table>
           </div>
 
         </div>
       </div>
     </div>
+
+    <?php submit_button(); ?>
 
   </form>
 

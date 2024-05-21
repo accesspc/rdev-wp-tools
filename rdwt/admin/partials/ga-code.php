@@ -7,3 +7,4 @@
 
   gtag('config', '<?php echo $rdwt_options[ 'ga_id' ]; ?>');
 </script>
+<!-- End: Google tag (gtag.js) -->
