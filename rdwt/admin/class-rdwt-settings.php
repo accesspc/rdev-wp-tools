@@ -120,11 +120,15 @@ class RDWT_Settings {
 			array( $this, 'validate_settings')
 		);
 
+		/** Google Analytics */
 		add_settings_section(
 			'rdwt-settings-ga-section',
 			__( 'Google Analytics Settings', 'rdwt' ),
 			array( $this, 'render_section_ga' ),
-			'rdwt-settings'
+			'rdwt-settings',
+			array(
+				'after_section' => '<hr/>',
+			),
 		);
 
 		add_settings_field(
@@ -134,9 +138,11 @@ class RDWT_Settings {
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
+				'class' => 'rdwt-setting',
 				'id' => 'ga_enable',
+				'label_for' => 'ga_enable',
 				'page' => 'rdwt_options',
-				'classes' => array(),
+				'sub_desc' => __( 'Check to place the tracking code on website', 'rdwt' ),
 				'type' => 'checkbox',
 			)
 		);
@@ -148,12 +154,16 @@ class RDWT_Settings {
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
+				'class' => 'rdwt-setting',
+				'desc' => array(
+					__( 'Enter your Google Tracking ID. Note: the Tracking ID also may be referred to as Tag ID, Measurement ID, or Property ID.', 'rdwt' ),
+					__( 'Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager (GTM-XXXXXXXXX) currently is not supported.', 'rdwt' ),
+				),
 				'id' => 'ga_id',
+				'label_for' => 'ga_id',
 				'page' => 'rdwt_options',
-				'classes' => array(),
+				'sub_desc' => __( '', 'rdwt' ),
 				'type' => 'text',
-				'desc' => __( 'Googla Analytics Tracking ID', 'rdwt' ),
-				'sub_desc' => __( 'Sub description', 'rdwt' )
 			)
 		);
 
@@ -164,20 +174,22 @@ class RDWT_Settings {
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
+				'class' => 'rdwt-setting',
+				'desc' => __( 'Tip: Google recommends including the tracking code in the page head, but including it in the footer can benefit page performance. If in doubt, go with the head option.', 'rdwt' ),
 				'id' => 'ga_location',
-				'page' => 'rdwt_options',
-				'classes' => array(),
-				'type' => 'radio',
+				'label_for' => 'ga_location',
 				'options' => array(
 					array(
 						'value' => 'header',
-						'desc' => __( 'Include tracking code in page head', 'rdwt' )
+						'desc' => __( 'Include tracking code in page head (via <code>wp_head</code>)', 'rdwt' )
 					),
 					array(
 						'value' => 'footer',
-						'desc' => __( 'Include tracking code in page footer', 'rdwt' )
+						'desc' => __( 'Include tracking code in page footer (via <code>wp_footer</code>)', 'rdwt' )
 					),
-				)
+				),
+				'page' => 'rdwt_options',
+				'type' => 'radio',
 			)
 		);
 	}
@@ -369,16 +381,18 @@ class RDWT_Settings {
 
 				foreach( $options as $option ) {
 					?>
-					<input 
-						type='radio' 
-						id='<?php echo esc_attr( $args['id'] ); ?>' 
-						name='<?php echo esc_attr( $name ); ?>' 
-						value='<?php echo esc_attr( $option['value'] ); ?>' 
-						class='<?php echo implode( ' ', $args['classes'] ); ?>' 
-						<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?> />
+					<div class="rdwt-radio">
+						<input 
+							type='radio' 
+							id='<?php echo esc_attr( $args['id'] ); ?>' 
+							name='<?php echo esc_attr( $name ); ?>' 
+							value='<?php echo esc_attr( $option['value'] ); ?>' 
+							class='<?php echo implode( ' ', $args['classes'] ); ?>' 
+							<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?>
+						/>
+						<?php echo wp_kses_post( $option['desc'] ); ?>
+					</div>
 					<?php
-					esc_html_e( $option['desc'], 'rdwt' );
-					?><br /><?php
 				}
 				break;
 
@@ -400,9 +414,18 @@ class RDWT_Settings {
 			echo wp_kses_post( $sub_desc );
 		}
 
-		if ( ! empty( $desc ) ) : ?>
-		<p class='description'><?php echo wp_kses_post( $desc ); ?></p>
-		<?php endif;
+		if ( isset( $desc ) && ! empty( $desc ) ) {
+			echo '<div class="description">';
+			if ( is_array( $desc ) ) {
+
+				array_walk( $desc, function( &$line ) { $line = sprintf( "<div>%s</div>", wp_kses_post( $line ) ); } );
+				echo implode( '', $desc );
+
+			} else {
+				echo wp_kses_post( $desc );
+			}
+			echo '</div>';
+		}
 	}
 
 	/**

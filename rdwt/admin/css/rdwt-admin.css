@@ -3,17 +3,10 @@
  * included in this file.
  */
 
-.rdwt-admin-wrap .postbox h2 {
-  border-bottom: 1px solid #777;
-  margin: 0;
-  padding: 12px 10px;
+.rdwt-admin-wrap .rdwt-setting .description {
+  font-size: .9em;
+  margin: 5px 0;
 }
-
-.rdwt-admin-wrap .postbox .overview {
-  margin: 0;
-  padding: 0 10px;
-}
-
-.rdwt-admin-wrap .postbox table {
-  border: 0px;
+.rdwt-admin-wrap .rdwt-radio {
+  margin: 5px 0;
 }
