@@ -281,7 +281,7 @@ class RDWT_Settings {
 
 			$location = isset($rdwt_options[ 'ga_location' ]) ? $rdwt_options[ 'ga_location' ] : 'header';
 
-			if ( $location == "header" ) {
+			if ( $location == 'header' ) {
 				add_action( 'wp_head', array( &$this, 'ga_tracking_code' ) );
 			} else {
 				add_action( 'wp_footer', array( &$this, 'ga_tracking_code' ) );
@@ -331,7 +331,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function render_section_ga() {
-
+		esc_html_e( 'These are some basic settings for Googla Analytics', 'rdwt' );
 	}
 
 	/**
@@ -355,11 +355,11 @@ class RDWT_Settings {
 			case 'checkbox':
 				?>
 				<input 
-					type="checkbox" 
-					id="<?php echo esc_attr( $args['id'] ); ?>" 
-					name="<?php echo esc_attr( $name ); ?>" 
-					value="1" 
-					class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+					type='checkbox' 
+					id='<?php echo esc_attr( $args['id'] ); ?>' 
+					name='<?php echo esc_attr( $name ); ?>' 
+					value='1' 
+					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
 					<?php if ( isset( $args['value'] ) ) checked( '1', $args['value'] ); ?>
 				/>
 				<?php
@@ -370,11 +370,11 @@ class RDWT_Settings {
 				foreach( $options as $option ) {
 					?>
 					<input 
-						type="radio" 
-						id="<?php echo esc_attr( $args['id'] ); ?>" 
-						name="<?php echo esc_attr( $name ); ?>" 
-						value="<?php echo esc_attr( $option['value'] ); ?>" 
-						class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+						type='radio' 
+						id='<?php echo esc_attr( $args['id'] ); ?>' 
+						name='<?php echo esc_attr( $name ); ?>' 
+						value='<?php echo esc_attr( $option['value'] ); ?>' 
+						class='<?php echo implode( ' ', $args['classes'] ); ?>' 
 						<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?> />
 					<?php
 					esc_html_e( $option['desc'], 'rdwt' );
@@ -386,11 +386,11 @@ class RDWT_Settings {
 
 				?>
 				<input 
-					type="text" 
-					id="<?php echo esc_attr( $args['id'] ); ?>" 
-					name="<?php echo esc_attr( $name ); ?>" 
-					value="<?php echo esc_attr( $value ); ?>" 
-					class="<?php echo implode( ' ', $args['classes'] ); ?>" 
+					type='text' 
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $name ); ?>' 
+					value='<?php echo esc_attr( $value ); ?>' 
+					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
 				/>
 				<?php
 				break;
@@ -401,7 +401,7 @@ class RDWT_Settings {
 		}
 
 		if ( ! empty( $desc ) ) : ?>
-		<p class="description"><?php echo wp_kses_post( $desc ); ?></p>
+		<p class='description'><?php echo wp_kses_post( $desc ); ?></p>
 		<?php endif;
 	}
 
@@ -434,14 +434,12 @@ class RDWT_Settings {
 		$input[ 'ga_id' ] = wp_filter_nohtml_kses( $input[ 'ga_id' ] );
 
 		if( isset($input[ 'ga_id' ] ) && preg_match("/^GTM-/i", $input[ 'ga_id' ]) ) {
-
 			$input[ 'ga_id' ] = '';
 
-			$message  = esc_html__('Error: your tracking code begins with', 'rdwt') .' <code>GTM-</code> ';
-			$message .= esc_html__('(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 'rdwt');
+			$message  = esc_html__( 'Error: your tracking code begins with', 'rdwt' ) .' <code>GTM-</code> ';
+			$message .= esc_html__( '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 'rdwt' );
 
-			add_settings_error('ga_id', 'invalid-tracking-code', $message, 'error');
-
+			add_settings_error( 'ga_id', 'invalid-tracking-code', $message, 'error' );
 		}
 
 		return $input;
