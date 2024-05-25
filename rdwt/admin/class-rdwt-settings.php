@@ -82,19 +82,19 @@ class RDWT_Settings {
 		}
 
 		add_menu_page(
-			esc_html__( 'Rdev WP Tools', 'rdwt' ),
-			esc_html__( 'Rdev WP Tools', 'rdwt' ),
+			esc_html__( 'Rdev WP Tools', RDWT_DOMAIN ),
+			esc_html__( 'Rdev WP Tools', RDWT_DOMAIN ),
 			'manage_options',
-			'rdwt',
+			RDWT_SLUG,
 			array( $this, 'display_admin_overview' ),
 			'',
 			80
 		);
 
 		add_submenu_page(
-			'rdwt',
-			__( 'Rdev', 'rdwt' ),
-			__( 'Settings', 'rdwt' ),
+			RDWT_SLUG,
+			__( 'Rdev', RDWT_DOMAIN ),
+			__( 'Settings', RDWT_DOMAIN ),
 			'manage_options',
 			'rdwt-settings',
 			array( $this, 'display_admin_settings' ),
@@ -123,7 +123,7 @@ class RDWT_Settings {
 		/** Google Analytics */
 		add_settings_section(
 			'rdwt-settings-ga-section',
-			__( 'Google Analytics Settings', 'rdwt' ),
+			__( 'Google Analytics Settings', RDWT_DOMAIN ),
 			array( $this, 'render_section_ga' ),
 			'rdwt-settings',
 			array(
@@ -133,7 +133,7 @@ class RDWT_Settings {
 
 		add_settings_field(
 			'ga_enable',
-			__( 'Enable', 'rdwt' ),
+			__( 'Enable', RDWT_DOMAIN ),
 			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
@@ -142,50 +142,50 @@ class RDWT_Settings {
 				'id' => 'ga_enable',
 				'label_for' => 'ga_enable',
 				'page' => 'rdwt_options',
-				'sub_desc' => __( 'Check to place the tracking code on website', 'rdwt' ),
+				'sub_desc' => __( 'Check to place the tracking code on website', RDWT_DOMAIN ),
 				'type' => 'checkbox',
 			)
 		);
 
 		add_settings_field(
 			'ga_id',
-			__( 'GA Tracking ID', 'rdwt' ),
+			__( 'GA Tracking ID', RDWT_DOMAIN ),
 			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
 				'class' => 'rdwt-setting',
 				'desc' => array(
-					__( 'Enter your Google Tracking ID. Note: the Tracking ID also may be referred to as Tag ID, Measurement ID, or Property ID.', 'rdwt' ),
-					__( 'Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager (GTM-XXXXXXXXX) currently is not supported.', 'rdwt' ),
+					__( 'Enter your Google Tracking ID. Note: the Tracking ID also may be referred to as Tag ID, Measurement ID, or Property ID.', RDWT_DOMAIN ),
+					__( 'Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager (GTM-XXXXXXXXX) currently is not supported.', RDWT_DOMAIN ),
 				),
 				'id' => 'ga_id',
 				'label_for' => 'ga_id',
 				'page' => 'rdwt_options',
-				'sub_desc' => __( '', 'rdwt' ),
+				'sub_desc' => __( '', RDWT_DOMAIN ),
 				'type' => 'text',
 			)
 		);
 
 		add_settings_field(
 			'ga_location',
-			__( 'Tracking code location', 'rdwt' ),
+			__( 'Tracking code location', RDWT_DOMAIN ),
 			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
 				'class' => 'rdwt-setting',
-				'desc' => __( 'Tip: Google recommends including the tracking code in the page head, but including it in the footer can benefit page performance. If in doubt, go with the head option.', 'rdwt' ),
+				'desc' => __( 'Tip: Google recommends including the tracking code in the page head, but including it in the footer can benefit page performance. If in doubt, go with the head option.', RDWT_DOMAIN ),
 				'id' => 'ga_location',
 				'label_for' => 'ga_location',
 				'options' => array(
 					array(
 						'value' => 'header',
-						'desc' => __( 'Include tracking code in page head (via <code>wp_head</code>)', 'rdwt' )
+						'desc' => __( 'Include tracking code in page head (via <code>wp_head</code>)', RDWT_DOMAIN )
 					),
 					array(
 						'value' => 'footer',
-						'desc' => __( 'Include tracking code in page footer (via <code>wp_footer</code>)', 'rdwt' )
+						'desc' => __( 'Include tracking code in page footer (via <code>wp_footer</code>)', RDWT_DOMAIN )
 					),
 				),
 				'page' => 'rdwt_options',
@@ -248,7 +248,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'rdwt', plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -259,7 +259,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'rdwt', plugin_dir_url( __FILE__ ) . 'js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -343,7 +343,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function render_section_ga() {
-		esc_html_e( 'These are some basic settings for Googla Analytics', 'rdwt' );
+		esc_html_e( 'These are some basic settings for Googla Analytics', RDWT_DOMAIN );
 	}
 
 	/**
@@ -459,8 +459,8 @@ class RDWT_Settings {
 		if( isset($input[ 'ga_id' ] ) && preg_match("/^GTM-/i", $input[ 'ga_id' ]) ) {
 			$input[ 'ga_id' ] = '';
 
-			$message  = esc_html__( 'Error: your tracking code begins with', 'rdwt' ) .' <code>GTM-</code> ';
-			$message .= esc_html__( '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 'rdwt' );
+			$message  = esc_html__( 'Error: your tracking code begins with', RDWT_DOMAIN ) .' <code>GTM-</code> ';
+			$message .= esc_html__( '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', RDWT_DOMAIN );
 
 			add_settings_error( 'ga_id', 'invalid-tracking-code', $message, 'error' );
 		}

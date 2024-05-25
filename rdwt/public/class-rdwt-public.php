@@ -56,7 +56,7 @@ class RDWT_Public {
 	 * @since		1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'rdwt', plugin_dir_url( __FILE__ ) . 'css/rdwt-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'css/rdwt-public.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class RDWT_Public {
 	 * @since		1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'rdwt', plugin_dir_url( __FILE__ ) . 'js/rdwt-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'js/rdwt-public.js', array( 'jquery' ), $this->version, false );
 	}
 
 }

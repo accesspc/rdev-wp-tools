@@ -6,7 +6,7 @@ if ( ! function_exists( 'add_action' ) ) die() ;
 
 <div class="wrap rdwt-admin-wrap">
 
-  <h1 class="rdwt-title"><?php esc_html_e( 'Settings', 'rdwt' ); ?></h1>
+  <h1 class="rdwt-title"><?php esc_html_e( 'Settings', RDWT_DOMAIN ); ?></h1>
   <?php settings_errors(); ?>
   <h2 class="nav-tab-wrapper"></h2>
 

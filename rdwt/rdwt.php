@@ -29,6 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * Current plugin version.
  */
 define( 'RDWT_DIR', plugin_dir_path( __FILE__ ) );
+define( 'RDWT_DOMAIN', 'rdwt' );
 define( 'RDWT_SLUG', basename( dirname( __FILE__ ) ) );
 define( 'RDWT_VERSION', '1.0.0' );
 

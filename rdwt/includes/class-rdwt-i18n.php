@@ -23,7 +23,7 @@ class RDWT_i18n {
 	 */
 	public static function load_plugin_textdomain() {
 		load_plugin_textdomain(
-			'rdwt',
+			RDWT_DOMAIN,
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
