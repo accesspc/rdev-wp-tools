@@ -156,43 +156,9 @@ class RDWT_GA extends RDWT_Settings {
 			)
 		);
   }
-	/**
-	 * GA: Init function to render/or not the tracking code.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.0.0
-	 */
-	public function ga_init() {
-		$options = get_option( $this->option, $this->get_default_options() );
-
-		if ( isset( $options[ 'ga_enable'] ) && $options[ 'ga_enable' ] ) {
-
-			$location = isset($options[ 'ga_location' ]) ? $options[ 'ga_location' ] : 'header';
-
-			if ( $location == 'header' ) {
-				add_action( 'wp_head', array( &$this, 'ga_tracking_code' ) );
-			} else {
-				add_action( 'wp_footer', array( &$this, 'ga_tracking_code' ) );
-			}
-		}
-	}
 
 	/**
-	 * GA: Render tracking code.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.0.0
-	 */
-	public function ga_tracking_code() {
-		$options = get_option( $this->option, $this->get_default_options() );
-
-		require_once plugin_dir_path( __FILE__ ) . 'partials/ga-code.php';
-	}
-
-	/**
-	 * Init
+	 * GA: Init function to render/or not the tracking code
 	 * 
 	 * @access	public
 	 * @return	void
@@ -202,6 +168,19 @@ class RDWT_GA extends RDWT_Settings {
 		// If no options exist, create them
 		if ( ! get_option( $this->option ) ) {
 			update_option( $this->option, $this->get_default_options() );
+		}
+
+		$options = get_option( $this->option, $this->get_default_options() );
+
+		if ( isset( $options[ 'ga_enable'] ) && $options[ 'ga_enable' ] ) {
+
+			$location = isset($options[ 'ga_location' ]) ? $options[ 'ga_location' ] : 'header';
+
+			if ( $location == 'header' ) {
+				add_action( 'wp_head', array( &$this, 'render_tracking_code' ) );
+			} else {
+				add_action( 'wp_footer', array( &$this, 'render_tracking_code' ) );
+			}
 		}
 	}
 
@@ -214,6 +193,19 @@ class RDWT_GA extends RDWT_Settings {
 	 */
 	public static function render_section_ga() {
 		esc_html_e( 'These are some basic settings for Googla Analytics', RDWT_DOMAIN );
+	}
+
+	/**
+	 * GA: Render tracking code.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since		1.0.0
+	 */
+	public function render_tracking_code() {
+		$options = get_option( $this->option, $this->get_default_options() );
+
+		require_once plugin_dir_path( __FILE__ ) . 'partials/ga-code.php';
 	}
 
 	/**

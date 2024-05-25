@@ -68,8 +68,8 @@ class RDWT_Settings {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_action( 'admin_init', array( $this, 'add_settings' ) );
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+		add_action( 'admin_init', array( $this, 'add_settings' ) );
 	}
 
 	/**
@@ -154,17 +154,6 @@ class RDWT_Settings {
 	}
 
 	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.0.0
-	 */
-	public function enqueue_styles() {
-		wp_enqueue_style( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
-	}
-
-	/**
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @access	public
@@ -173,6 +162,17 @@ class RDWT_Settings {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
+	}
+
+	/**
+	 * Register the stylesheets for the admin area.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since		1.0.0
+	 */
+	public function enqueue_styles() {
+		wp_enqueue_style( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function render_section_overview() {
-		esc_html_e( 'Rdev WP Tools is a wordpress plugin and a collection of tools in a single bloat-less plugin..', RDWT_DOMAIN );
+		esc_html_e( 'Rdev WP Tools is a collection of tools in a single bloat-less wordpress plugin.', RDWT_DOMAIN );
 	}
 
 	/**
@@ -328,7 +328,6 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function validate_settings( $input ) {
-
 		return $input;
 	}
 
