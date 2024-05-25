@@ -12,16 +12,25 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @package    RDWT
  * @subpackage RDWT/admin
  */
-class RDWT_Settings_GA {
+class RDWT_GA extends RDWT_Settings {
+
+	/**
+	 * RDWT option name.
+	 * 
+	 * @access	protected
+	 * @since		1.0.0
+	 * @var			string
+	 */
+	protected $option = 'rdwt_ga';
 
 	/**
 	 * RDWT Options
 	 * 
-	 * @access	private
+	 * @access	protected
 	 * @since		1.0.0
 	 * @var			array
 	 */
-	private static $options = array(
+	protected $options = array(
 		'ga_enable' => false,
 		'ga_id' => '',
 		'ga_location' => 'header',
@@ -47,8 +56,7 @@ class RDWT_Settings_GA {
 		$this->version = RDWT_VERSION;
 
 		$this->add_hooks();
-
-		$this->ga_init();
+		$this->init();
 	}
 
 	/**
@@ -70,6 +78,12 @@ class RDWT_Settings_GA {
 	 * @since		1.0.0
 	 */
   public function add_settings() {
+		register_setting(
+			'rdwt_plugin_settings',
+			$this->option,
+			array( $this, 'validate_settings')
+		);
+
 		add_settings_section(
 			'rdwt-settings-ga-section',
 			__( 'Google Analytics Settings', RDWT_DOMAIN ),
@@ -83,14 +97,14 @@ class RDWT_Settings_GA {
 		add_settings_field(
 			'ga_enable',
 			__( 'Enable', RDWT_DOMAIN ),
-			array( 'RDWT_Settings', 'render_settings_field' ),
+			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
 				'class' => 'rdwt-setting',
 				'id' => 'ga_enable',
 				'label_for' => 'ga_enable',
-				'page' => 'rdwt_options',
+				'page' => 'rdwt_ga',
 				'sub_desc' => __( 'Check to place the tracking code on website', RDWT_DOMAIN ),
 				'type' => 'checkbox',
 			)
@@ -99,7 +113,7 @@ class RDWT_Settings_GA {
 		add_settings_field(
 			'ga_id',
 			__( 'GA Tracking ID', RDWT_DOMAIN ),
-			array( 'RDWT_Settings', 'render_settings_field' ),
+			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
@@ -110,7 +124,7 @@ class RDWT_Settings_GA {
 				),
 				'id' => 'ga_id',
 				'label_for' => 'ga_id',
-				'page' => 'rdwt_options',
+				'page' => 'rdwt_ga',
 				'sub_desc' => __( '', RDWT_DOMAIN ),
 				'type' => 'text',
 			)
@@ -119,7 +133,7 @@ class RDWT_Settings_GA {
 		add_settings_field(
 			'ga_location',
 			__( 'Tracking code location', RDWT_DOMAIN ),
-			array( 'RDWT_Settings', 'render_settings_field' ),
+			array( $this, 'render_settings_field' ),
 			'rdwt-settings',
 			'rdwt-settings-ga-section',
 			array(
@@ -137,7 +151,7 @@ class RDWT_Settings_GA {
 						'desc' => __( 'Include tracking code in page footer (via <code>wp_footer</code>)', RDWT_DOMAIN )
 					),
 				),
-				'page' => 'rdwt_options',
+				'page' => 'rdwt_ga',
 				'type' => 'radio',
 			)
 		);
@@ -150,11 +164,11 @@ class RDWT_Settings_GA {
 	 * @since		1.0.0
 	 */
 	public function ga_init() {
-		$rdwt_options = get_option( 'rdwt_options', RDWT_Settings::get_default_options() );
+		$options = get_option( $this->option, $this->get_default_options() );
 
-		if ( isset( $rdwt_options[ 'ga_enable'] ) && $rdwt_options[ 'ga_enable' ] ) {
+		if ( isset( $options[ 'ga_enable'] ) && $options[ 'ga_enable' ] ) {
 
-			$location = isset($rdwt_options[ 'ga_location' ]) ? $rdwt_options[ 'ga_location' ] : 'header';
+			$location = isset($options[ 'ga_location' ]) ? $options[ 'ga_location' ] : 'header';
 
 			if ( $location == 'header' ) {
 				add_action( 'wp_head', array( &$this, 'ga_tracking_code' ) );
@@ -172,30 +186,23 @@ class RDWT_Settings_GA {
 	 * @since		1.0.0
 	 */
 	public function ga_tracking_code() {
-		$rdwt_options = get_option( 'rdwt_options', RDWT_Settings::get_default_options() );
+		$options = get_option( $this->option, $this->get_default_options() );
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/ga-code.php';
 	}
 
 	/**
-	 * Get screen id.
-	 *
+	 * Init
+	 * 
 	 * @access	public
-	 * @return	int
+	 * @return	void
 	 * @since		1.0.0
 	 */
-	public function get_screen_id() {
-		if ( ! function_exists( 'get_current_screen' ) ) {
-			require_once ABSPATH . './wp-admin/includes/screen.php';
+	public function init() {
+		// If no options exist, create them
+		if ( ! get_option( $this->option ) ) {
+			update_option( $this->option, $this->get_default_options() );
 		}
-
-		$screen = get_current_screen();
-
-		if ( $screen && property_exists( $screen, 'id' ) ) {
-			return $screen->id;
-		}
-
-		return false;
 	}
 
 	/**

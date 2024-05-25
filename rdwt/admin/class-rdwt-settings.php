@@ -15,16 +15,23 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class RDWT_Settings {
 
 	/**
+	 * RDWT option name.
+	 * 
+	 * @access	protected
+	 * @since		1.0.0
+	 * @var			string
+	 */
+	protected $option = 'rdwt';
+
+	/**
 	 * RDWT Options
 	 * 
-	 * @access	private
+	 * @access	protected
 	 * @since		1.0.0
 	 * @var			array
 	 */
-	private static $options = array(
-		'ga_enable' => false,
-		'ga_id' => '',
-		'ga_location' => 'header',
+	protected $options = array(
+
 	);
 
 	/**
@@ -47,21 +54,7 @@ class RDWT_Settings {
 		$this->version = RDWT_VERSION;
 
 		$this->add_hooks();
-		$this->load_dependencies();
-	}
-
-	/**
-	 * Plugin activation hook.
-	 * 
-	 * @access	public
-	 * @return	void
-	 * @since		1.0.0
-	 */
-	public static function activate() {
-		// If no options exist, create them
-		if ( ! get_option( 'rdwt_options' ) ) {
-			update_option( 'rdwt_options', RDWT_Settings::get_default_options() );
-		}
+		$this->init();
 	}
 
 	/**
@@ -119,20 +112,9 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function add_settings() {
-		// If no options exist, create them
-		if ( ! get_option( 'rdwt_options' ) ) {
-			update_option( 'rdwt_options', self::get_default_options() );
-		}
-
 		register_setting(
-			'rdwt_plugin_overview',
+			'rdwt_plugin',
 			'rdwt',
-			array( $this, 'validate_settings')
-		);
-
-		register_setting(
-			'rdwt_plugin_settings',
-			'rdwt_options',
 			array( $this, 'validate_settings')
 		);
 
@@ -145,17 +127,6 @@ class RDWT_Settings {
 				'after_section' => '<hr/>',
 			)
 		);
-	}
-
-	/**
-	 * Plugin deactivation hook.
-	 * 
-	 * @access	public
-	 * @return	void
-	 * @since		1.0.0
-	 */
-	public static function deactivate() {
-
 	}
 
 	/**
@@ -177,7 +148,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function display_admin_settings() {
-		$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
+		$options = get_option( $this->option, $this->get_default_options() );
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/display-settings.php';
 	}
@@ -211,20 +182,22 @@ class RDWT_Settings {
 	 * @return	void
 	 * @since		1.0.0
 	 */
-	public static function get_default_options() {
-		return apply_filters( 'rdwt_default_options', self::$options );
+	public function get_default_options() {
+		return apply_filters( 'rdwt_default_options', $this->options );
 	}
 
 	/**
-	 * Load file dependencies
+	 * Init
 	 * 
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
 	 */
-	public function load_dependencies() {
-		require_once RDWT_DIR . 'admin/class-rdwt-ga.php';
-		$ga = new RDWT_Settings_GA();
+	public function init() {
+		// If no options exist, create them
+		if ( ! get_option( $this->option ) ) {
+			update_option( $this->option, $this->get_default_options() );
+		}
 	}
 
 	/**
@@ -234,8 +207,8 @@ class RDWT_Settings {
 	 * @return	int
 	 * @since		1.0.0
 	 */
-	public static function render_section_overview() {
-		esc_html_e( 'Rdev WP Tools is a wordpress plugin.', RDWT_DOMAIN );
+	public function render_section_overview() {
+		esc_html_e( 'Rdev WP Tools is a wordpress plugin and a collection of tools in a single bloat-less plugin..', RDWT_DOMAIN );
 	}
 
 	/**
@@ -245,8 +218,8 @@ class RDWT_Settings {
 	 * @return	int
 	 * @since		1.0.0
 	 */
-	public static function render_settings_field( $args ) {
-		self::set_name_and_value( $args );
+	public function render_settings_field( $args ) {
+		$this->set_name_and_value( $args );
 		extract( $args, EXTR_SKIP );
 
 		$args = wp_parse_args( $args, array( 'classes' => array() ) );
@@ -336,14 +309,14 @@ class RDWT_Settings {
 	 * @return	void
 	 * @since		1.0.0
 	 */
-	private static function set_name_and_value( &$args ) {
+	private function set_name_and_value( &$args ) {
 		if ( ! isset( $args['name'] ) ) {
 			$args['name'] = sprintf( '%s[%s]', esc_attr( $args['page'] ), esc_attr( $args['id'] ) );
 		}
 
 		if ( ! isset( $args['value'] ) ) {
-			$rdwt_options = get_option( 'rdwt_options', self::get_default_options() );
-			$args['value'] = $rdwt_options[ $args['id'] ];
+			$options = get_option( $this->option, $this->get_default_options() );
+			$args['value'] = $options[ $args['id'] ];
 		}
 	}
 

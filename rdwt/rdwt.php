@@ -37,6 +37,6 @@ require_once 'includes/class-rdwt.php';
 
 $rdwt = new RDWT();
 
-register_activation_hook( __FILE__, array( 'RDWT_Settings', 'activate' ) );
+// register_activation_hook( __FILE__, array( 'RDWT_Settings', 'activate' ) );
 
-register_deactivation_hook( __FILE__, array( 'RDWT_Settings', 'deactivate' ) );
+// register_deactivation_hook( __FILE__, array( 'RDWT_Settings', 'deactivate' ) );

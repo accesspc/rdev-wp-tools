@@ -87,7 +87,9 @@ class RDWT {
 		$this->i18n = new RDWT_i18n();
 
 		require_once RDWT_DIR . 'admin/class-rdwt-settings.php';
+		require_once RDWT_DIR . 'admin/class-rdwt-ga.php';
 		$this->settings = new RDWT_Settings();
+		$ga = new RDWT_GA();
 
 		require_once RDWT_DIR . 'public/class-rdwt-public.php';
 		$this->public = new RDWT_Public();
