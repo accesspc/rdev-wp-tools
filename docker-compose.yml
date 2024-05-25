@@ -1,0 +1,31 @@
+---
+services:
+  mysql:
+    image: mariadb:latest
+    environment:
+      - MARIADB_DATABASE=wordpress
+      - MARIADB_PASSWORD=wordpress
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_USER=wordpress
+    ports:
+      - 3306:3306
+    volumes:
+      - data-mysql:/var/lib/mysql
+  
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      - mysql
+    environment:
+      - WORDPRESS_DB_HOST=mysql
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_TABLE_PREFIX=wp_
+    ports:
+      - 8080:80
+    volumes:
+      - ./rdwt:/var/www/html/wp-content/plugins/rdwt
+
+volumes:
+  data-mysql:
