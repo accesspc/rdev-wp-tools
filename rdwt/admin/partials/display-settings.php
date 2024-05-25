@@ -13,7 +13,7 @@ if ( ! function_exists( 'add_action' ) ) die() ;
   <form method="post" action="options.php">
 
     <?php
-    settings_fields( 'rdwt_plugin_options' );
+    settings_fields( 'rdwt_plugin_settings' );
     do_settings_sections( 'rdwt-settings' );
     submit_button(); 
     ?>

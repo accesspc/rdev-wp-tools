@@ -12,7 +12,11 @@ if ( ! function_exists( 'add_action' ) ) die() ;
 
   <form method="post" action="options.php">
 
-    <?php settings_fields( 'rdwt_plugin_options' ); ?>
+    <?php
+    settings_fields( 'rdwt_plugin_overview' );
+    do_settings_sections( 'rdwt' );
+    submit_button(); 
+    ?>
 
     <div class="metabox-holder">
       <div class="meta-box-sortables ui-sortable">

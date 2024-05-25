@@ -15,15 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class RDWT_Settings {
 
 	/**
-	 * RDWT GA Object
-	 * 
-	 * @access	public
-	 * @since		1.0.0
-	 * @var			RDWT_GA
-	 */
-	public $ga;
-
-	/**
 	 * RDWT Options
 	 * 
 	 * @access	private
@@ -56,9 +47,7 @@ class RDWT_Settings {
 		$this->version = RDWT_VERSION;
 
 		$this->add_hooks();
-
-		require_once RDWT_DIR . 'admin/class-rdwt-ga.php';
-		$this->ga = new RDWT_GA();
+		$this->load_dependencies();
 	}
 
 	/**
@@ -117,7 +106,7 @@ class RDWT_Settings {
 			__( 'Rdev', RDWT_DOMAIN ),
 			__( 'Settings', RDWT_DOMAIN ),
 			'manage_options',
-			'rdwt-settings',
+			RDWT_SLUG . '-settings',
 			array( $this, 'display_admin_settings' ),
 		);
 	}
@@ -136,9 +125,25 @@ class RDWT_Settings {
 		}
 
 		register_setting(
-			'rdwt_plugin_options',
+			'rdwt_plugin_overview',
+			'rdwt',
+			array( $this, 'validate_settings')
+		);
+
+		register_setting(
+			'rdwt_plugin_settings',
 			'rdwt_options',
 			array( $this, 'validate_settings')
+		);
+
+		add_settings_section(
+			'rdwt-settings-overview',
+			__( 'Overview', RDWT_DOMAIN ),
+			array( $this, 'render_section_overview' ),
+			'rdwt',
+			array(
+				'after_section' => '<hr/>',
+			)
 		);
 	}
 
@@ -211,6 +216,29 @@ class RDWT_Settings {
 	}
 
 	/**
+	 * Load file dependencies
+	 * 
+	 * @access	public
+	 * @return	void
+	 * @since		1.0.0
+	 */
+	public function load_dependencies() {
+		require_once RDWT_DIR . 'admin/class-rdwt-ga.php';
+		$ga = new RDWT_Settings_GA();
+	}
+
+	/**
+	 * Settings section callback.
+	 *
+	 * @access	public
+	 * @return	int
+	 * @since		1.0.0
+	 */
+	public static function render_section_overview() {
+		esc_html_e( 'Rdev WP Tools is a wordpress plugin.', RDWT_DOMAIN );
+	}
+
+	/**
 	 * Settings field callback.
 	 *
 	 * @access	public
@@ -260,6 +288,15 @@ class RDWT_Settings {
 				}
 				break;
 			
+				case 'raw':
+
+					if ( ! isset( $html ) ) {
+						break;
+					}
+	
+					echo wp_kses_post( $html );
+					break;
+	
 			case 'text':
 
 				?>
@@ -318,7 +355,6 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function validate_settings( $input ) {
-		$input = $this->ga->validate_settings( $input );
 
 		return $input;
 	}

@@ -12,7 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @package    RDWT
  * @subpackage RDWT/admin
  */
-class RDWT_GA {
+class RDWT_Settings_GA {
+
+	/**
+	 * RDWT Options
+	 * 
+	 * @access	private
+	 * @since		1.0.0
+	 * @var			array
+	 */
+	private static $options = array(
+		'ga_enable' => false,
+		'ga_id' => '',
+		'ga_location' => 'header',
+	);
 
 	/**
 	 * RDWT Version Number.
@@ -204,16 +217,18 @@ class RDWT_GA {
 	 * @since		1.0.0
 	 */
 	public function validate_settings( $input ) {
-		$input[ 'ga_id' ] = wp_filter_nohtml_kses( $input[ 'ga_id' ] );
+    if ( isset( $input[ 'ga_id' ] ) ) {
+		  $input[ 'ga_id' ] = wp_filter_nohtml_kses( $input[ 'ga_id' ] );
 
-		if( isset($input[ 'ga_id' ] ) && preg_match("/^GTM-/i", $input[ 'ga_id' ]) ) {
-			$input[ 'ga_id' ] = '';
+      if( preg_match("/^GTM-/i", $input[ 'ga_id' ]) ) {
+        $input[ 'ga_id' ] = '';
 
-			$message  = esc_html__( 'Error: your tracking code begins with', RDWT_DOMAIN ) .' <code>GTM-</code> ';
-			$message .= esc_html__( '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', RDWT_DOMAIN );
+        $message  = esc_html__( 'Error: your tracking code begins with', RDWT_DOMAIN ) .' <code>GTM-</code> ';
+        $message .= esc_html__( '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', RDWT_DOMAIN );
 
-			add_settings_error( 'ga_id', 'invalid-tracking-code', $message, 'error' );
-		}
+        add_settings_error( 'ga_id', 'invalid-tracking-code', $message, 'error' );
+      }
+    }
 
 		return $input;
 	}
