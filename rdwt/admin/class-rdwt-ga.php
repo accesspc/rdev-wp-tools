@@ -86,7 +86,7 @@ class RDWT_GA extends RDWT_Settings {
 
 		add_settings_section(
 			'rdwt-settings-ga-section',
-			__( 'Google Analytics Settings', RDWT_DOMAIN ),
+			__( 'Google Analytics', RDWT_DOMAIN ),
 			array( $this, 'render_section_ga' ),
 			'rdwt-settings',
 			array(
