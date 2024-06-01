@@ -56,7 +56,6 @@ class RDWT_GA extends RDWT_Settings {
 		$this->version = RDWT_VERSION;
 
 		$this->add_hooks();
-		$this->init();
 	}
 
 	/**
@@ -68,6 +67,8 @@ class RDWT_GA extends RDWT_Settings {
 	 */
 	public function add_hooks() {
     add_action( 'admin_init', array( $this, 'add_settings' ) );
+
+		add_action( 'init', array( $this, 'init' ) );
   }
 
 	/**
@@ -188,11 +189,11 @@ class RDWT_GA extends RDWT_Settings {
 	 * Settings section callback.
 	 *
 	 * @access	public
-	 * @return	int
+	 * @return	void
 	 * @since		1.0.0
 	 */
 	public static function render_section_ga() {
-		esc_html_e( 'These are some basic settings for Googla Analytics', RDWT_DOMAIN );
+		esc_html_e( 'These are the settings for Googla Analytics', RDWT_DOMAIN );
 	}
 
 	/**
@@ -205,7 +206,7 @@ class RDWT_GA extends RDWT_Settings {
 	public function render_tracking_code() {
 		$options = get_option( $this->option, $this->get_default_options() );
 
-		require_once plugin_dir_path( __FILE__ ) . 'partials/ga-code.php';
+		require_once RDWT_DIR . 'assets/partials/ga-code.php';
 	}
 
 	/**

@@ -5,6 +5,7 @@ A Wordpress plugin to provide some bloat-less tools for day-to-day work.
 ## Includes
 
 * Google Analytics tracking code
+* Password Generator via shortcode
 
 ## Development
 

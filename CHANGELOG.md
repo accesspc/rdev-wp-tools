@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0
+
+* Password Generator
+
 ## v1.0.0
 
 * Initial Release.
