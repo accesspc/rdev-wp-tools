@@ -9,8 +9,8 @@ Author URI: https://reiciunas.dev/
 Contributors: accesspc
 Requires at least: 4.9
 Tested up to: 6.5
-Stable tag: 1.0.0
-Version: 1.0.0
+Stable tag: 1.1.0
+Version: 1.1.0
 Requires PHP: 5.6.20
 Text Domain: rdwt
 Domain Path: /languages
@@ -21,12 +21,8 @@ Add some useful tools to your Wordpress site.
 
 == Description ==
 
-> Connects Google Analytics to WordPress
-> Supports Universal Analytics / analytics.js
-> Supports Global Site Tag / gtag.js
-> Supports Google Analytics 4
-
-This plugin enables Google Analytics for your entire WordPress site. Lightweight and fast with plenty of great features.
+> Enabled Google Analytics for your entire WordPress site.
+> Registers password generator shortcode `[rdwt_pwdgen]` which can be added anywhere on the site.
 
 == Installation ==
 
@@ -38,14 +34,14 @@ This plugin enables Google Analytics for your entire WordPress site. Lightweight
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Overview page for Rdev WP Tools plugin (TBD)
+2. Settings page for Google Analytics and Password Generator
 
 == Changelog ==
 
-= 1.0 =
+= 1.1.0 = 
+* Password Generator
+
+= 1.0.0 =
 * Initial release.
 * Google Analytics tracking code

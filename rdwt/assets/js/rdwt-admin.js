@@ -1,8 +1,15 @@
 (function( $ ) {
 	'use strict';
 
+	// RDWT::Settings: range slider value
+	$(function() {
+		$('.rdwt-range input').on('input', function() {
+			$(this).next('.sub-desc').html(this.value);
+		});
+	});
+
 	/**
-	 * All of the code for your public-facing JavaScript source
+	 * All of the code for your admin-facing JavaScript source
 	 * should reside in this file.
 	 *
 	 * Note: It has been assumed you will write jQuery code here, so the

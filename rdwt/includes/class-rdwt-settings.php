@@ -137,7 +137,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function display_admin_overview() {
-		require_once plugin_dir_path( __FILE__ ) . 'partials/display-overview.php';
+		require_once RDWT_DIR . 'assets/partials/display-overview.php';
 	}
 
 	/**
@@ -150,7 +150,7 @@ class RDWT_Settings {
 	public function display_admin_settings() {
 		$options = get_option( $this->option, $this->get_default_options() );
 
-		require_once plugin_dir_path( __FILE__ ) . 'partials/display-settings.php';
+		require_once RDWT_DIR . 'assets/partials/display-settings.php';
 	}
 
 	/**
@@ -161,7 +161,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( RDWT_SLUG, RDWT_URL . 'assets/js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -172,7 +172,7 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( RDWT_SLUG, plugin_dir_url( __FILE__ ) . 'css/rdwt-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( RDWT_SLUG, RDWT_URL . 'assets/css/rdwt-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -261,7 +261,24 @@ class RDWT_Settings {
 				}
 				break;
 			
-				case 'raw':
+			case 'range':
+
+				?>
+				<input
+					type='range'
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $name ); ?>'
+					value='<?php echo esc_attr( $value ); ?>'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
+					min='<?php echo esc_attr( $args[ 'min' ] ); ?>' 
+					max='<?php echo esc_attr( $max ); ?>' 
+					step='<?php echo esc_attr( $step ); ?>' 
+				/>
+				<?php
+
+				break;
+			
+			case 'raw':
 
 					if ( ! isset( $html ) ) {
 						break;
@@ -285,7 +302,9 @@ class RDWT_Settings {
 		}
 
 		if ( isset( $sub_desc ) && ! empty( $sub_desc ) ) {
+			echo '<span class="sub-desc">';
 			echo wp_kses_post( $sub_desc );
+			echo '</span>';
 		}
 
 		if ( isset( $desc ) && ! empty( $desc ) ) {

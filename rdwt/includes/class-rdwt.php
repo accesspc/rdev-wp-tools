@@ -15,6 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class RDWT {
 
 	/**
+	 * RDWT Google Analytics Object
+	 * 
+	 * @access	public
+	 * @since		1.1.0
+	 * @var			RDWT_GA
+	 */
+	public $ga;
+
+	/**
 	 * RDWT Internationalization Object
 	 * 
 	 * @access	public
@@ -31,6 +40,15 @@ class RDWT {
 	 * @var			RDWT_Public
 	 */
 	public $public;
+
+	/**
+	 * RDWT Password Generator Object
+	 * 
+	 * @access	public
+	 * @since		1.1.0
+	 * @var			RDWT_PwdGen
+	 */
+	public $pwdgen;
 
 	/**
 	 * RDWT Settings Object
@@ -86,12 +104,16 @@ class RDWT {
 		require_once RDWT_DIR . 'includes/class-rdwt-i18n.php';
 		$this->i18n = new RDWT_i18n();
 
-		require_once RDWT_DIR . 'admin/class-rdwt-settings.php';
-		require_once RDWT_DIR . 'admin/class-rdwt-ga.php';
+		require_once RDWT_DIR . 'includes/class-rdwt-settings.php';
 		$this->settings = new RDWT_Settings();
-		$ga = new RDWT_GA();
 
-		require_once RDWT_DIR . 'public/class-rdwt-public.php';
+		require_once RDWT_DIR . 'includes/class-rdwt-ga.php';
+		$this->ga = new RDWT_GA();
+		
+		require_once RDWT_DIR . 'includes/class-rdwt-pwdgen.php';
+		$this->pwdgen = new RDWT_PwdGen();
+
+		require_once RDWT_DIR . 'includes/class-rdwt-public.php';
 		$this->public = new RDWT_Public();
 	}
 
