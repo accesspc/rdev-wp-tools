@@ -9,8 +9,8 @@ Author URI: https://reiciunas.dev/
 Contributors: accesspc
 Requires at least: 4.9
 Tested up to: 6.5
-Stable tag: 1.1.0
-Version: 1.1.0
+Stable tag: 1.1.2
+Version: 1.1.2
 Requires PHP: 5.6.20
 Text Domain: rdwt
 Domain Path: /languages
@@ -39,9 +39,16 @@ Add some useful tools to your Wordpress site.
 
 == Changelog ==
 
+= 1.1.2 =
+* Version bump
+
+= 1.1.1 =
+* Feat: Admin overview section definition
+* Fix: Password Generator shortcode html cleanup
+
 = 1.1.0 = 
-* Password Generator
+* Feat: Password Generator
 
 = 1.0.0 =
-* Initial release.
-* Google Analytics tracking code
+* Initial Release.
+* Feat: Google Analytics 4 tracking code
