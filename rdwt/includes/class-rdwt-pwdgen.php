@@ -281,7 +281,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
     ob_start();
     require_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
-    return ob_get_clean();
+    return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
   }
   
 	/**
