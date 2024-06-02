@@ -98,6 +98,26 @@ class RDWT_PwdGen extends RDWT_Settings {
       array( $this, 'validate_settings')
     );
 
+    // Overview section's field
+    ob_start();
+    require_once RDWT_DIR . 'assets/partials/display-overview-pwdgen.php';
+    $html = str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+
+    add_settings_field(
+      'pwdgen_overview',
+      __( 'Password Generator', RDWT_DOMAIN ),
+      array( $this, 'render_settings_field' ),
+      'rdwt',
+      'rdwt-settings-overview',
+      array(
+        'html' => $html,
+        'id' => 'pwdgen_overview',
+        'page' => 'rdwt_overview',
+        'type' => 'raw',
+      )
+    );
+
+    // Settings section and fields
     add_settings_section(
       'rdwt-settings-pwdgen-section',
       __( 'Password Generator', RDWT_DOMAIN ),
@@ -281,7 +301,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
     ob_start();
     require_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
-    return ob_get_clean();
+    return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
   }
   
 	/**
