@@ -85,6 +85,26 @@ class RDWT_GA extends RDWT_Settings {
 			array( $this, 'validate_settings')
 		);
 
+    // Overview section's field
+    ob_start();
+    require_once RDWT_DIR . 'assets/partials/display-overview-ga.php';
+    $html = str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+
+    add_settings_field(
+      'ga_overview',
+      __( 'Google Analytics', RDWT_DOMAIN ),
+      array( $this, 'render_settings_field' ),
+      'rdwt',
+      'rdwt-settings-overview',
+      array(
+        'html' => $html,
+        'id' => 'ga_overview',
+        'page' => 'rdwt_overview',
+        'type' => 'raw',
+      )
+    );
+
+		// Settings section and fields
 		add_settings_section(
 			'rdwt-settings-ga-section',
 			__( 'Google Analytics', RDWT_DOMAIN ),
