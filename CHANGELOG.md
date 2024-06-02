@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+
+* Feat: settings link on plugins page
+
 ## v1.1.2
 
 * Version bump
