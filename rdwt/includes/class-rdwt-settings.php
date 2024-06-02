@@ -70,6 +70,8 @@ class RDWT_Settings {
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'add_settings' ) );
+
+		add_filter( 'plugin_action_links_' . RDWT_BASE, array( $this, 'plugin_action_links' ) );
 	}
 
 	/**
@@ -198,6 +200,23 @@ class RDWT_Settings {
 		if ( ! get_option( $this->option ) ) {
 			update_option( $this->option, $this->get_default_options() );
 		}
+	}
+
+	/**
+	 * Plugin action links callback.
+	 *
+	 * @access	public
+	 * @return	array
+	 * @since		1.2.0
+	 */
+	public function plugin_action_links( $links ) {
+		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt' ), __( 'Overview', RDWT_DOMAIN ) );
+		array_unshift( $links, $settings_link );
+
+		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt-settings' ), __( 'Settings', RDWT_DOMAIN ) );
+		array_unshift( $links, $settings_link );
+
+		return $links;
 	}
 
 	/**

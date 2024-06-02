@@ -12,7 +12,7 @@
  * Plugin Name:       Rdev WP Tools
  * Plugin URI:        https://github.com/accesspc/rdev-wp-tools
  * Description:       RDev bloat-less wordpress tools.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Robertas Reiciunas
@@ -26,13 +26,21 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Current plugin version.
+ * Global definitions for the plugin
  */
+// rdwt/rdwt.php
+define( 'RDWT_BASE', plugin_basename( __FILE__ ) );
+
+// /var/www/html/wp-content/plugins/rdwt/
 define( 'RDWT_DIR', plugin_dir_path( __FILE__ ) );
+
+// rdwt
 define( 'RDWT_DOMAIN', 'rdwt' );
 define( 'RDWT_SLUG', basename( dirname( __FILE__ ) ) );
+
+// https://reiciunas.dev/wp-content/plugins/rdwt/
 define( 'RDWT_URL', plugin_dir_url( __FILE__ ) );
-define( 'RDWT_VERSION', '1.1.2' );
+define( 'RDWT_VERSION', '1.2.0' );
 
 require_once 'includes/class-rdwt.php';
 
