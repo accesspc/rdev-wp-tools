@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Google Analytics functionality of the plugin
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- * 
+ *
  * @since      1.0.0
  * @package    RDWT
  * @subpackage RDWT/admin
@@ -16,7 +16,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * RDWT option name.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -25,7 +25,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * RDWT Options
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			array
@@ -38,7 +38,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * RDWT Version Number.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -47,7 +47,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * Main construct function.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -60,7 +60,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * Add Settings hooks.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -73,7 +73,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * Register settings / options.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -180,7 +180,7 @@ class RDWT_GA extends RDWT_Settings {
 
 	/**
 	 * GA: Init function to render/or not the tracking code
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0

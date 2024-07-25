@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * The public-facing functionality of the plugin.
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- * 
+ *
  * @since      1.0.0
  * @package    RDWT
  * @subpackage RDWT/public
@@ -16,7 +16,7 @@ class RDWT_Public {
 
 	/**
 	 * RDWT Version Number
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -25,7 +25,7 @@ class RDWT_Public {
 
 	/**
 	 * Main construct function
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -38,7 +38,7 @@ class RDWT_Public {
 
 	/**
 	 * Add Settings hooks.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0

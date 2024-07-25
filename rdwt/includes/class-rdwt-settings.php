@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * The admin-settings specific functionality of the plugin.
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- * 
+ *
  * @since      1.0.0
  * @package    RDWT
  * @subpackage RDWT/admin
@@ -16,7 +16,7 @@ class RDWT_Settings {
 
 	/**
 	 * RDWT option name.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -25,7 +25,7 @@ class RDWT_Settings {
 
 	/**
 	 * RDWT Options
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			array
@@ -36,7 +36,7 @@ class RDWT_Settings {
 
 	/**
 	 * RDWT Version Number.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -45,7 +45,7 @@ class RDWT_Settings {
 
 	/**
 	 * Main construct function.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -59,7 +59,7 @@ class RDWT_Settings {
 
 	/**
 	 * Add Settings hooks.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -76,7 +76,7 @@ class RDWT_Settings {
 
 	/**
 	 * Add admin menu for RDWT.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -108,7 +108,7 @@ class RDWT_Settings {
 
 	/**
 	 * Register settings / options.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -133,7 +133,7 @@ class RDWT_Settings {
 
 	/**
 	 * Display: admin overview page.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -144,7 +144,7 @@ class RDWT_Settings {
 
 	/**
 	 * Display: admin settings page.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -190,7 +190,7 @@ class RDWT_Settings {
 
 	/**
 	 * Init
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -250,12 +250,12 @@ class RDWT_Settings {
 		switch ($type) {
 			case 'checkbox':
 				?>
-				<input 
-					type='checkbox' 
-					id='<?php echo esc_attr( $args['id'] ); ?>' 
-					name='<?php echo esc_attr( $name ); ?>' 
-					value='1' 
-					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
+				<input
+					type='checkbox'
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $name ); ?>'
+					value='1'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
 					<?php if ( isset( $args['value'] ) ) checked( '1', $args['value'] ); ?>
 				/>
 				<?php
@@ -266,12 +266,12 @@ class RDWT_Settings {
 				foreach( $options as $option ) {
 					?>
 					<div class="rdwt-radio">
-						<input 
-							type='radio' 
-							id='<?php echo esc_attr( $args['id'] ); ?>' 
-							name='<?php echo esc_attr( $name ); ?>' 
-							value='<?php echo esc_attr( $option['value'] ); ?>' 
-							class='<?php echo implode( ' ', $args['classes'] ); ?>' 
+						<input
+							type='radio'
+							id='<?php echo esc_attr( $args['id'] ); ?>'
+							name='<?php echo esc_attr( $name ); ?>'
+							value='<?php echo esc_attr( $option['value'] ); ?>'
+							class='<?php echo implode( ' ', $args['classes'] ); ?>'
 							<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?>
 						/>
 						<?php echo wp_kses_post( $option['desc'] ); ?>
@@ -279,7 +279,7 @@ class RDWT_Settings {
 					<?php
 				}
 				break;
-			
+
 			case 'range':
 
 				?>
@@ -288,33 +288,33 @@ class RDWT_Settings {
 					id='<?php echo esc_attr( $args['id'] ); ?>'
 					name='<?php echo esc_attr( $name ); ?>'
 					value='<?php echo esc_attr( $value ); ?>'
-					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
-					min='<?php echo esc_attr( $args[ 'min' ] ); ?>' 
-					max='<?php echo esc_attr( $max ); ?>' 
-					step='<?php echo esc_attr( $step ); ?>' 
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+					min='<?php echo esc_attr( $args[ 'min' ] ); ?>'
+					max='<?php echo esc_attr( $max ); ?>'
+					step='<?php echo esc_attr( $step ); ?>'
 				/>
 				<?php
 
 				break;
-			
+
 			case 'raw':
 
 					if ( ! isset( $html ) ) {
 						break;
 					}
-	
+
 					echo wp_kses_post( $html );
 					break;
-	
+
 			case 'text':
 
 				?>
-				<input 
-					type='text' 
+				<input
+					type='text'
 					id='<?php echo esc_attr( $args['id'] ); ?>'
-					name='<?php echo esc_attr( $name ); ?>' 
-					value='<?php echo esc_attr( $value ); ?>' 
-					class='<?php echo implode( ' ', $args['classes'] ); ?>' 
+					name='<?php echo esc_attr( $name ); ?>'
+					value='<?php echo esc_attr( $value ); ?>'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
 				/>
 				<?php
 				break;

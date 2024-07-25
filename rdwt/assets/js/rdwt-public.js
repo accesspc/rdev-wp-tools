@@ -14,7 +14,7 @@
 			const symbols = '!@#$%^&*(){}[]=<>/,.';
 
 			// Init pwd, clear pwdgen-list
-			var pwd;
+			let pwd;
 			$('.pwdgen-list').html('');
 
 			// Generate pwd

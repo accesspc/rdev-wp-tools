@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * This is the main class of the plugin
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
  *
@@ -16,7 +16,7 @@ class RDWT {
 
 	/**
 	 * RDWT Google Analytics Object
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.1.0
 	 * @var			RDWT_GA
@@ -25,7 +25,7 @@ class RDWT {
 
 	/**
 	 * RDWT Internationalization Object
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.0.0
 	 * @var			RDWT_i18n
@@ -34,7 +34,7 @@ class RDWT {
 
 	/**
 	 * RDWT Public Object
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.0.0
 	 * @var			RDWT_Public
@@ -43,7 +43,7 @@ class RDWT {
 
 	/**
 	 * RDWT Password Generator Object
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.1.0
 	 * @var			RDWT_PwdGen
@@ -52,7 +52,7 @@ class RDWT {
 
 	/**
 	 * RDWT Settings Object
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.0.0
 	 * @var			RDWT_Settings
@@ -61,7 +61,7 @@ class RDWT {
 
 	/**
 	 * RDWT Version Number
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.0.0
 	 * @var			string
@@ -70,7 +70,7 @@ class RDWT {
 
 	/**
 	 * Main construct function
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -84,7 +84,7 @@ class RDWT {
 
 	/**
 	 * Add hooks and filters
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -95,7 +95,7 @@ class RDWT {
 
 	/**
 	 * Load file dependencies
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.0.0
@@ -109,7 +109,7 @@ class RDWT {
 
 		require_once RDWT_DIR . 'includes/class-rdwt-ga.php';
 		$this->ga = new RDWT_GA();
-		
+
 		require_once RDWT_DIR . 'includes/class-rdwt-pwdgen.php';
 		$this->pwdgen = new RDWT_PwdGen();
 

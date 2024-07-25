@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Password Generator functionality of the plugin
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- * 
+ *
  * @since      1.1.0
  * @package    RDWT
  * @subpackage RDWT/admin
@@ -16,7 +16,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * RDWT option name.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.1.0
 	 * @var			string
@@ -25,7 +25,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * RDWT Options
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.1.0
 	 * @var			array
@@ -42,7 +42,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * RDWT PwdGen Shortcode tag.
-	 * 
+	 *
 	 * @access	public
 	 * @since		1.1.0
 	 * @var			string
@@ -51,7 +51,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * RDWT Version Number.
-	 * 
+	 *
 	 * @access	protected
 	 * @since		1.1.0
 	 * @var			string
@@ -60,7 +60,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * Main construct function.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.1.0
@@ -73,7 +73,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * Add Settings hooks.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.1.0
@@ -86,7 +86,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * Register settings / options.
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.1.0
@@ -249,7 +249,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
 	/**
 	 * PwdGen: Init function
-	 * 
+	 *
 	 * @access	public
 	 * @return	void
 	 * @since		1.1.0
@@ -280,7 +280,7 @@ class RDWT_PwdGen extends RDWT_Settings {
 
   /**
    * PwdGen: Render shortcode block
-   * 
+   *
    * @access  public
    * @return  string
    * @since   1.1.0
@@ -303,7 +303,7 @@ class RDWT_PwdGen extends RDWT_Settings {
     require_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
     return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
   }
-  
+
 	/**
 	 * Validate settings / options.
 	 *

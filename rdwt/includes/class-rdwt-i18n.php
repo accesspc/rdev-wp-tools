@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Define the internationalization functionality
- * 
+ *
  * @author     Robertas Reiciunas <accesspc@gmail.com>
  * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- * 
+ *
  * @since      1.0.0
  * @package    RDWT
  * @subpackage RDWT/includes

@@ -49,7 +49,7 @@ Add some useful tools to your Wordpress site.
 * Feat: Admin overview section definition
 * Fix: Password Generator shortcode html cleanup
 
-= 1.1.0 = 
+= 1.1.0 =
 * Feat: Password Generator
 
 = 1.0.0 =

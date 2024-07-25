@@ -1,6 +1,8 @@
 <?php
 
-if ( ! function_exists( 'add_action' ) ) die() ; 
+if ( ! function_exists( 'add_action' ) ) {
+  die();
+}
 
 ?>
 
@@ -15,7 +17,6 @@ if ( ! function_exists( 'add_action' ) ) die() ;
     <?php
     settings_fields( 'rdwt_plugin' );
     do_settings_sections( 'rdwt' );
-    //submit_button(); 
     ?>
 
   </form>
