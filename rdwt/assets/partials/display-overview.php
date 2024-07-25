@@ -10,7 +10,7 @@ if ( ! function_exists( 'add_action' ) ) {
 
   <h1 class="rdwt-title"><?php esc_html_e( 'Rdev WP Tools', RDWT_DOMAIN ); ?></h1>
   <?php settings_errors(); ?>
-  <h2 class="nav-tab-wrapper"></h2>
+  <h2 class="nav-tab-wrapper">&nbsp;</h2>
 
   <form method="post" action="options.php">
 

@@ -12,4 +12,8 @@
         <li>Symbols: <code>!@#$%^&*(){}[]=&lt;&gt;/,.</code></li>
     </li>
   </ul>
+  <p>
+    Shortcode to insert anywhere on the site:
+    <code>[rdwt_pwdgen]</code>
+  </p>
 </div>

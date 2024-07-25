@@ -252,11 +252,11 @@ class RDWT_Settings {
 				?>
 				<input
 					type='checkbox'
-					id='<?php echo esc_attr( $args['id'] ); ?>'
+					id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
 					name='<?php echo esc_attr( $name ); ?>'
 					value='1'
-					class='<?php echo implode( ' ', $args['classes'] ); ?>'
-					<?php if ( isset( $args['value'] ) ) checked( '1', $args['value'] ); ?>
+					class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
+					<?php if ( isset( $args[ 'value' ] ) ) checked( '1', $args[ 'value' ] ); ?>
 				/>
 				<?php
 				break;
@@ -268,13 +268,13 @@ class RDWT_Settings {
 					<div class="rdwt-radio">
 						<input
 							type='radio'
-							id='<?php echo esc_attr( $args['id'] ); ?>'
+							id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
 							name='<?php echo esc_attr( $name ); ?>'
-							value='<?php echo esc_attr( $option['value'] ); ?>'
-							class='<?php echo implode( ' ', $args['classes'] ); ?>'
-							<?php checked( esc_attr( $option['value'] ), $args['value'] ); ?>
+							value='<?php echo esc_attr( $option[ 'value' ] ); ?>'
+							class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
+							<?php checked( esc_attr( $option[ 'value' ] ), $args[ 'value' ] ); ?>
 						/>
-						<?php echo wp_kses_post( $option['desc'] ); ?>
+						<?php echo wp_kses_post( $option[ 'desc' ] ); ?>
 					</div>
 					<?php
 				}
@@ -285,10 +285,10 @@ class RDWT_Settings {
 				?>
 				<input
 					type='range'
-					id='<?php echo esc_attr( $args['id'] ); ?>'
+					id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
 					name='<?php echo esc_attr( $name ); ?>'
 					value='<?php echo esc_attr( $value ); ?>'
-					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+					class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
 					min='<?php echo esc_attr( $args[ 'min' ] ); ?>'
 					max='<?php echo esc_attr( $max ); ?>'
 					step='<?php echo esc_attr( $step ); ?>'
@@ -311,10 +311,10 @@ class RDWT_Settings {
 				?>
 				<input
 					type='text'
-					id='<?php echo esc_attr( $args['id'] ); ?>'
+					id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
 					name='<?php echo esc_attr( $name ); ?>'
 					value='<?php echo esc_attr( $value ); ?>'
-					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+					class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
 				/>
 				<?php
 				break;
@@ -348,13 +348,13 @@ class RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	private function set_name_and_value( &$args ) {
-		if ( ! isset( $args['name'] ) ) {
-			$args['name'] = sprintf( '%s[%s]', esc_attr( $args['page'] ), esc_attr( $args['id'] ) );
+		if ( ! isset( $args[ 'name' ] ) ) {
+			$args[ 'name' ] = sprintf( '%s[%s]', esc_attr( $args[ 'page' ] ), esc_attr( $args[ 'id' ] ) );
 		}
 
-		if ( ! isset( $args['value'] ) ) {
+		if ( ! isset( $args[ 'value' ] ) ) {
 			$options = get_option( $this->option, $this->get_default_options() );
-			$args['value'] = $options[ $args['id'] ];
+			$args[ 'value' ] = $options[ $args[ 'id' ] ];
 		}
 	}
 

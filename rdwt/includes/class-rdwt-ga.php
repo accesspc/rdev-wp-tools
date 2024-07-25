@@ -186,10 +186,7 @@ class RDWT_GA extends RDWT_Settings {
 	 * @since		1.0.0
 	 */
 	public function init() {
-		// If no options exist, create them
-		if ( ! get_option( $this->option ) ) {
-			update_option( $this->option, $this->get_default_options() );
-		}
+		parent::init();
 
 		$options = get_option( $this->option, $this->get_default_options() );
 

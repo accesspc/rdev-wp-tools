@@ -33,4 +33,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // delete options
-delete_option( 'rdwt_options' );
+delete_option( 'rdwt' );
+delete_option( 'rdwt_ga' );
+delete_option( 'rdwt_pwdgen' );
