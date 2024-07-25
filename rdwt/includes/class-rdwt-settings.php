@@ -258,7 +258,11 @@ class RDWT_Settings {
 					name='<?php echo esc_attr( $name ); ?>'
 					value='1'
 					class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
-					<?php if ( isset( $args[ 'value' ] ) ) checked( '1', $args[ 'value' ] ); ?>
+					<?php
+						if ( isset( $args[ 'value' ] ) ) {
+							checked( '1', $args[ 'value' ] );
+						}
+					?>
 				/>
 				<?php
 				break;
@@ -319,6 +323,9 @@ class RDWT_Settings {
 					class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
 				/>
 				<?php
+				break;
+			
+			default:
 				break;
 		}
 
