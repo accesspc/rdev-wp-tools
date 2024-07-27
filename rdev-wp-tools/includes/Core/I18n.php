@@ -10,7 +10,7 @@
 namespace Rdev\WpTools\Core;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
@@ -20,18 +20,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class I18n {
 
-	/**
-	 * Load plugin text domain for translations
-	 *
-	 * @access  public
-	 * @return  void
-	 * @since   1.0.0
-	 */
-	public static function load_plugin_textdomain(): void {
-		load_plugin_textdomain(
-			RDWT_DOMAIN,
-			false,
-			dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
-		);
-	}
+    /**
+     * Load plugin text domain for translations
+     *
+     * @access  public
+     * @return  void
+     * @since   1.0.0
+     */
+    public static function load_plugin_textdomain(): void {
+        load_plugin_textdomain(
+            RDWT_DOMAIN,
+            false,
+            dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
+        );
+    }
 }
