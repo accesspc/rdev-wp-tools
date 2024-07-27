@@ -14,8 +14,8 @@ namespace Rdev\WpTools;
 
 use Rdev\WpTools\Admin\Settings;
 use Rdev\WpTools\Core\UI;
-use Rdev\WpTools\Modules\GA;
-use Rdev\WpTools\Modules\PwdGen;
+use Rdev\WpTools\Module\GA;
+use Rdev\WpTools\Module\PwdGen;
 
 /**
  * Class: WpTools
@@ -35,7 +35,7 @@ class WpTools
      *
      * @access public
      * @since  1.1.0
-     * @var    \Rdev\WpTools\Modules\GA
+     * @var    \Rdev\WpTools\Module\GA
      */
     public GA $ga;
 
@@ -44,7 +44,7 @@ class WpTools
      *
      * @access public
      * @since  1.1.0
-     * @var    \Rdev\WpTools\Modules\PwdGen
+     * @var    \Rdev\WpTools\Module\PwdGen
      */
     public PwdGen $pwdgen;
 

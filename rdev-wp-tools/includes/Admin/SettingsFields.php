@@ -59,7 +59,7 @@ class SettingsFields
             id='<?php echo esc_attr($args['id']); ?>'
             name='<?php echo esc_attr($args['name']); ?>'
             value='1'
-            class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
+            class='<?php echo implode(' ', $args['classes']); ?>'
             <?php
             if (isset($args['value']) ) {
                 checked('1', $args['value']);
@@ -88,7 +88,7 @@ class SettingsFields
                 id='<?php echo esc_attr($args['id']); ?>'
                 name='<?php echo esc_attr($args['name']); ?>'
                 value='<?php echo esc_attr($option['value']); ?>'
-                class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
+                class='<?php echo implode(' ', $args['classes']); ?>'
             <?php
                 checked(esc_attr($option['value']), $args['value']);
             ?>
@@ -118,7 +118,7 @@ class SettingsFields
             id='<?php echo esc_attr($args['id']); ?>'
             name='<?php echo esc_attr($args['name']); ?>'
             value='<?php echo esc_attr($args['value']); ?>'
-            class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
+            class='<?php echo implode(' ', $args['classes']); ?>'
             min='<?php echo esc_attr($args['min']); ?>'
             max='<?php echo esc_attr($args['max']); ?>'
             step='<?php echo esc_attr($args['step']); ?>'
@@ -143,7 +143,7 @@ class SettingsFields
             id='<?php echo esc_attr($args['id']); ?>'
             name='<?php echo esc_attr($args['name']); ?>'
             value='<?php echo esc_attr($args['value']); ?>'
-            class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
+            class='<?php echo implode(' ', $args['classes']); ?>'
         />
         <?php
     }

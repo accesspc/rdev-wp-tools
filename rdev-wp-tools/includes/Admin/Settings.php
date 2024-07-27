@@ -99,7 +99,7 @@ class Settings
             esc_html__('Rdev WP Tools', 'rdwt'),
             'manage_options',
             RDWT_SLUG,
-            array( $this, 'displayAdminOverview' ),
+            array( 'Rdev\WpTools\View\Admin', 'renderOverview' ),
             '',
             80
         );
@@ -110,7 +110,7 @@ class Settings
             __('Settings', 'rdwt'),
             'manage_options',
             RDWT_SLUG . '-settings',
-            array( $this, 'displayAdminSettings' ),
+            array( 'Rdev\WpTools\View\Admin', 'renderSettings' ),
         );
     }
 
@@ -138,32 +138,6 @@ class Settings
                 'after_section' => '<hr/>',
             )
         );
-    }
-
-    /**
-     * Display: admin overview page.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function displayAdminOverview(): void
-    {
-        include_once RDWT_DIR . 'assets/partials/display-overview.php';
-    }
-
-    /**
-     * Display: admin settings page.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function displayAdminSettings(): void
-    {
-        $options = get_option($this->option, $this->getDefaultOptions());
-
-        include_once RDWT_DIR . 'assets/partials/display-settings.php';
     }
 
     /**
@@ -267,7 +241,8 @@ class Settings
     public function renderSectionOverview(): void
     {
         esc_html_e(
-            'Rdev WP Tools is a collection of tools in a single bloat-less WordPress plugin.',
+            'Rdev WP Tools is a collection of tools in a single ' .
+            'bloat-less WordPress plugin.',
             'rdwt'
         );
     }
@@ -335,7 +310,7 @@ class Settings
                         $line = sprintf('<div>%s</div>', wp_kses_post($line));
                     }
                 );
-                echo esc_attr(implode('', $args['desc']));
+                echo implode('', $args['desc']);
 
             } else {
                 echo wp_kses_post($args['desc']);

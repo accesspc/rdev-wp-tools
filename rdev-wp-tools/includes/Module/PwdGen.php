@@ -3,16 +3,17 @@
  * Password Generator
  * php version 7.3.0
  *
- * @category Modules
- * @package  Rdev\WpTools\Modules
+ * @category Module
+ * @package  Rdev\WpTools\Module
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
-namespace Rdev\WpTools\Modules;
+namespace Rdev\WpTools\Module;
 
 use Rdev\WpTools\Admin\Settings;
+use Rdev\WpTools\View\PwdGen as ViewPwdGen;
 
 if (! defined('ABSPATH') ) {
     exit;
@@ -21,8 +22,8 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: PwdGen
  *
- * @category Modules
- * @package  Rdev\WpTools\Modules
+ * @category Module
+ * @package  Rdev\WpTools\Module
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools
@@ -107,11 +108,6 @@ class PwdGen extends Settings
             array( $this, 'validateSettings' )
         );
 
-        // Overview section's field.
-        ob_start();
-        include_once RDWT_DIR . 'assets/partials/display-overview-pwdgen.php';
-        $html = str_replace(array( "\r", "\n" ), '', ob_get_clean());
-
         add_settings_field(
             'pwdgen_overview',
             __('Password Generator', 'rdwt'),
@@ -119,7 +115,7 @@ class PwdGen extends Settings
             'rdwt',
             'rdwt-settings-overview',
             array(
-                'html' => $html,
+                'html' => ViewPwdGen::getOverview(),
                 'id'   => 'pwdgen_overview',
                 'page' => 'rdwt_overview',
                 'type' => 'raw',
@@ -314,9 +310,7 @@ class PwdGen extends Settings
         // ), $atts, $this->shortcodeTag
         // );
 
-        ob_start();
-        include_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
-        return str_replace(array( "\r", "\n" ), '', ob_get_clean());
+        return ViewPwdGen::getShortcode($options);
     }
 
     /**

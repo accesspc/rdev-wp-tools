@@ -3,16 +3,17 @@
  * Google Analytics
  * php version 7.3.0
  *
- * @category Modules
- * @package  Rdev\WpTools\Modules
+ * @category Module
+ * @package  Rdev\WpTools\Module
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
-namespace Rdev\WpTools\Modules;
+namespace Rdev\WpTools\Module;
 
 use Rdev\WpTools\Admin\Settings;
+use Rdev\WpTools\View\GA as ViewGA;
 
 if (! defined('ABSPATH') ) {
     exit;
@@ -21,8 +22,8 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: GA
  *
- * @category Modules
- * @package  Rdev\WpTools\Modules
+ * @category Module
+ * @package  Rdev\WpTools\Module
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools
@@ -94,11 +95,6 @@ class GA extends Settings
             array( $this, 'validateSettings' )
         );
 
-        // Overview section's field.
-        ob_start();
-        include_once RDWT_DIR . 'assets/partials/display-overview-ga.php';
-        $html = str_replace(array( "\r", "\n" ), '', ob_get_clean());
-
         add_settings_field(
             'ga_overview',
             __('Google Analytics', 'rdwt'),
@@ -106,7 +102,7 @@ class GA extends Settings
             'rdwt',
             'rdwt-settings-overview',
             array(
-                'html' => $html,
+                'html' => ViewGA::getOverview(),
                 'id'   => 'ga_overview',
                 'page' => 'rdwt_overview',
                 'type' => 'raw',
@@ -152,8 +148,18 @@ class GA extends Settings
             array(
                 'class'     => 'rdwt-setting',
                 'desc'      => array(
-                    __('Enter your Google Tracking ID. Note: the Tracking ID also may be referred to as Tag ID, Measurement ID, or Property ID.', 'rdwt'),
-                    __('Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager (GTM-XXXXXXXXX) currently is not supported.', 'rdwt'),
+                    __(
+                        'Enter your Google Tracking ID. Note: the Tracking ID ' .
+                        'also may be referred to as Tag ID, Measurement ID, or ' .
+                        'Property ID.',
+                        'rdwt'
+                    ),
+                    __(
+                        'Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, ' .
+                        'GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager ' .
+                        '(GTM-XXXXXXXXX) currently is not supported.',
+                        'rdwt'
+                    ),
                 ),
                 'id'        => 'ga_id',
                 'label_for' => 'ga_id',
@@ -171,21 +177,28 @@ class GA extends Settings
             'rdwt-settings-ga-section',
             array(
                 'class'     => 'rdwt-setting',
-                'desc'      => __('Tip: Google recommends including the tracking code in the page head, but including it in the footer can benefit page performance. If in doubt, go with the head option.', 'rdwt'),
+                'desc'      => __(
+                    'Tip: Google recommends including the tracking code in the ' .
+                    'page head, but including it in the footer can benefit page ' .
+                    'performance. If in doubt, go with the head option.',
+                    'rdwt'
+                ),
                 'id'        => 'ga_location',
                 'label_for' => 'ga_location',
                 'options'   => array(
                     array(
                         'value' => 'header',
                         'desc'  => __(
-                            'Include tracking code in page head (via <code>wp_head</code>)',
+                            'Include tracking code in page head ' .
+                            '(via <code>wp_head</code>)',
                             'rdwt'
                         ),
                     ),
                     array(
                         'value' => 'footer',
                         'desc'  => __(
-                            'Include tracking code in page footer (via <code>wp_footer</code>)',
+                            'Include tracking code in page footer ' .
+                            '(via <code>wp_footer</code>)',
                             'rdwt'
                         ),
                     ),
@@ -211,7 +224,8 @@ class GA extends Settings
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
-            $location = isset($options['ga_location']) ? $options['ga_location'] : 'header';
+            $location = isset($options['ga_location']) 
+                ? $options['ga_location'] : 'header';
 
             if ('header' === $location ) {
                 add_action('wp_head', array( &$this, 'renderTrackingCode' ));
@@ -244,7 +258,7 @@ class GA extends Settings
     {
         $options = get_option($this->option, $this->getDefaultOptions());
 
-        include_once RDWT_DIR . 'assets/partials/ga-code.php';
+        ViewGA::renderScript($options);
     }
 
     /**
@@ -269,7 +283,8 @@ class GA extends Settings
                     'rdwt'
                 ) . ' <code>GTM-</code> ';
                 $message .= esc_html__(
-                    '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.',
+                    '(for Google Tag Manager), which is not supported. ' .
+                    'Please try again with a supported tracking code.',
                     'rdwt'
                 );
 
