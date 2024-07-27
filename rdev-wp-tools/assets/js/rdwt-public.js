@@ -34,16 +34,20 @@
 
                         for ( let i = 0; i < length; i ++ ) {
                             if (lower) {
-                                  generatedPassword += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+                                const val = Math.random();
+                                  generatedPassword += String.fromCharCode(Math.floor(val * 26) + 97);
                             }
                             if (upper) {
-                                generatedPassword += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+                                const val = Math.random();
+                                generatedPassword += String.fromCharCode(Math.floor(val * 26) + 65);
                             }
                             if (number) {
-                                 generatedPassword += String.fromCharCode(Math.floor(Math.random() * 10) + 48);
+                                const val = Math.random();
+                                 generatedPassword += String.fromCharCode(Math.floor(val * 10) + 48);
                             }
                             if (symbol) {
-                                     generatedPassword += symbols[Math.floor(Math.random() * symbols.length)];
+                                const val = Math.random();
+                                generatedPassword += symbols[Math.floor(val * symbols.length)];
                             }
                         }
 
