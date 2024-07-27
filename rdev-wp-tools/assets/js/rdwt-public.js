@@ -24,11 +24,11 @@
 					'<div class="pwdgen-item"><code>' + $('<div/>').text(pwd) .html() + '</code></div>'
 				);
 			}
-			
+
 			// Defined functions
 			function generatePassword(lower, upper, number, symbol, length) {
 				let generatedPassword = '';
-				
+
 				for ( let i = 0; i < length; i ++ ) {
 					if (lower) {
 						generatedPassword += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
@@ -38,7 +38,7 @@
 					}
 					if (number) {
 						generatedPassword += String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-					} 
+					}
 					if (symbol) {
 						generatedPassword += symbols[Math.floor(Math.random() * symbols.length)];
 					}
