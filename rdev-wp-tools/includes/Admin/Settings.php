@@ -258,7 +258,7 @@ class Settings
      */
     public function renderSettingsField( $args ): void
     {
-        $this->_setNameAndValue($args);
+        $this->setNameAndValue($args);
 
         $args = wp_parse_args($args, array( 'classes' => array() ));
 
@@ -324,11 +324,11 @@ class Settings
      *
      * @param array $args Key-value pairs.
      *
-     * @access private
+     * @access public
      * @return void
      * @since  1.0.0
      */
-    private function _setNameAndValue( &$args ): void
+    public function setNameAndValue( &$args ): void
     {
         if (! isset($args['name']) ) {
             $args['name'] = sprintf(
