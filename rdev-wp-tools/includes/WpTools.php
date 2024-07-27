@@ -89,10 +89,10 @@ class WpTools
     public function addHooks(): void
     {
         add_action(
-            'plugins_loaded', 
-            array( 
-                '\Rdev\WpTools\Core\I18n', 
-                'loadPluginTextdomain' 
+            'plugins_loaded',
+            array(
+                '\Rdev\WpTools\Core\I18n',
+                'loadPluginTextdomain'
             )
         );
     }

@@ -64,10 +64,10 @@ class UI
     public function enqueueStyles()
     {
         wp_enqueue_style(
-            RDWT_SLUG, 
-            RDWT_URL . 'assets/css/rdwt-public.css', 
-            array(), 
-            RDWT_VERSION, 
+            RDWT_SLUG,
+            RDWT_URL . 'assets/css/rdwt-public.css',
+            array(),
+            RDWT_VERSION,
             'all'
         );
     }
@@ -82,10 +82,10 @@ class UI
     public function enqueueScripts()
     {
         wp_enqueue_script(
-            RDWT_SLUG, 
-            RDWT_URL . 'assets/js/rdwt-public.js', 
-            array( 'jquery' ), 
-            RDWT_VERSION, 
+            RDWT_SLUG,
+            RDWT_URL . 'assets/js/rdwt-public.js',
+            array( 'jquery' ),
+            RDWT_VERSION,
             false
         );
     }

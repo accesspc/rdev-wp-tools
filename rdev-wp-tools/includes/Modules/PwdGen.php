@@ -149,7 +149,7 @@ class PwdGen extends Settings
                 'label_for' => 'pwdgen_enable',
                 'page'      => 'rdwt_pwdgen',
                 'sub_desc'  => __(
-                    'Check to enable Password Generator shortcode', 
+                    'Check to enable Password Generator shortcode',
                     'rdwt'
                 ),
                 'type'      => 'checkbox',
@@ -291,7 +291,7 @@ class PwdGen extends Settings
 
     /**
      * PwdGen: Render shortcode block
-     * 
+     *
      * @param array  $atts    Shortcode attributes.
      * @param string $content Shortcode content.
      *
@@ -321,7 +321,7 @@ class PwdGen extends Settings
 
     /**
      * Validate settings / options.
-     * 
+     *
      * @param array $input Key-value pairs.
      *
      * @access public

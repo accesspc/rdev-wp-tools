@@ -76,7 +76,7 @@ class Settings
         add_action('admin_init', array( $this, 'addSettings' ));
 
         add_filter(
-            'plugin_action_links_' . RDWT_BASE, 
+            'plugin_action_links_' . RDWT_BASE,
             array($this, 'pluginActionLinks')
         );
     }
@@ -176,10 +176,10 @@ class Settings
     public function enqueueScripts(): void
     {
         wp_enqueue_script(
-            RDWT_SLUG, 
-            RDWT_URL . 'assets/js/rdwt-admin.js', 
-            array( 'jquery' ), 
-            RDWT_VERSION, 
+            RDWT_SLUG,
+            RDWT_URL . 'assets/js/rdwt-admin.js',
+            array( 'jquery' ),
+            RDWT_VERSION,
             false
         );
     }
@@ -194,10 +194,10 @@ class Settings
     public function enqueueStyles(): void
     {
         wp_enqueue_style(
-            RDWT_SLUG, 
-            RDWT_URL . 'assets/css/rdwt-admin.css', 
-            array(), 
-            RDWT_VERSION, 
+            RDWT_SLUG,
+            RDWT_URL . 'assets/css/rdwt-admin.css',
+            array(),
+            RDWT_VERSION,
             'all'
         );
     }
@@ -231,7 +231,7 @@ class Settings
 
     /**
      * Plugin action links callback.
-     * 
+     *
      * @param array $links Action links.
      *
      * @access public
@@ -242,14 +242,14 @@ class Settings
     {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url('admin.php?page=rdwt'), 
+            admin_url('admin.php?page=rdwt'),
             __('Overview', 'rdwt')
         );
         array_unshift($links, $settings_link);
 
         $settings_link = sprintf(
-            '<a href="%s">%s</a>', 
-            admin_url('admin.php?page=rdwt-settings'), 
+            '<a href="%s">%s</a>',
+            admin_url('admin.php?page=rdwt-settings'),
             __('Settings', 'rdwt')
         );
         array_unshift($links, $settings_link);
@@ -274,7 +274,7 @@ class Settings
 
     /**
      * Settings field callback.
-     * 
+     *
      * @param array $args Settings arguments.
      *
      * @access public
@@ -397,7 +397,7 @@ class Settings
 
     /**
      * Set name and value from settings / options.
-     * 
+     *
      * @param array $args Key-value pairs.
      *
      * @access private
@@ -408,8 +408,8 @@ class Settings
     {
         if (! isset($args['name']) ) {
             $args['name'] = sprintf(
-                '%s[%s]', 
-                esc_attr($args['page']), 
+                '%s[%s]',
+                esc_attr($args['page']),
                 esc_attr($args['id'])
             );
         }
@@ -423,7 +423,7 @@ class Settings
 
     /**
      * Validate settings / options.
-     * 
+     *
      * @param array $input array to validate.
      *
      * @access public

@@ -136,7 +136,7 @@ class GA extends Settings
                 'label_for' => 'ga_enable',
                 'page'      => 'rdwt_ga',
                 'sub_desc'  => __(
-                    'Check to place the tracking code on website', 
+                    'Check to place the tracking code on website',
                     'rdwt'
                 ),
                 'type'      => 'checkbox',
@@ -178,14 +178,14 @@ class GA extends Settings
                     array(
                         'value' => 'header',
                         'desc'  => __(
-                            'Include tracking code in page head (via <code>wp_head</code>)', 
+                            'Include tracking code in page head (via <code>wp_head</code>)',
                             'rdwt'
                         ),
                     ),
                     array(
                         'value' => 'footer',
                         'desc'  => __(
-                            'Include tracking code in page footer (via <code>wp_footer</code>)', 
+                            'Include tracking code in page footer (via <code>wp_footer</code>)',
                             'rdwt'
                         ),
                     ),
@@ -251,7 +251,7 @@ class GA extends Settings
      * Validate settings / options.
      *
      * @param array $input Key-value array.
-     * 
+     *
      * @access public
      * @return array
      * @since  1.0.0
@@ -265,18 +265,18 @@ class GA extends Settings
                 $input['ga_id'] = '';
 
                 $message  = esc_html__(
-                    'Error: your tracking code begins with', 
+                    'Error: your tracking code begins with',
                     'rdwt'
                 ) . ' <code>GTM-</code> ';
                 $message .= esc_html__(
-                    '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 
+                    '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.',
                     'rdwt'
                 );
 
                 add_settings_error(
-                    'ga_id', 
-                    'invalid-tracking-code', 
-                    $message, 
+                    'ga_id',
+                    'invalid-tracking-code',
+                    $message,
                     'error'
                 );
             }
