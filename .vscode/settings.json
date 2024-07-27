@@ -1,9 +1,0 @@
-{
-    "editor.tabSize": 4,
-    "phpcbf.onsave": true,
-    "phpcbf.standard": "WordPress",
-    "phpcs.ignorePatterns": [
-        "vendor/"
-    ],
-    "phpcs.standard": "WordPress"
-}
