@@ -1,325 +1,319 @@
 <?php
+/**
+ * Password Generator functionality of the plugin
+ *
+ * @package Rdev\WpTools
+ * @subpackage Rdev\WpTools\modules
+ * @since 1.1.0
+ */
 
 namespace Rdev\WpTools\Modules;
 
 use Rdev\WpTools\Admin\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 /**
- * Password Generator functionality of the plugin
+ * Class: PwdGen
  *
- * @since       1.1.0
- * @package     Rdev\WpTools
- * @subpackage  Rdev\WpTools\modules
+ * @since 1.1.0
  */
-class PwdGen extends Settings
-{
+class PwdGen extends Settings {
 
-  /**
-   * RDWT option name.
-   *
-   * @access  protected
-   * @since   1.1.0
-   * @var     string
-   */
-  protected $option = 'rdwt_pwdgen';
+	/**
+	 * RDWT option name.
+	 *
+	 * @access protected
+	 * @since 1.1.0
+	 * @var string
+	 */
+	protected $option = 'rdwt_pwdgen';
 
-  /**
-   * RDWT Options
-   *
-   * @access  protected
-   * @since   1.1.0
-   * @var     array
-   */
-  protected $options = array(
-    'pwdgen_enable' => false,
-    'pwdgen_count' => 3,
-    'pwdgen_length' => 16,
-    'pwdgen_inc_numbers' => true,
-    'pwdgen_inc_lower' => true,
-    'pwdgen_inc_upper' => true,
-    'pwdgen_inc_symbols' => false,
-  );
+	/**
+	 * RDWT Options
+	 *
+	 * @access protected
+	 * @since 1.1.0
+	 * @var array
+	 */
+	protected $options = array(
+		'pwdgen_enable'      => false,
+		'pwdgen_count'       => 3,
+		'pwdgen_length'      => 16,
+		'pwdgen_inc_numbers' => true,
+		'pwdgen_inc_lower'   => true,
+		'pwdgen_inc_upper'   => true,
+		'pwdgen_inc_symbols' => false,
+	);
 
-  /**
-   * RDWT PwdGen Shortcode tag.
-   *
-   * @access  public
-   * @since   1.1.0
-   * @var     string
-   */
-  public $shortcode_tag = 'rdwt_pwdgen';
+	/**
+	 * RDWT PwdGen Shortcode tag.
+	 *
+	 * @access public
+	 * @since 1.1.0
+	 * @var string
+	 */
+	public $shortcode_tag = 'rdwt_pwdgen';
 
-  /**
-   * RDWT Version Number.
-   *
-   * @access  protected
-   * @since   1.1.0
-   * @var     string
-   */
-  protected $version;
+	/**
+	 * Main construct function.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function __construct() {
+		$this->add_hooks();
+	}
 
-  /**
-   * Main construct function.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.1.0
-   */
-  public function __construct() {
-    $this->version = RDWT_VERSION;
+	/**
+	 * Add Settings hooks.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function add_hooks(): void {
+		add_action( 'admin_init', array( $this, 'add_settings' ) );
 
-    $this->add_hooks();
-  }
+		add_action( 'init', array( $this, 'init' ) );
+	}
 
-  /**
-   * Add Settings hooks.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.1.0
-   */
-  public function add_hooks() {
-    add_action( 'admin_init', array( $this, 'add_settings' ) );
+	/**
+	 * Register settings / options.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function add_settings(): void {
+		register_setting(
+			'rdwt_plugin_settings',
+			$this->option,
+			array( $this, 'validate_settings' )
+		);
 
-    add_action( 'init', array( $this, 'init' ) );
-  }
+		// Overview section's field.
+		ob_start();
+		include_once RDWT_DIR . 'assets/partials/display-overview-pwdgen.php';
+		$html = str_replace( array( "\r", "\n" ), '', ob_get_clean() );
 
-  /**
-   * Register settings / options.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.1.0
-   */
-  public function add_settings() {
-    register_setting(
-      'rdwt_plugin_settings',
-      $this->option,
-      array( $this, 'validate_settings')
-    );
+		add_settings_field(
+			'pwdgen_overview',
+			__( 'Password Generator', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt',
+			'rdwt-settings-overview',
+			array(
+				'html' => $html,
+				'id'   => 'pwdgen_overview',
+				'page' => 'rdwt_overview',
+				'type' => 'raw',
+			)
+		);
 
-    // Overview section's field
-    ob_start();
-    require_once RDWT_DIR . 'assets/partials/display-overview-pwdgen.php';
-    $html = str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+		// Settings section and fields.
+		add_settings_section(
+			'rdwt-settings-pwdgen-section',
+			__( 'Password Generator', 'rdwt' ),
+			array( $this, 'render_section_pwdgen' ),
+			'rdwt-settings',
+			array(
+				'after_section' => '<hr/>',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_overview',
-      __( 'Password Generator', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt',
-      'rdwt-settings-overview',
-      array(
-        'html' => $html,
-        'id' => 'pwdgen_overview',
-        'page' => 'rdwt_overview',
-        'type' => 'raw',
-      )
-    );
+		add_settings_field(
+			'pwdgen_enable',
+			__( 'Enable', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting',
+				'id'        => 'pwdgen_enable',
+				'label_for' => 'pwdgen_enable',
+				'page'      => 'rdwt_pwdgen',
+				'sub_desc'  => __( 'Check to enable Password Generator shortcode', 'rdwt' ),
+				'type'      => 'checkbox',
+			)
+		);
 
-    // Settings section and fields
-    add_settings_section(
-      'rdwt-settings-pwdgen-section',
-      __( 'Password Generator', RDWT_DOMAIN ),
-      array( $this, 'render_section_pwdgen' ),
-      'rdwt-settings',
-      array(
-        'after_section' => '<hr/>'
-      )
-    );
+		add_settings_field(
+			'pwdgen_count',
+			__( 'Number of passwords', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting rdwt-range pwdgen-counter',
+				'id'        => 'pwdgen_count',
+				'label_for' => 'pwdgen_count',
+				'max'       => 10,
+				'min'       => 1,
+				'page'      => 'rdwt_pwdgen',
+				'step'      => 1,
+				'sub_desc'  => $this->options['pwdgen_count'],
+				'type'      => 'range',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_enable',
-      __( 'Enable', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting',
-        'id' => 'pwdgen_enable',
-        'label_for' => 'pwdgen_enable',
-        'page' => 'rdwt_pwdgen',
-        'sub_desc' => __( 'Check to enable Password Generator shortcode', RDWT_DOMAIN ),
-        'type' => 'checkbox',
-      )
-    );
+		add_settings_field(
+			'pwdgen_length',
+			__( 'Password length', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting rdwt-range',
+				'id'        => 'pwdgen_length',
+				'label_for' => 'pwdgen_length',
+				'max'       => 32,
+				'min'       => 8,
+				'page'      => 'rdwt_pwdgen',
+				'step'      => 1,
+				'sub_desc'  => $this->options['pwdgen_length'],
+				'type'      => 'range',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_count',
-      __( 'Number of passwords', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting rdwt-range pwdgen-counter',
-        'id' => 'pwdgen_count',
-        'label_for' => 'pwdgen_count',
-        'max' => 10,
-        'min' => 1,
-        'page' => 'rdwt_pwdgen',
-        'step' => 1,
-        'sub_desc' => $this->options[ 'pwdgen_count' ],
-        'type' => 'range',
-      )
-    );
+		add_settings_field(
+			'pwdgen_inc_numbers',
+			'', // __( '', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting',
+				'id'        => 'pwdgen_inc_numbers',
+				'label_for' => 'pwdgen_inc_numbers',
+				'page'      => 'rdwt_pwdgen',
+				'sub_desc'  => __( 'Numbers', 'rdwt' ),
+				'type'      => 'checkbox',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_length',
-      __( 'Password length', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting rdwt-range',
-        'id' => 'pwdgen_length',
-        'label_for' => 'pwdgen_length',
-        'max' => 32,
-        'min' => 8,
-        'page' => 'rdwt_pwdgen',
-        'step' => 1,
-        'sub_desc' => $this->options[ 'pwdgen_length' ],
-        'type' => 'range',
-      )
-    );
+		add_settings_field(
+			'pwdgen_inc_lower',
+			'', // __( '', 'rdwt' ),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting',
+				'id'        => 'pwdgen_inc_lower',
+				'label_for' => 'pwdgen_inc_lower',
+				'page'      => 'rdwt_pwdgen',
+				'sub_desc'  => __( 'Lower case letters', 'rdwt' ),
+				'type'      => 'checkbox',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_inc_numbers',
-      __( '', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting',
-        'id' => 'pwdgen_inc_numbers',
-        'label_for' => 'pwdgen_inc_numbers',
-        'page' => 'rdwt_pwdgen',
-        'sub_desc' => __( 'Numbers', RDWT_DOMAIN ),
-        'type' => 'checkbox',
-      )
-    );
+		add_settings_field(
+			'pwdgen_inc_upper',
+			'', // __('', 'rdwt'),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting',
+				'id'        => 'pwdgen_inc_upper',
+				'label_for' => 'pwdgen_inc_upper',
+				'page'      => 'rdwt_pwdgen',
+				'sub_desc'  => __( 'Upper case letters', 'rdwt' ),
+				'type'      => 'checkbox',
+			)
+		);
 
-    add_settings_field(
-      'pwdgen_inc_lower',
-      __( '', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting',
-        'id' => 'pwdgen_inc_lower',
-        'label_for' => 'pwdgen_inc_lower',
-        'page' => 'rdwt_pwdgen',
-        'sub_desc' => __( 'Lower case letters', RDWT_DOMAIN ),
-        'type' => 'checkbox',
-      )
-    );
+		add_settings_field(
+			'pwdgen_inc_symbols',
+			'', // __('', 'rdwt'),
+			array( $this, 'render_settings_field' ),
+			'rdwt-settings',
+			'rdwt-settings-pwdgen-section',
+			array(
+				'class'     => 'rdwt-setting',
+				'id'        => 'pwdgen_inc_symbols',
+				'label_for' => 'pwdgen_inc_symbols',
+				'page'      => 'rdwt_pwdgen',
+				'sub_desc'  => __( 'Symbols', 'rdwt' ),
+				'type'      => 'checkbox',
+			)
+		);
+	}
 
-    add_settings_field(
-      'pwdgen_inc_upper',
-      __( '', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting',
-        'id' => 'pwdgen_inc_upper',
-        'label_for' => 'pwdgen_inc_upper',
-        'page' => 'rdwt_pwdgen',
-        'sub_desc' => __( 'Upper case letters', RDWT_DOMAIN ),
-        'type' => 'checkbox',
-      )
-    );
+	/**
+	 * PwdGen: Init function
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function init(): void {
+		parent::init();
 
-    add_settings_field(
-      'pwdgen_inc_symbols',
-      __( '', RDWT_DOMAIN ),
-      array( $this, 'render_settings_field' ),
-      'rdwt-settings',
-      'rdwt-settings-pwdgen-section',
-      array(
-        'class' => 'rdwt-setting',
-        'id' => 'pwdgen_inc_symbols',
-        'label_for' => 'pwdgen_inc_symbols',
-        'page' => 'rdwt_pwdgen',
-        'sub_desc' => __( 'Symbols', RDWT_DOMAIN ),
-        'type' => 'checkbox',
-      )
-    );
-  }
+		$options = get_option( $this->option, $this->get_default_options() );
 
-  /**
-   * PwdGen: Init function
-   *
-   * @access  public
-   * @return  void
-   * @since   1.1.0
-   */
-  public function init() {
-    parent::init();
+		if ( isset( $options['pwdgen_enable'] ) && $options['pwdgen_enable'] ) {
+			add_shortcode( $this->shortcode_tag, array( $this, 'render_shortcode' ) );
+		}
+	}
 
-    $options = get_option( $this->option, $this->get_default_options() );
+	/**
+	 * Settings section callback.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.1.0
+	 */
+	public function render_section_pwdgen(): void {
+		esc_html_e( 'These are the settings for Password Generator', 'rdwt' );
+	}
 
-    if ( isset( $options[ 'pwdgen_enable' ] ) && $options[ 'pwdgen_enable'] ) {
-      add_shortcode( $this->shortcode_tag, array( $this, 'render_shortcode' ) );
-    }
-  }
+	/**
+	 * PwdGen: Render shortcode block
+	 *
+	 * @access public
+	 * @return string
+	 * @since 1.1.0
+	 * @param array  $atts Shortcode attributes.
+	 * @param string $content Shortcode content.
+	 */
+	public function render_shortcode( $atts, $content = '' ): string {
+		$options = get_option( $this->option, $this->get_default_options() );
+		$opts    = array();
 
-  /**
-   * Settings section callback.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.1.0
-   */
-  public function render_section_pwdgen() {
-    esc_html_e( 'These are the settings for Password Generator', RDWT_DOMAIN );
-  }
+		foreach ( $options as $k => $v ) {
+			$opts[ str_replace( 'pwdgen_', '', $k ) ] = $v;
+		}
 
-  /**
-   * PwdGen: Render shortcode block
-   *
-   * @access  public
-   * @return  string
-   * @since   1.1.0
-   */
-  public function render_shortcode( $atts, $content = '' ) {
-    $options = get_option( $this->option, $this->get_default_options() );
-    $opts = array();
+		// $atts = shortcode_atts(
+		// array(
+		// 'count' => '3'
+		// ), $atts, $this->shortcode_tag
+		// );
 
-    foreach ( $options as $k => $v ) {
-      $opts[ str_replace( 'pwdgen_', '', $k ) ] = $v;
-    }
+		ob_start();
+		include_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
+		return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+	}
 
-    // $atts = shortcode_atts(
-    //   array(
-    //     'count' => '3'
-    //   ), $atts, $this->shortcode_tag
-    // );
-
-    ob_start();
-    require_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
-    return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
-  }
-
-  /**
-   * Validate settings / options.
-   *
-   * @access  public
-   * @return  array
-   * @since   1.1.0
-   */
-  public function validate_settings( $input ) {
-    foreach ( array_keys( $this->options )  as $k ) {
-      if ( isset( $input[ $k ] ) ) {
-        $input[ $k ] = wp_filter_nohtml_kses( $input[ $k ] );
-      }
-    }
-
-    return $input;
-  }
-
+	/**
+	 * Validate settings / options.
+	 *
+	 * @access public
+	 * @return array
+	 * @since 1.1.0
+	 * @param array $input Key-value pairs.
+	 */
+	public function validate_settings( $input ): array {
+		foreach ( array_keys( $this->options ) as $k ) {
+			if ( isset( $input[ $k ] ) ) {
+				$input[ $k ] = wp_filter_nohtml_kses( $input[ $k ] );
+			}
+		}
+		return $input;
+	}
 }

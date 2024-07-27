@@ -1,9 +1,4 @@
 <?php
-
-if ( ! defined( 'ABSPATH' ) ) {
-  exit;
-}
-
 /**
  * Fired when the plugin is uninstalled.
  *
@@ -23,18 +18,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
- * @link    http://example.com
+ * @link  http://example.com
  * @since   1.0.0
  *
- * @package    RDWT
+ * @package  RDWT
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-  exit;
+	exit;
 }
 
-// delete options
+// delete options.
 delete_option( 'rdwt' );
 delete_option( 'rdwt_ga' );
 delete_option( 'rdwt_pwdgen' );

@@ -3,7 +3,7 @@
         'name' => 'rdev/wp-tools',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'de3e6d82c636e081f66e1bf3a05f3236eada93b7',
+        'reference' => 'fc1b6b4092491eeef0f5339548b3e383477fbee6',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'rdev/wp-tools' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'de3e6d82c636e081f66e1bf3a05f3236eada93b7',
+            'reference' => 'fc1b6b4092491eeef0f5339548b3e383477fbee6',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

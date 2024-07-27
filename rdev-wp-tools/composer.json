@@ -13,5 +13,10 @@
             "name": "Robertas Reiciunas",
             "email": "accesspc@gmail.com"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

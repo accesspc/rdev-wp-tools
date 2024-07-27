@@ -1,381 +1,378 @@
 <?php
+/**
+ * Define the internationalization functionality
+ *
+ * @package Rdev\WpTools
+ * @subpackage Rdev\WpTools\Admin
+ */
 
 namespace Rdev\WpTools\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 /**
  * The admin-settings specific functionality of the plugin
  *
- * @since       1.1.0
- * @package     Rdev\WpTools
- * @subpackage  Rdev\WpTools\admin
+ * @since 1.1.0
  */
-class Settings
-{
+class Settings {
 
-  /**
-   * RDWT option name.
-   *
-   * @access  protected
-   * @since   1.0.0
-   * @var     string
-   */
-  protected $option = 'rdwt';
+	/**
+	 * RDWT option name.
+	 *
+	 * @access protected
+	 * @since 1.0.0
+	 * @var string
+	 */
+	protected $option = 'rdwt';
 
-  /**
-   * RDWT Options
-   *
-   * @access  protected
-   * @since   1.0.0
-   * @var     array
-   */
-  protected $options = array(
+	/**
+	 * RDWT Options
+	 *
+	 * @access protected
+	 * @since 1.0.0
+	 * @var array
+	 */
+	protected $options = array();
 
-  );
+	/**
+	 * Main construct function.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function __construct() {
+		$this->add_hooks();
+		$this->init();
+	}
 
-  /**
-   * RDWT Version Number.
-   *
-   * @access  protected
-   * @since   1.0.0
-   * @var     string
-   */
-  protected $version;
+	/**
+	 * Add Settings hooks.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function add_hooks(): void {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-  /**
-   * Main construct function.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function __construct() {
-    $this->version = RDWT_VERSION;
+		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+		add_action( 'admin_init', array( $this, 'add_settings' ) );
 
-    $this->add_hooks();
-    $this->init();
-  }
+		add_filter( 'plugin_action_links_' . RDWT_BASE, array( $this, 'plugin_action_links' ) );
+	}
 
-  /**
-   * Add Settings hooks.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function add_hooks() {
-    add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-    add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	/**
+	 * Add admin menu for RDWT.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function add_admin_menu(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
-    add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
-    add_action( 'admin_init', array( $this, 'add_settings' ) );
+		add_menu_page(
+			esc_html__( 'Rdev WP Tools', 'rdwt' ),
+			esc_html__( 'Rdev WP Tools', 'rdwt' ),
+			'manage_options',
+			RDWT_SLUG,
+			array( $this, 'display_admin_overview' ),
+			'',
+			80
+		);
 
-    add_filter( 'plugin_action_links_' . RDWT_BASE, array( $this, 'plugin_action_links' ) );
-  }
+		add_submenu_page(
+			RDWT_SLUG,
+			__( 'Rdev', 'rdwt' ),
+			__( 'Settings', 'rdwt' ),
+			'manage_options',
+			RDWT_SLUG . '-settings',
+			array( $this, 'display_admin_settings' ),
+		);
+	}
 
-  /**
-   * Add admin menu for RDWT.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function add_admin_menu() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-      return;
-    }
+	/**
+	 * Register settings / options.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function add_settings(): void {
+		register_setting(
+			'rdwt_plugin',
+			'rdwt',
+			array( $this, 'validate_settings' )
+		);
 
-    add_menu_page(
-      esc_html__( 'Rdev WP Tools', RDWT_DOMAIN ),
-      esc_html__( 'Rdev WP Tools', RDWT_DOMAIN ),
-      'manage_options',
-      RDWT_SLUG,
-      array( $this, 'display_admin_overview' ),
-      '',
-      80
-    );
+		add_settings_section(
+			'rdwt-settings-overview',
+			__( 'Overview', 'rdwt' ),
+			array( $this, 'render_section_overview' ),
+			'rdwt',
+			array(
+				'after_section' => '<hr/>',
+			)
+		);
+	}
 
-    add_submenu_page(
-      RDWT_SLUG,
-      __( 'Rdev', RDWT_DOMAIN ),
-      __( 'Settings', RDWT_DOMAIN ),
-      'manage_options',
-      RDWT_SLUG . '-settings',
-      array( $this, 'display_admin_settings' ),
-    );
-  }
+	/**
+	 * Display: admin overview page.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function display_admin_overview(): void {
+		include_once RDWT_DIR . 'assets/partials/display-overview.php';
+	}
 
-  /**
-   * Register settings / options.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function add_settings() {
-    register_setting(
-      'rdwt_plugin',
-      'rdwt',
-      array( $this, 'validate_settings')
-    );
+	/**
+	 * Display: admin settings page.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function display_admin_settings(): void {
+		$options = get_option( $this->option, $this->get_default_options() );
 
-    add_settings_section(
-      'rdwt-settings-overview',
-      __( 'Overview', RDWT_DOMAIN ),
-      array( $this, 'render_section_overview' ),
-      'rdwt',
-      array(
-        'after_section' => '<hr/>',
-      )
-    );
-  }
+		include_once RDWT_DIR . 'assets/partials/display-settings.php';
+	}
 
-  /**
-   * Display: admin overview page.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function display_admin_overview() {
-    require_once RDWT_DIR . 'assets/partials/display-overview.php';
-  }
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function enqueue_scripts(): void {
+		wp_enqueue_script( RDWT_SLUG, RDWT_URL . 'assets/js/rdwt-admin.js', array( 'jquery' ), RDWT_VERSION, false );
+	}
 
-  /**
-   * Display: admin settings page.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function display_admin_settings() {
-    $options = get_option( $this->option, $this->get_default_options() );
+	/**
+	 * Register the stylesheets for the admin area.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function enqueue_styles(): void {
+		wp_enqueue_style( RDWT_SLUG, RDWT_URL . 'assets/css/rdwt-admin.css', array(), RDWT_VERSION, 'all' );
+	}
 
-    require_once RDWT_DIR . 'assets/partials/display-settings.php';
-  }
+	/**
+	 * Retrieve default options / settings.
+	 *
+	 * @access public
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function get_default_options(): array {
+		return apply_filters( 'rdwt_default_options', $this->options );
+	}
 
-  /**
-   * Register the JavaScript for the admin area.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function enqueue_scripts() {
-    wp_enqueue_script( RDWT_SLUG, RDWT_URL . 'assets/js/rdwt-admin.js', array( 'jquery' ), $this->version, false );
-  }
+	/**
+	 * Init
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function init(): void {
+		// If no options exist, create them.
+		if ( ! get_option( $this->option ) ) {
+			update_option( $this->option, $this->get_default_options() );
+		}
+	}
 
-  /**
-   * Register the stylesheets for the admin area.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function enqueue_styles() {
-    wp_enqueue_style( RDWT_SLUG, RDWT_URL . 'assets/css/rdwt-admin.css', array(), $this->version, 'all' );
-  }
+	/**
+	 * Plugin action links callback.
+	 *
+	 * @access public
+	 * @return array
+	 * @since 1.2.0
+	 * @param array $links Action links.
+	 */
+	public function plugin_action_links( $links ): array {
+		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt' ), __( 'Overview', 'rdwt' ) );
+		array_unshift( $links, $settings_link );
 
-  /**
-   * Retrieve default options / settings.
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function get_default_options() {
-    return apply_filters( 'rdwt_default_options', $this->options );
-  }
+		$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt-settings' ), __( 'Settings', 'rdwt' ) );
+		array_unshift( $links, $settings_link );
 
-  /**
-   * Init
-   *
-   * @access  public
-   * @return  void
-   * @since   1.0.0
-   */
-  public function init() {
-    // If no options exist, create them
-    if ( ! get_option( $this->option ) ) {
-      update_option( $this->option, $this->get_default_options() );
-    }
-  }
+		return $links;
+	}
 
-  /**
-   * Plugin action links callback.
-   *
-   * @access  public
-   * @return  array
-   * @since   1.2.0
-   */
-  public function plugin_action_links( $links ) {
-    $settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt' ), __( 'Overview', RDWT_DOMAIN ) );
-    array_unshift( $links, $settings_link );
+	/**
+	 * Settings section callback.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function render_section_overview(): void {
+		esc_html_e( 'Rdev WP Tools is a collection of tools in a single bloat-less WordPress plugin.', 'rdwt' );
+	}
 
-    $settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=rdwt-settings' ), __( 'Settings', RDWT_DOMAIN ) );
-    array_unshift( $links, $settings_link );
+	/**
+	 * Settings field callback.
+	 *
+	 * @access public
+	 * @return int
+	 * @since 1.0.0
+	 * @param array $args Settings arguments.
+	 */
+	public function render_settings_field( $args ) {
+		$this->set_name_and_value( $args );
 
-    return $links;
-  }
+		$args = wp_parse_args( $args, array( 'classes' => array() ) );
 
-  /**
-   * Settings section callback.
-   *
-   * @access  public
-   * @return  int
-   * @since   1.0.0
-   */
-  public function render_section_overview() {
-    esc_html_e( 'Rdev WP Tools is a collection of tools in a single bloat-less wordpress plugin.', RDWT_DOMAIN );
-  }
+		if ( empty( $args['id'] ) || empty( $args['page'] ) ) {
+			return;
+		}
 
-  /**
-   * Settings field callback.
-   *
-   * @access  public
-   * @return  int
-   * @since   1.0.0
-   */
-  public function render_settings_field( $args ) {
-    $this->set_name_and_value( $args );
-    extract( $args, EXTR_SKIP );
+		switch ( $args['type'] ) {
+			case 'checkbox':
+				?>
+				<input
+					type='checkbox'
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $args['name'] ); ?>'
+					value='1'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+					<?php
+					if ( isset( $args['value'] ) ) {
+						checked( '1', $args['value'] );
+					}
+					?>
+				/>
+				<?php
+				break;
 
-    $args = wp_parse_args( $args, array( 'classes' => array() ) );
+			case 'radio':
+				foreach ( $args['options'] as $option ) {
+					?>
+					<div class="rdwt-radio">
+					<input
+						type='radio'
+						id='<?php echo esc_attr( $args['id'] ); ?>'
+						name='<?php echo esc_attr( $args['name'] ); ?>'
+						value='<?php echo esc_attr( $option['value'] ); ?>'
+						class='<?php echo implode( ' ', $args['classes'] ); ?>'
+						<?php
+							checked( esc_attr( $option['value'] ), $args['value'] );
+						?>
+					/>
+					<?php
+						echo wp_kses_post( $option['desc'] );
+					?>
+					</div>
+					<?php
+				}
+				break;
 
-    if ( empty( $args[ 'id' ] ) || empty( $args[ 'page' ] ) ) {
-      return;
-    }
+			case 'range':
+				?>
+				<input
+					type='range'
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $args['name'] ); ?>'
+					value='<?php echo esc_attr( $args['value'] ); ?>'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+					min='<?php echo esc_attr( $args['min'] ); ?>'
+					max='<?php echo esc_attr( $args['max'] ); ?>'
+					step='<?php echo esc_attr( $args['step'] ); ?>'
+				/>
+				<?php
 
-    switch ($type) {
-      case 'checkbox':
-        ?>
-        <input
-          type='checkbox'
-          id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
-          name='<?php echo esc_attr( $name ); ?>'
-          value='1'
-          class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
-          <?php
-            if ( isset( $args[ 'value' ] ) ) {
-              checked( '1', $args[ 'value' ] );
-            }
-          ?>
-        />
-        <?php
-        break;
+				break;
 
-      case 'radio':
+			case 'raw':
+				if ( ! isset( $args['html'] ) ) {
+					break;
+				}
+				echo wp_kses_post( $args['html'] );
+				break;
 
-        foreach( $options as $option ) {
-          ?>
-          <div class="rdwt-radio">
-            <input
-              type='radio'
-              id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
-              name='<?php echo esc_attr( $name ); ?>'
-              value='<?php echo esc_attr( $option[ 'value' ] ); ?>'
-              class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
-              <?php checked( esc_attr( $option[ 'value' ] ), $args[ 'value' ] ); ?>
-            />
-            <?php echo wp_kses_post( $option[ 'desc' ] ); ?>
-          </div>
-          <?php
-        }
-        break;
+			case 'text':
+				?>
+				<input
+					type='text'
+					id='<?php echo esc_attr( $args['id'] ); ?>'
+					name='<?php echo esc_attr( $args['name'] ); ?>'
+					value='<?php echo esc_attr( $args['value'] ); ?>'
+					class='<?php echo implode( ' ', $args['classes'] ); ?>'
+				/>
+				<?php
+				break;
 
-      case 'range':
+			default:
+				break;
+		}
 
-        ?>
-        <input
-          type='range'
-          id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
-          name='<?php echo esc_attr( $name ); ?>'
-          value='<?php echo esc_attr( $value ); ?>'
-          class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
-          min='<?php echo esc_attr( $args[ 'min' ] ); ?>'
-          max='<?php echo esc_attr( $max ); ?>'
-          step='<?php echo esc_attr( $step ); ?>'
-        />
-        <?php
+		if ( isset( $args['sub_desc'] ) && ! empty( $args['sub_desc'] ) ) {
+			echo '<span class="sub-desc">';
+			echo wp_kses_post( $args['sub_desc'] );
+			echo '</span>';
+		}
 
-        break;
+		if ( isset( $desc ) && ! empty( $desc ) ) {
+			echo '<div class="description">';
+			if ( is_array( $desc ) ) {
 
-      case 'raw':
+				array_walk(
+					$desc,
+					function ( &$line ) {
+						$line = sprintf( '<div>%s</div>', wp_kses_post( $line ) );
+					}
+				);
+				echo implode( '', $desc );
 
-          if ( ! isset( $html ) ) {
-            break;
-          }
+			} else {
+				echo wp_kses_post( $desc );
+			}
+			echo '</div>';
+		}
+	}
 
-          echo wp_kses_post( $html );
-          break;
+	/**
+	 * Set name and value from settings / options.
+	 *
+	 * @access private
+	 * @return void
+	 * @since 1.0.0
+	 * @param array $args Key-value pairs.
+	 */
+	private function set_name_and_value( &$args ): void {
+		if ( ! isset( $args['name'] ) ) {
+			$args['name'] = sprintf( '%s[%s]', esc_attr( $args['page'] ), esc_attr( $args['id'] ) );
+		}
 
-      case 'text':
+		if ( ! isset( $args['value'] ) ) {
+			$options = get_option( $this->option, $this->get_default_options() );
 
-        ?>
-        <input
-          type='text'
-          id='<?php echo esc_attr( $args[ 'id' ] ); ?>'
-          name='<?php echo esc_attr( $name ); ?>'
-          value='<?php echo esc_attr( $value ); ?>'
-          class='<?php echo implode( ' ', $args[ 'classes' ] ); ?>'
-        />
-        <?php
-        break;
-      
-      default:
-        break;
-    }
+			$args['value'] = $options[ $args['id'] ];
+		}
+	}
 
-    if ( isset( $sub_desc ) && ! empty( $sub_desc ) ) {
-      echo '<span class="sub-desc">';
-      echo wp_kses_post( $sub_desc );
-      echo '</span>';
-    }
-
-    if ( isset( $desc ) && ! empty( $desc ) ) {
-      echo '<div class="description">';
-      if ( is_array( $desc ) ) {
-
-        array_walk( $desc, function( &$line ) { $line = sprintf( "<div>%s</div>", wp_kses_post( $line ) ); } );
-        echo implode( '', $desc );
-
-      } else {
-        echo wp_kses_post( $desc );
-      }
-      echo '</div>';
-    }
-  }
-
-  /**
-   * Set name and value from settings / options.
-   *
-   * @access  private
-   * @return  void
-   * @since   1.0.0
-   */
-  private function set_name_and_value( &$args ) {
-    if ( ! isset( $args[ 'name' ] ) ) {
-      $args[ 'name' ] = sprintf( '%s[%s]', esc_attr( $args[ 'page' ] ), esc_attr( $args[ 'id' ] ) );
-    }
-
-    if ( ! isset( $args[ 'value' ] ) ) {
-      $options = get_option( $this->option, $this->get_default_options() );
-      $args[ 'value' ] = $options[ $args[ 'id' ] ];
-    }
-  }
-
-  /**
-   * Validate settings / options.
-   *
-   * @access  public
-   * @return  array
-   * @since   1.0.0
-   */
-  public function validate_settings( $input ) {
-    return $input;
-  }
-
+	/**
+	 * Validate settings / options.
+	 *
+	 * @access public
+	 * @return array
+	 * @since 1.0.0
+	 * @param array $input array to validate.
+	 */
+	public function validate_settings( $input ): array {
+		return $input;
+	}
 }
