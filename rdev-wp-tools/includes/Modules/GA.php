@@ -143,7 +143,7 @@ class GA extends Settings {
                 'id'        => 'ga_id',
                 'label_for' => 'ga_id',
                 'page'      => 'rdwt_ga',
-                'sub_desc'  => '', // __( '', 'rdwt' ),
+                'sub_desc'  => '',
                 'type'      => 'text',
             )
         );

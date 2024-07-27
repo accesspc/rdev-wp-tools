@@ -5,6 +5,7 @@
 	<arg value="s" /><!-- Show sniff codes in all reports -->
 
 	<config name="testVersion" value="6.0-" />
+	<exclude-pattern>vendor/*</exclude-pattern>
 	<file>.</file>
 
 	<rule ref="Generic.WhiteSpace.ScopeIndent">
@@ -13,6 +14,7 @@
 			<property name="tabIndent" value="false"/>
 		</properties>
 	</rule>
+
 	<rule ref="Generic.WhiteSpace.DisallowTabIndent" />
 
 	<rule ref="WordPress">
