@@ -2,9 +2,8 @@
 /**
  * Google Analytics functionality of the plugin
  *
- * @package    Rdev\WpTools
- * @subpackage Rdev\WpTools\modules
- * @since      1.0.0
+ * @package Rdev\WpTools\Modules
+ * @since   1.0.0
  */
 
 namespace Rdev\WpTools\Modules;
@@ -94,7 +93,7 @@ class GA extends Settings
         add_settings_field(
             'ga_overview',
             __('Google Analytics', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt',
             'rdwt-settings-overview',
             array(
@@ -119,7 +118,7 @@ class GA extends Settings
         add_settings_field(
             'ga_enable',
             __('Enable', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-ga-section',
             array(
@@ -138,7 +137,7 @@ class GA extends Settings
         add_settings_field(
             'ga_id',
             __('GA Tracking ID', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-ga-section',
             array(
@@ -158,7 +157,7 @@ class GA extends Settings
         add_settings_field(
             'ga_location',
             __('Tracking code location', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-ga-section',
             array(

@@ -2,9 +2,8 @@
 /**
  * Password Generator functionality of the plugin
  *
- * @package    Rdev\WpTools
- * @subpackage Rdev\WpTools\modules
- * @since      1.1.0
+ * @package Rdev\WpTools\Modules
+ * @since   1.1.0
  */
 
 namespace Rdev\WpTools\Modules;
@@ -107,7 +106,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_overview',
             __('Password Generator', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt',
             'rdwt-settings-overview',
             array(
@@ -132,7 +131,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_enable',
             __('Enable', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -148,7 +147,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_count',
             __('Number of passwords', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -167,7 +166,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_length',
             __('Password length', 'rdwt'),
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -186,7 +185,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_inc_numbers',
             '',
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -202,7 +201,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_inc_lower',
             '',
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -218,7 +217,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_inc_upper',
             '',
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(
@@ -234,7 +233,7 @@ class PwdGen extends Settings
         add_settings_field(
             'pwdgen_inc_symbols',
             '',
-            array( $this, 'render_settings_field' ),
+            array( $this, 'renderSettingsField' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
             array(

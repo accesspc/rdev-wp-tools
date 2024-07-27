@@ -2,9 +2,8 @@
 /**
  * The public-facing functionality of the plugin
  *
- * @package    Rdev\WpTools
- * @subpackage Rdev\WpTools\Core
- * @since      1.0.0
+ * @package Rdev\WpTools\Core
+ * @since   1.0.0
  */
 
 namespace Rdev\WpTools\Core;
