@@ -68,7 +68,6 @@ if (! defined('RDWT_VERSION') ) {
  * Autoload
  */
 require_once RDWT_DIR . 'vendor/autoload.php';
-require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 use Rdev\WpTools\WpTools;
 

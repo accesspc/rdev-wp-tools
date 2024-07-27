@@ -64,7 +64,7 @@ class PwdGen extends Settings
      * @since  1.1.0
      * @var    string
      */
-    public $shortcode_tag = 'rdwt_pwdgen';
+    public $shortcodeTag = 'rdwt_pwdgen';
 
     /**
      * Main construct function.
@@ -273,7 +273,7 @@ class PwdGen extends Settings
         $options = get_option($this->option, $this->getDefaultOptions());
 
         if (isset($options['pwdgen_enable']) && $options['pwdgen_enable'] ) {
-            add_shortcode($this->shortcode_tag, array( $this, 'renderShortcode' ));
+            add_shortcode($this->shortcodeTag, array( $this, 'renderShortcode' ));
         }
     }
 
@@ -311,7 +311,7 @@ class PwdGen extends Settings
         // $atts = shortcode_atts(
         // array(
         // 'count' => '3'
-        // ), $atts, $this->shortcode_tag
+        // ), $atts, $this->shortcodeTag
         // );
 
         ob_start();

@@ -29,7 +29,7 @@ if (! defined('ABSPATH') ) {
 
 class SettingsFields
 {
-    
+
     /**
      * Main construct function.
      *
@@ -44,7 +44,7 @@ class SettingsFields
 
     /**
      * Render checkbox field.
-     * 
+     *
      * @param array $args field args.
      *
      * @access public
@@ -71,7 +71,7 @@ class SettingsFields
 
     /**
      * Render radio field.
-     * 
+     *
      * @param array $args field args.
      *
      * @access public
@@ -103,7 +103,7 @@ class SettingsFields
 
     /**
      * Render range field.
-     * 
+     *
      * @param array $args field args.
      *
      * @access public
@@ -128,7 +128,7 @@ class SettingsFields
 
     /**
      * Render text field.
-     * 
+     *
      * @param array $args field args.
      *
      * @access public
@@ -147,5 +147,4 @@ class SettingsFields
         />
         <?php
     }
-
 }
