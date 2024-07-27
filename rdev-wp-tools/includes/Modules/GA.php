@@ -1,5 +1,9 @@
 <?php
 
+namespace Rdev\WpTools\Modules;
+
+use Rdev\WpTools\Admin\Settings;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -7,14 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Google Analytics functionality of the plugin
  *
- * @author      Robertas Reiciunas <accesspc@gmail.com>
- * @link        https://reiciunas.dev/plugins/rdev-wp-tools/
- *
  * @since       1.0.0
- * @package     RDWT
- * @subpackage  RDWT/admin
+ * @package     Rdev\WpTools
+ * @subpackage  Rdev\WpTools\modules
  */
-class RDWT_GA extends RDWT_Settings {
+class GA extends Settings
+{
 
   /**
    * RDWT option name.

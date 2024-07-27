@@ -9,8 +9,8 @@ Author URI: https://reiciunas.dev/
 Contributors: accesspc
 Requires at least: 4.9
 Tested up to: 6.5
-Stable tag: 1.2.0
-Version: 1.2.0
+Stable tag: 2.0.0
+Version: 2.0.0
 Requires PHP: 5.6.20
 Text Domain: rdwt
 Domain Path: /languages

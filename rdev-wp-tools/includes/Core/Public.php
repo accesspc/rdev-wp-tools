@@ -1,29 +1,20 @@
 <?php
 
+namespace Rdev\WpTools\Core;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
 /**
- * The public-facing functionality of the plugin.
+ * The public-facing functionality of the plugin
  *
- * @author     Robertas Reiciunas <accesspc@gmail.com>
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- *
- * @since     1.0.0
- * @package    RDWT
- * @subpackage RDWT/public
+ * @since       1.0.0
+ * @package     Rdev\WpTools
+ * @subpackage  Rdev\WpTools\Core
  */
-class RDWT_Public {
-
-  /**
-   * RDWT Version Number
-   *
-   * @access  protected
-   * @since   1.0.0
-   * @var     string
-   */
-  protected $version;
+class Public
+{
 
   /**
    * Main construct function

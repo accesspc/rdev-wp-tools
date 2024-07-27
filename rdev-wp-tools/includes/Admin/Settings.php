@@ -1,20 +1,20 @@
 <?php
 
+namespace Rdev\WpTools\Admin;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
 /**
- * The admin-settings specific functionality of the plugin.
+ * The admin-settings specific functionality of the plugin
  *
- * @author     Robertas Reiciunas <accesspc@gmail.com>
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
- *
- * @since     1.0.0
- * @package    RDWT
- * @subpackage RDWT/admin
+ * @since       1.1.0
+ * @package     Rdev\WpTools
+ * @subpackage  Rdev\WpTools\admin
  */
-class RDWT_Settings {
+class Settings
+{
 
   /**
    * RDWT option name.

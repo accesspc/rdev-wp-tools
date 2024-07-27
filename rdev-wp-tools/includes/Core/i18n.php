@@ -1,5 +1,7 @@
 <?php
 
+namespace Rdev\WpTools\Core;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -7,23 +9,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define the internationalization functionality
  *
- * @author      Robertas Reiciunas <accesspc@gmail.com>
- * @link        https://reiciunas.dev/plugins/rdev-wp-tools/
- *
  * @since       1.0.0
- * @package     RDWT
- * @subpackage  RDWT/includes
+ * @package     Rdev\WpTools
+ * @subpackage  Rdev\WpTools\Core
  */
-class RDWT_i18n {
+class i18n
+{
 
   /**
-   * Load the plugin text domain for translation.
-   *
+   * Load plugin text domain for translations
+   * 
    * @access  public
    * @return  void
    * @since   1.0.0
    */
-  public static function load_plugin_textdomain() {
+  public static function load_plugin_textdomain() : void {
     load_plugin_textdomain(
       RDWT_DOMAIN,
       false,

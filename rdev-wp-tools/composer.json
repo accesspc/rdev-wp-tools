@@ -1,0 +1,17 @@
+{
+    "name": "rdev/wp-tools",
+    "description": "RDev bloat-less wordpress tools.",
+    "type": "project",
+    "license": "GPL-3.0",
+    "autoload": {
+        "psr-4": {
+            "Rdev\\WpTools\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Robertas Reiciunas",
+            "email": "accesspc@gmail.com"
+        }
+    ]
+}
