@@ -37,7 +37,7 @@ class WpTools
      * @since  1.1.0
      * @var    \Rdev\WpTools\Modules\GA
      */
-    public $ga;
+    public GA $ga;
 
     /**
      * Password Generator Object
@@ -46,7 +46,7 @@ class WpTools
      * @since  1.1.0
      * @var    \Rdev\WpTools\Modules\PwdGen
      */
-    public $pwdgen;
+    public PwdGen $pwdgen;
 
     /**
      * Settings Object
@@ -55,7 +55,7 @@ class WpTools
      * @since  1.0.0
      * @var    \Rdev\WpTools\Admin\Settings
      */
-    public $settings;
+    public Settings $settings;
 
     /**
      * UI Object
@@ -64,7 +64,7 @@ class WpTools
      * @since  1.0.0
      * @var    \Rdev\WpTools\Core\UI
      */
-    public $ui;
+    public UI $ui;
 
     /**
      * Main construct function

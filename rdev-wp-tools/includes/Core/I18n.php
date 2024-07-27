@@ -1,6 +1,6 @@
 <?php
 /**
- * Define the internationalization functionality
+ * Internationalization functionality
  * php version 7.3.0
  *
  * @category Core

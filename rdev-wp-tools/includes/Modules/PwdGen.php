@@ -1,6 +1,6 @@
 <?php
 /**
- * Password Generator functionality of the plugin
+ * Password Generator
  * php version 7.3.0
  *
  * @category Modules
@@ -38,7 +38,7 @@ class PwdGen extends Settings
      * @since  1.1.0
      * @var    string
      */
-    protected $option = 'rdwt_pwdgen';
+    protected string $option = 'rdwt_pwdgen';
 
     /**
      * RDWT Options
@@ -47,7 +47,7 @@ class PwdGen extends Settings
      * @since  1.1.0
      * @var    array
      */
-    protected $options = array(
+    protected array $options = array(
         'pwdgen_enable'      => false,
         'pwdgen_count'       => 3,
         'pwdgen_length'      => 16,

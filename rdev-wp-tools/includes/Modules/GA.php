@@ -1,6 +1,6 @@
 <?php
 /**
- * Google Analytics functionality of the plugin
+ * Google Analytics
  * php version 7.3.0
  *
  * @category Modules
@@ -38,7 +38,7 @@ class GA extends Settings
      * @since  1.0.0
      * @var    string
      */
-    protected $option = 'rdwt_ga';
+    protected string $option = 'rdwt_ga';
 
     /**
      * RDWT Options
@@ -47,7 +47,7 @@ class GA extends Settings
      * @since  1.0.0
      * @var    array
      */
-    protected $options = array(
+    protected array $options = array(
         'ga_enable'   => false,
         'ga_id'       => '',
         'ga_location' => 'header',

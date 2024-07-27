@@ -1,6 +1,6 @@
 <?php
 /**
- * Define the internationalization functionality
+ * Plugin Settings
  * php version 7.3.0
  *
  * @category Admin
@@ -36,7 +36,7 @@ class Settings
      * @since  1.0.0
      * @var    string
      */
-    protected $option = 'rdwt';
+    protected string $option = 'rdwt';
 
     /**
      * RDWT Options
@@ -45,7 +45,7 @@ class Settings
      * @since  1.0.0
      * @var    array
      */
-    protected $options = array();
+    protected array $options = array();
 
     /**
      * Main construct function.
@@ -278,10 +278,10 @@ class Settings
      * @param array $args Settings arguments.
      *
      * @access public
-     * @return int
+     * @return void
      * @since  1.0.0
      */
-    public function renderSettingsField( $args )
+    public function renderSettingsField( $args ): void
     {
         $this->_setNameAndValue($args);
 
@@ -293,58 +293,15 @@ class Settings
 
         switch ( $args['type'] ) {
         case 'checkbox':
-            ?>
-                <input
-                    type='checkbox'
-                    id='<?php echo esc_attr($args['id']); ?>'
-                    name='<?php echo esc_attr($args['name']); ?>'
-                    value='1'
-                    class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
-                <?php
-                if (isset($args['value']) ) {
-                    checked('1', $args['value']);
-                }
-                ?>
-                />
-                <?php
+            SettingsFields::renderCheckbox($args);
             break;
 
         case 'radio':
-            foreach ( $args['options'] as $option ) {
-                ?>
-                    <div class="rdwt-radio">
-                    <input
-                        type='radio'
-                        id='<?php echo esc_attr($args['id']); ?>'
-                        name='<?php echo esc_attr($args['name']); ?>'
-                        value='<?php echo esc_attr($option['value']); ?>'
-                        class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
-                    <?php
-                        checked(esc_attr($option['value']), $args['value']);
-                    ?>
-                    />
-                    <?php
-                    echo wp_kses_post($option['desc']);
-                    ?>
-                    </div>
-                    <?php
-            }
+            SettingsFields::renderRadio($args);
             break;
 
         case 'range':
-            ?>
-                <input
-                    type='range'
-                    id='<?php echo esc_attr($args['id']); ?>'
-                    name='<?php echo esc_attr($args['name']); ?>'
-                    value='<?php echo esc_attr($args['value']); ?>'
-                    class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
-                    min='<?php echo esc_attr($args['min']); ?>'
-                    max='<?php echo esc_attr($args['max']); ?>'
-                    step='<?php echo esc_attr($args['step']); ?>'
-                />
-                <?php
-
+            SettingsFields::renderRange($args);
             break;
 
         case 'raw':
@@ -355,15 +312,7 @@ class Settings
             break;
 
         case 'text':
-            ?>
-                <input
-                    type='text'
-                    id='<?php echo esc_attr($args['id']); ?>'
-                    name='<?php echo esc_attr($args['name']); ?>'
-                    value='<?php echo esc_attr($args['value']); ?>'
-                    class='<?php echo esc_attr(implode(' ', $args['classes'])); ?>'
-                />
-                <?php
+            SettingsFields::renderText($args);
             break;
 
         default:
