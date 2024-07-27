@@ -288,14 +288,11 @@ class PwdGen extends Settings
     /**
      * PwdGen: Render shortcode block
      *
-     * @param array  $atts    Shortcode attributes.
-     * @param string $content Shortcode content.
-     *
      * @access public
      * @return string
      * @since  1.1.0
      */
-    public function renderShortcode( $atts, $content = '' ): string
+    public function renderShortcode(): string
     {
         $options = get_option($this->option, $this->getDefaultOptions());
         $opts    = array();
@@ -303,12 +300,6 @@ class PwdGen extends Settings
         foreach ( $options as $k => $v ) {
             $opts[ str_replace('pwdgen_', '', $k) ] = $v;
         }
-
-        // $atts = shortcode_atts(
-        // array(
-        // 'count' => '3'
-        // ), $atts, $this->shortcodeTag
-        // );
 
         return ViewPwdGen::getShortcode($options);
     }
