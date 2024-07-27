@@ -1,98 +1,98 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+  exit;
 }
 
 /**
  * Password Generator functionality of the plugin
  *
- * @author     Robertas Reiciunas <accesspc@gmail.com>
- * @link       https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @author      Robertas Reiciunas <accesspc@gmail.com>
+ * @link        https://reiciunas.dev/plugins/rdev-wp-tools/
  *
- * @since      1.1.0
- * @package    RDWT
- * @subpackage RDWT/admin
+ * @since       1.1.0
+ * @package     RDWT
+ * @subpackage  RDWT/admin
  */
 class RDWT_PwdGen extends RDWT_Settings {
 
-	/**
-	 * RDWT option name.
-	 *
-	 * @access	protected
-	 * @since		1.1.0
-	 * @var			string
-	 */
-	protected $option = 'rdwt_pwdgen';
+  /**
+   * RDWT option name.
+   *
+   * @access  protected
+   * @since   1.1.0
+   * @var     string
+   */
+  protected $option = 'rdwt_pwdgen';
 
-	/**
-	 * RDWT Options
-	 *
-	 * @access	protected
-	 * @since		1.1.0
-	 * @var			array
-	 */
-	protected $options = array(
-		'pwdgen_enable' => false,
-		'pwdgen_count' => 3,
+  /**
+   * RDWT Options
+   *
+   * @access  protected
+   * @since   1.1.0
+   * @var     array
+   */
+  protected $options = array(
+    'pwdgen_enable' => false,
+    'pwdgen_count' => 3,
     'pwdgen_length' => 16,
     'pwdgen_inc_numbers' => true,
     'pwdgen_inc_lower' => true,
     'pwdgen_inc_upper' => true,
     'pwdgen_inc_symbols' => false,
-	);
+  );
 
-	/**
-	 * RDWT PwdGen Shortcode tag.
-	 *
-	 * @access	public
-	 * @since		1.1.0
-	 * @var			string
-	 */
-	public $shortcode_tag = 'rdwt_pwdgen';
+  /**
+   * RDWT PwdGen Shortcode tag.
+   *
+   * @access  public
+   * @since   1.1.0
+   * @var     string
+   */
+  public $shortcode_tag = 'rdwt_pwdgen';
 
-	/**
-	 * RDWT Version Number.
-	 *
-	 * @access	protected
-	 * @since		1.1.0
-	 * @var			string
-	 */
-	protected $version;
+  /**
+   * RDWT Version Number.
+   *
+   * @access  protected
+   * @since   1.1.0
+   * @var     string
+   */
+  protected $version;
 
-	/**
-	 * Main construct function.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.1.0
-	 */
-	public function __construct() {
-		$this->version = RDWT_VERSION;
+  /**
+   * Main construct function.
+   *
+   * @access  public
+   * @return  void
+   * @since   1.1.0
+   */
+  public function __construct() {
+    $this->version = RDWT_VERSION;
 
-		$this->add_hooks();
-	}
+    $this->add_hooks();
+  }
 
-	/**
-	 * Add Settings hooks.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.1.0
-	 */
-	public function add_hooks() {
+  /**
+   * Add Settings hooks.
+   *
+   * @access  public
+   * @return  void
+   * @since   1.1.0
+   */
+  public function add_hooks() {
     add_action( 'admin_init', array( $this, 'add_settings' ) );
 
     add_action( 'init', array( $this, 'init' ) );
   }
 
-	/**
-	 * Register settings / options.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.1.0
-	 */
+  /**
+   * Register settings / options.
+   *
+   * @access  public
+   * @return  void
+   * @since   1.1.0
+   */
   public function add_settings() {
     register_setting(
       'rdwt_plugin_settings',
@@ -156,10 +156,10 @@ class RDWT_PwdGen extends RDWT_Settings {
         'class' => 'rdwt-setting rdwt-range pwdgen-counter',
         'id' => 'pwdgen_count',
         'label_for' => 'pwdgen_count',
-				'max' => 10,
-				'min' => 1,
+        'max' => 10,
+        'min' => 1,
         'page' => 'rdwt_pwdgen',
-				'step' => 1,
+        'step' => 1,
         'sub_desc' => $this->options[ 'pwdgen_count' ],
         'type' => 'range',
       )
@@ -175,10 +175,10 @@ class RDWT_PwdGen extends RDWT_Settings {
         'class' => 'rdwt-setting rdwt-range',
         'id' => 'pwdgen_length',
         'label_for' => 'pwdgen_length',
-				'max' => 32,
-				'min' => 8,
+        'max' => 32,
+        'min' => 8,
         'page' => 'rdwt_pwdgen',
-				'step' => 1,
+        'step' => 1,
         'sub_desc' => $this->options[ 'pwdgen_length' ],
         'type' => 'range',
       )
@@ -249,17 +249,17 @@ class RDWT_PwdGen extends RDWT_Settings {
     );
   }
 
-	/**
-	 * PwdGen: Init function
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.1.0
-	 */
+  /**
+   * PwdGen: Init function
+   *
+   * @access  public
+   * @return  void
+   * @since   1.1.0
+   */
   public function init() {
     parent::init();
 
-		$options = get_option( $this->option, $this->get_default_options() );
+    $options = get_option( $this->option, $this->get_default_options() );
 
     if ( isset( $options[ 'pwdgen_enable' ] ) && $options[ 'pwdgen_enable'] ) {
       add_shortcode( $this->shortcode_tag, array( $this, 'render_shortcode' ) );
@@ -267,12 +267,12 @@ class RDWT_PwdGen extends RDWT_Settings {
   }
 
   /**
-	 * Settings section callback.
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since		1.1.0
-	 */
+   * Settings section callback.
+   *
+   * @access  public
+   * @return  void
+   * @since   1.1.0
+   */
   public function render_section_pwdgen() {
     esc_html_e( 'These are the settings for Password Generator', RDWT_DOMAIN );
   }
@@ -303,21 +303,21 @@ class RDWT_PwdGen extends RDWT_Settings {
     return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
   }
 
-	/**
-	 * Validate settings / options.
-	 *
-	 * @access	public
-	 * @return	array
-	 * @since		1.1.0
-	 */
-	public function validate_settings( $input ) {
+  /**
+   * Validate settings / options.
+   *
+   * @access  public
+   * @return  array
+   * @since   1.1.0
+   */
+  public function validate_settings( $input ) {
     foreach ( array_keys( $this->options )  as $k ) {
       if ( isset( $input[ $k ] ) ) {
         $input[ $k ] = wp_filter_nohtml_kses( $input[ $k ] );
       }
     }
 
-		return $input;
-	}
+    return $input;
+  }
 
 }
