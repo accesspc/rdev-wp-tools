@@ -1,9 +1,13 @@
 <?php
 /**
  * Google Analytics functionality of the plugin
+ * php version 7.3.0
  *
- * @package Rdev\WpTools\Modules
- * @since   1.0.0
+ * @category Modules
+ * @package  Rdev\WpTools\Modules
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools\Modules;
@@ -17,7 +21,12 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: GA
  *
- * @since 1.0.0
+ * @category Modules
+ * @package  Rdev\WpTools\Modules
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    1.0.0
  */
 class GA extends Settings
 {
@@ -168,11 +177,17 @@ class GA extends Settings
                 'options'   => array(
                     array(
                         'value' => 'header',
-                        'desc'  => __('Include tracking code in page head (via <code>wp_head</code>)', 'rdwt'),
+                        'desc'  => __(
+                            'Include tracking code in page head (via <code>wp_head</code>)', 
+                            'rdwt'
+                        ),
                     ),
                     array(
                         'value' => 'footer',
-                        'desc'  => __('Include tracking code in page footer (via <code>wp_footer</code>)', 'rdwt'),
+                        'desc'  => __(
+                            'Include tracking code in page footer (via <code>wp_footer</code>)', 
+                            'rdwt'
+                        ),
                     ),
                 ),
                 'page'      => 'rdwt_ga',
@@ -192,7 +207,7 @@ class GA extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option, $this->get_default_options());
+        $options = get_option($this->option, $this->getDefaultOptions());
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
@@ -227,7 +242,7 @@ class GA extends Settings
      */
     public function renderTrackingCode(): void
     {
-        $options = get_option($this->option, $this->get_default_options());
+        $options = get_option($this->option, $this->getDefaultOptions());
 
         include_once RDWT_DIR . 'assets/partials/ga-code.php';
     }
@@ -249,10 +264,21 @@ class GA extends Settings
             if (preg_match('/^GTM-/i', $input['ga_id']) ) {
                 $input['ga_id'] = '';
 
-                $message  = esc_html__('Error: your tracking code begins with', 'rdwt') . ' <code>GTM-</code> ';
-                $message .= esc_html__('(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 'rdwt');
+                $message  = esc_html__(
+                    'Error: your tracking code begins with', 
+                    'rdwt'
+                ) . ' <code>GTM-</code> ';
+                $message .= esc_html__(
+                    '(for Google Tag Manager), which is not supported. Please try again with a supported tracking code.', 
+                    'rdwt'
+                );
 
-                add_settings_error('ga_id', 'invalid-tracking-code', $message, 'error');
+                add_settings_error(
+                    'ga_id', 
+                    'invalid-tracking-code', 
+                    $message, 
+                    'error'
+                );
             }
         }
         return $input;

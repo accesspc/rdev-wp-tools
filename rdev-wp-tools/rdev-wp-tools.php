@@ -9,6 +9,7 @@
  * License: GPL v3
  * Text Domain: rdevwt
  * Domain Path: /languages
+ * php version 7.3.0
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @package Rdev
+ * @category Admin
+ * @package  Rdev\WpTools
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools;

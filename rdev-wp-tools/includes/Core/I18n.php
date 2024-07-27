@@ -1,9 +1,13 @@
 <?php
 /**
  * Define the internationalization functionality
+ * php version 7.3.0
  *
- * @package Rdev\WpTools\Core
- * @since   1.0.0
+ * @category Core
+ * @package  Rdev\WpTools\Core
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools\Core;
@@ -15,7 +19,12 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: I18n
  *
- * @since 1.0.0
+ * @category Core
+ * @package  Rdev\WpTools\Core
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    1.0.0
  */
 class I18n
 {

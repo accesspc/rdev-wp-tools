@@ -1,8 +1,13 @@
 <?php
 /**
  * Define the internationalization functionality
+ * php version 7.3.0
  *
- * @package Rdev\WpTools\Admin
+ * @category Admin
+ * @package  Rdev\WpTools\Admin
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools\Admin;
@@ -14,7 +19,12 @@ if (! defined('ABSPATH') ) {
 /**
  * The admin-settings specific functionality of the plugin
  *
- * @since 1.1.0
+ * @category Admin
+ * @package  Rdev\WpTools\Admin
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    1.1.0
  */
 class Settings
 {
@@ -65,7 +75,10 @@ class Settings
         add_action('admin_menu', array( $this, 'addAdminMenu' ));
         add_action('admin_init', array( $this, 'addSettings' ));
 
-        add_filter('plugin_action_links_' . RDWT_BASE, array( $this, 'pluginActionLinks' ));
+        add_filter(
+            'plugin_action_links_' . RDWT_BASE, 
+            array($this, 'pluginActionLinks')
+        );
     }
 
     /**
@@ -148,7 +161,7 @@ class Settings
      */
     public function displayAdminSettings(): void
     {
-        $options = get_option($this->option, $this->get_default_options());
+        $options = get_option($this->option, $this->getDefaultOptions());
 
         include_once RDWT_DIR . 'assets/partials/display-settings.php';
     }
@@ -162,7 +175,13 @@ class Settings
      */
     public function enqueueScripts(): void
     {
-        wp_enqueue_script(RDWT_SLUG, RDWT_URL . 'assets/js/rdwt-admin.js', array( 'jquery' ), RDWT_VERSION, false);
+        wp_enqueue_script(
+            RDWT_SLUG, 
+            RDWT_URL . 'assets/js/rdwt-admin.js', 
+            array( 'jquery' ), 
+            RDWT_VERSION, 
+            false
+        );
     }
 
     /**
@@ -174,7 +193,13 @@ class Settings
      */
     public function enqueueStyles(): void
     {
-        wp_enqueue_style(RDWT_SLUG, RDWT_URL . 'assets/css/rdwt-admin.css', array(), RDWT_VERSION, 'all');
+        wp_enqueue_style(
+            RDWT_SLUG, 
+            RDWT_URL . 'assets/css/rdwt-admin.css', 
+            array(), 
+            RDWT_VERSION, 
+            'all'
+        );
     }
 
     /**
@@ -184,7 +209,7 @@ class Settings
      * @return array
      * @since  1.0.0
      */
-    public function get_default_options(): array
+    public function getDefaultOptions(): array
     {
         return apply_filters('rdwt_default_options', $this->options);
     }
@@ -200,7 +225,7 @@ class Settings
     {
         // If no options exist, create them.
         if (! get_option($this->option) ) {
-            update_option($this->option, $this->get_default_options());
+            update_option($this->option, $this->getDefaultOptions());
         }
     }
 
@@ -215,10 +240,18 @@ class Settings
      */
     public function pluginActionLinks( $links ): array
     {
-        $settings_link = sprintf('<a href="%s">%s</a>', admin_url('admin.php?page=rdwt'), __('Overview', 'rdwt'));
+        $settings_link = sprintf(
+            '<a href="%s">%s</a>',
+            admin_url('admin.php?page=rdwt'), 
+            __('Overview', 'rdwt')
+        );
         array_unshift($links, $settings_link);
 
-        $settings_link = sprintf('<a href="%s">%s</a>', admin_url('admin.php?page=rdwt-settings'), __('Settings', 'rdwt'));
+        $settings_link = sprintf(
+            '<a href="%s">%s</a>', 
+            admin_url('admin.php?page=rdwt-settings'), 
+            __('Settings', 'rdwt')
+        );
         array_unshift($links, $settings_link);
 
         return $links;
@@ -233,7 +266,10 @@ class Settings
      */
     public function renderSectionOverview(): void
     {
-        esc_html_e('Rdev WP Tools is a collection of tools in a single bloat-less WordPress plugin.', 'rdwt');
+        esc_html_e(
+            'Rdev WP Tools is a collection of tools in a single bloat-less WordPress plugin.',
+            'rdwt'
+        );
     }
 
     /**
@@ -247,7 +283,7 @@ class Settings
      */
     public function renderSettingsField( $args )
     {
-        $this->setNameAndValue($args);
+        $this->_setNameAndValue($args);
 
         $args = wp_parse_args($args, array( 'classes' => array() ));
 
@@ -368,14 +404,18 @@ class Settings
      * @return void
      * @since  1.0.0
      */
-    private function setNameAndValue( &$args ): void
+    private function _setNameAndValue( &$args ): void
     {
         if (! isset($args['name']) ) {
-            $args['name'] = sprintf('%s[%s]', esc_attr($args['page']), esc_attr($args['id']));
+            $args['name'] = sprintf(
+                '%s[%s]', 
+                esc_attr($args['page']), 
+                esc_attr($args['id'])
+            );
         }
 
         if (! isset($args['value']) ) {
-            $options = get_option($this->option, $this->get_default_options());
+            $options = get_option($this->option, $this->getDefaultOptions());
 
             $args['value'] = $options[ $args['id'] ];
         }

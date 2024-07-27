@@ -1,9 +1,13 @@
 <?php
 /**
  * Password Generator functionality of the plugin
+ * php version 7.3.0
  *
- * @package Rdev\WpTools\Modules
- * @since   1.1.0
+ * @category Modules
+ * @package  Rdev\WpTools\Modules
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools\Modules;
@@ -17,7 +21,12 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: PwdGen
  *
- * @since 1.1.0
+ * @category Modules
+ * @package  Rdev\WpTools\Modules
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    1.1.0
  */
 class PwdGen extends Settings
 {
@@ -66,7 +75,7 @@ class PwdGen extends Settings
      */
     public function __construct()
     {
-        $this->add_hooks();
+        $this->addHooks();
     }
 
     /**
@@ -76,9 +85,9 @@ class PwdGen extends Settings
      * @return void
      * @since  1.1.0
      */
-    public function add_hooks(): void
+    public function addHooks(): void
     {
-        add_action('admin_init', array( $this, 'add_settings' ));
+        add_action('admin_init', array( $this, 'addSettings' ));
 
         add_action('init', array( $this, 'init' ));
     }
@@ -90,7 +99,7 @@ class PwdGen extends Settings
      * @return void
      * @since  1.1.0
      */
-    public function add_settings(): void
+    public function addSettings(): void
     {
         register_setting(
             'rdwt_plugin_settings',
@@ -121,7 +130,7 @@ class PwdGen extends Settings
         add_settings_section(
             'rdwt-settings-pwdgen-section',
             __('Password Generator', 'rdwt'),
-            array( $this, 'render_section_pwdgen' ),
+            array( $this, 'renderSectionPwdGen' ),
             'rdwt-settings',
             array(
                 'after_section' => '<hr/>',
@@ -139,7 +148,10 @@ class PwdGen extends Settings
                 'id'        => 'pwdgen_enable',
                 'label_for' => 'pwdgen_enable',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __('Check to enable Password Generator shortcode', 'rdwt'),
+                'sub_desc'  => __(
+                    'Check to enable Password Generator shortcode', 
+                    'rdwt'
+                ),
                 'type'      => 'checkbox',
             )
         );
@@ -258,10 +270,10 @@ class PwdGen extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option, $this->get_default_options());
+        $options = get_option($this->option, $this->getDefaultOptions());
 
         if (isset($options['pwdgen_enable']) && $options['pwdgen_enable'] ) {
-            add_shortcode($this->shortcode_tag, array( $this, 'render_shortcode' ));
+            add_shortcode($this->shortcode_tag, array( $this, 'renderShortcode' ));
         }
     }
 
@@ -272,23 +284,24 @@ class PwdGen extends Settings
      * @return void
      * @since  1.1.0
      */
-    public function render_section_pwdgen(): void
+    public function renderSectionPwdGen(): void
     {
         esc_html_e('These are the settings for Password Generator', 'rdwt');
     }
 
     /**
      * PwdGen: Render shortcode block
+     * 
+     * @param array  $atts    Shortcode attributes.
+     * @param string $content Shortcode content.
      *
      * @access public
      * @return string
      * @since  1.1.0
-     * @param  array  $atts    Shortcode attributes.
-     * @param  string $content Shortcode content.
      */
-    public function render_shortcode( $atts, $content = '' ): string
+    public function renderShortcode( $atts, $content = '' ): string
     {
-        $options = get_option($this->option, $this->get_default_options());
+        $options = get_option($this->option, $this->getDefaultOptions());
         $opts    = array();
 
         foreach ( $options as $k => $v ) {
@@ -308,11 +321,12 @@ class PwdGen extends Settings
 
     /**
      * Validate settings / options.
+     * 
+     * @param array $input Key-value pairs.
      *
      * @access public
      * @return array
      * @since  1.1.0
-     * @param  array $input Key-value pairs.
      */
     public function validateSettings( $input ): array
     {

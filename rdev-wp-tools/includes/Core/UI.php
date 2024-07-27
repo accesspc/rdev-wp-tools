@@ -1,9 +1,13 @@
 <?php
 /**
  * The public-facing functionality of the plugin
+ * php version 7.3.0
  *
- * @package Rdev\WpTools\Core
- * @since   1.0.0
+ * @category Core
+ * @package  Rdev\WpTools\Core
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools\Core;
@@ -15,7 +19,12 @@ if (! defined('ABSPATH') ) {
 /**
  * Class: UI
  *
- * @since 1.0.0
+ * @category Core
+ * @package  Rdev\WpTools\Core
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    1.0.0
  */
 class UI
 {
@@ -54,7 +63,13 @@ class UI
      */
     public function enqueueStyles()
     {
-        wp_enqueue_style(RDWT_SLUG, RDWT_URL . 'assets/css/rdwt-public.css', array(), RDWT_VERSION, 'all');
+        wp_enqueue_style(
+            RDWT_SLUG, 
+            RDWT_URL . 'assets/css/rdwt-public.css', 
+            array(), 
+            RDWT_VERSION, 
+            'all'
+        );
     }
 
     /**
@@ -66,6 +81,12 @@ class UI
      */
     public function enqueueScripts()
     {
-        wp_enqueue_script(RDWT_SLUG, RDWT_URL . 'assets/js/rdwt-public.js', array( 'jquery' ), RDWT_VERSION, false);
+        wp_enqueue_script(
+            RDWT_SLUG, 
+            RDWT_URL . 'assets/js/rdwt-public.js', 
+            array( 'jquery' ), 
+            RDWT_VERSION, 
+            false
+        );
     }
 }

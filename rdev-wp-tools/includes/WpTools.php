@@ -1,11 +1,13 @@
 <?php
 /**
  * This is the main class of the plugin
+ * php version 7.3.0
  *
- * @package Rdev\WpTools
- * 
- * @link  https://reiciunas.dev/plugins/rdev-wp-tools/
- * @since 2.0.0
+ * @category WpTools
+ * @package  Rdev\WpTools
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
 namespace Rdev\WpTools;
@@ -18,7 +20,12 @@ use Rdev\WpTools\Modules\PwdGen;
 /**
  * Class: WpTools
  *
- * @since 2.0.0
+ * @category WpTools
+ * @package  Rdev\WpTools
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
+ * @since    2.0.0
  */
 class WpTools
 {
@@ -81,7 +88,13 @@ class WpTools
      */
     public function addHooks(): void
     {
-        add_action('plugins_loaded', array( '\Rdev\WpTools\Core\I18n', 'loadPluginTextdomain' ));
+        add_action(
+            'plugins_loaded', 
+            array( 
+                '\Rdev\WpTools\Core\I18n', 
+                'loadPluginTextdomain' 
+            )
+        );
     }
 
     /**
