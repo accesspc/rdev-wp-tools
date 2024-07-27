@@ -1,11 +1,16 @@
 <?php
 /**
  * Admin -> Overview -> PwdGen settings information.
+ * php version 7.3.0
  *
- * @package Rdev\WpTools
+ * @category WpTools
+ * @package  Rdev\Partials
+ * @author   Robertas Reiciunas <accesspc@gmail.com>
+ * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
-if ( ! function_exists( 'add_action' ) ) {
+if (! function_exists('add_action') ) {
     die();
 }
 
