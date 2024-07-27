@@ -38,7 +38,7 @@ class GA
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -53,20 +53,20 @@ class GA
         ob_start();
         ?>
         <div class="rdwt-section-field">
-            This tool allows you to place a Google Analytics tracking code on your 
+            This tool allows you to place a Google Analytics tracking code on your
             website.<br/>
-            <a href="?page=rdwt-settings">Settings</a> page allows you to change 
+            <a href="?page=rdwt-settings">Settings</a> page allows you to change
             the following settings:
             <ul>
-                <li>GA Tracking ID: can be created on 
+                <li>GA Tracking ID: can be created on
                     <a href="https://analytics.google.com/" target="_blank">
                         Google Analytics
                     </a> page</li>
                 <li>Code placement location:
                     <ul>
-                        <li>Inside website's <code>&lt;head&gt;</code> element using 
+                        <li>Inside website's <code>&lt;head&gt;</code> element using
                         <code>wp_head</code></li>
-                        <li>At the bottom of website's <code>&lt;body&gt;</code> 
+                        <li>At the bottom of website's <code>&lt;body&gt;</code>
                         element using <code>wp_footer</code></li>
                     </ul>
                 </li>
@@ -90,9 +90,9 @@ class GA
         ?>
 
 <!-- Google tag (gtag.js) -->
-<script async 
-    src="https://www.googletagmanager.com/gtag/js?id=<?php 
-        echo $options['ga_id']; 
+<script async
+    src="https://www.googletagmanager.com/gtag/js?id=<?php
+        echo $options['ga_id'];
     ?>">
 </script>
 <script>

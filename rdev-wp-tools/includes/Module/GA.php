@@ -224,7 +224,7 @@ class GA extends Settings
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
-            $location = isset($options['ga_location']) 
+            $location = isset($options['ga_location'])
                 ? $options['ga_location'] : 'header';
 
             if ('header' === $location ) {

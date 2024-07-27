@@ -38,7 +38,7 @@ class Admin
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -67,7 +67,7 @@ class Admin
         </div>
         <?php
     }
-    
+
     /**
      * Render: Settings page.
      *
