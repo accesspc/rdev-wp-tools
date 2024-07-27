@@ -2,16 +2,16 @@
 /**
  * Password Generator functionality of the plugin
  *
- * @package Rdev\WpTools
+ * @package    Rdev\WpTools
  * @subpackage Rdev\WpTools\modules
- * @since 1.1.0
+ * @since      1.1.0
  */
 
 namespace Rdev\WpTools\Modules;
 
 use Rdev\WpTools\Admin\Settings;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH') ) {
     exit;
 }
 
@@ -20,14 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.1.0
  */
-class PwdGen extends Settings {
+class PwdGen extends Settings
+{
 
     /**
      * RDWT option name.
      *
      * @access protected
-     * @since 1.1.0
-     * @var string
+     * @since  1.1.0
+     * @var    string
      */
     protected $option = 'rdwt_pwdgen';
 
@@ -35,8 +36,8 @@ class PwdGen extends Settings {
      * RDWT Options
      *
      * @access protected
-     * @since 1.1.0
-     * @var array
+     * @since  1.1.0
+     * @var    array
      */
     protected $options = array(
         'pwdgen_enable'      => false,
@@ -52,8 +53,8 @@ class PwdGen extends Settings {
      * RDWT PwdGen Shortcode tag.
      *
      * @access public
-     * @since 1.1.0
-     * @var string
+     * @since  1.1.0
+     * @var    string
      */
     public $shortcode_tag = 'rdwt_pwdgen';
 
@@ -62,9 +63,10 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return void
-     * @since 1.1.0
+     * @since  1.1.0
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->add_hooks();
     }
 
@@ -73,12 +75,13 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return void
-     * @since 1.1.0
+     * @since  1.1.0
      */
-    public function add_hooks(): void {
-        add_action( 'admin_init', array( $this, 'add_settings' ) );
+    public function add_hooks(): void
+    {
+        add_action('admin_init', array( $this, 'add_settings' ));
 
-        add_action( 'init', array( $this, 'init' ) );
+        add_action('init', array( $this, 'init' ));
     }
 
     /**
@@ -86,23 +89,24 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return void
-     * @since 1.1.0
+     * @since  1.1.0
      */
-    public function add_settings(): void {
+    public function add_settings(): void
+    {
         register_setting(
             'rdwt_plugin_settings',
             $this->option,
-            array( $this, 'validate_settings' )
+            array( $this, 'validateSettings' )
         );
 
         // Overview section's field.
         ob_start();
         include_once RDWT_DIR . 'assets/partials/display-overview-pwdgen.php';
-        $html = str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+        $html = str_replace(array( "\r", "\n" ), '', ob_get_clean());
 
         add_settings_field(
             'pwdgen_overview',
-            __( 'Password Generator', 'rdwt' ),
+            __('Password Generator', 'rdwt'),
             array( $this, 'render_settings_field' ),
             'rdwt',
             'rdwt-settings-overview',
@@ -117,7 +121,7 @@ class PwdGen extends Settings {
         // Settings section and fields.
         add_settings_section(
             'rdwt-settings-pwdgen-section',
-            __( 'Password Generator', 'rdwt' ),
+            __('Password Generator', 'rdwt'),
             array( $this, 'render_section_pwdgen' ),
             'rdwt-settings',
             array(
@@ -127,7 +131,7 @@ class PwdGen extends Settings {
 
         add_settings_field(
             'pwdgen_enable',
-            __( 'Enable', 'rdwt' ),
+            __('Enable', 'rdwt'),
             array( $this, 'render_settings_field' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
@@ -136,14 +140,14 @@ class PwdGen extends Settings {
                 'id'        => 'pwdgen_enable',
                 'label_for' => 'pwdgen_enable',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __( 'Check to enable Password Generator shortcode', 'rdwt' ),
+                'sub_desc'  => __('Check to enable Password Generator shortcode', 'rdwt'),
                 'type'      => 'checkbox',
             )
         );
 
         add_settings_field(
             'pwdgen_count',
-            __( 'Number of passwords', 'rdwt' ),
+            __('Number of passwords', 'rdwt'),
             array( $this, 'render_settings_field' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
@@ -162,7 +166,7 @@ class PwdGen extends Settings {
 
         add_settings_field(
             'pwdgen_length',
-            __( 'Password length', 'rdwt' ),
+            __('Password length', 'rdwt'),
             array( $this, 'render_settings_field' ),
             'rdwt-settings',
             'rdwt-settings-pwdgen-section',
@@ -190,7 +194,7 @@ class PwdGen extends Settings {
                 'id'        => 'pwdgen_inc_numbers',
                 'label_for' => 'pwdgen_inc_numbers',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __( 'Numbers', 'rdwt' ),
+                'sub_desc'  => __('Numbers', 'rdwt'),
                 'type'      => 'checkbox',
             )
         );
@@ -206,7 +210,7 @@ class PwdGen extends Settings {
                 'id'        => 'pwdgen_inc_lower',
                 'label_for' => 'pwdgen_inc_lower',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __( 'Lower case letters', 'rdwt' ),
+                'sub_desc'  => __('Lower case letters', 'rdwt'),
                 'type'      => 'checkbox',
             )
         );
@@ -222,7 +226,7 @@ class PwdGen extends Settings {
                 'id'        => 'pwdgen_inc_upper',
                 'label_for' => 'pwdgen_inc_upper',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __( 'Upper case letters', 'rdwt' ),
+                'sub_desc'  => __('Upper case letters', 'rdwt'),
                 'type'      => 'checkbox',
             )
         );
@@ -238,7 +242,7 @@ class PwdGen extends Settings {
                 'id'        => 'pwdgen_inc_symbols',
                 'label_for' => 'pwdgen_inc_symbols',
                 'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __( 'Symbols', 'rdwt' ),
+                'sub_desc'  => __('Symbols', 'rdwt'),
                 'type'      => 'checkbox',
             )
         );
@@ -249,15 +253,16 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return void
-     * @since 1.1.0
+     * @since  1.1.0
      */
-    public function init(): void {
+    public function init(): void
+    {
         parent::init();
 
-        $options = get_option( $this->option, $this->get_default_options() );
+        $options = get_option($this->option, $this->get_default_options());
 
-        if ( isset( $options['pwdgen_enable'] ) && $options['pwdgen_enable'] ) {
-            add_shortcode( $this->shortcode_tag, array( $this, 'render_shortcode' ) );
+        if (isset($options['pwdgen_enable']) && $options['pwdgen_enable'] ) {
+            add_shortcode($this->shortcode_tag, array( $this, 'render_shortcode' ));
         }
     }
 
@@ -266,10 +271,11 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return void
-     * @since 1.1.0
+     * @since  1.1.0
      */
-    public function render_section_pwdgen(): void {
-        esc_html_e( 'These are the settings for Password Generator', 'rdwt' );
+    public function render_section_pwdgen(): void
+    {
+        esc_html_e('These are the settings for Password Generator', 'rdwt');
     }
 
     /**
@@ -277,16 +283,17 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return string
-     * @since 1.1.0
-     * @param array  $atts Shortcode attributes.
-     * @param string $content Shortcode content.
+     * @since  1.1.0
+     * @param  array  $atts    Shortcode attributes.
+     * @param  string $content Shortcode content.
      */
-    public function render_shortcode( $atts, $content = '' ): string {
-        $options = get_option( $this->option, $this->get_default_options() );
+    public function render_shortcode( $atts, $content = '' ): string
+    {
+        $options = get_option($this->option, $this->get_default_options());
         $opts    = array();
 
         foreach ( $options as $k => $v ) {
-            $opts[ str_replace( 'pwdgen_', '', $k ) ] = $v;
+            $opts[ str_replace('pwdgen_', '', $k) ] = $v;
         }
 
         // $atts = shortcode_atts(
@@ -297,7 +304,7 @@ class PwdGen extends Settings {
 
         ob_start();
         include_once RDWT_DIR . 'assets/partials/pwdgen-shortcode.php';
-        return str_replace( array( "\r", "\n" ), '', ob_get_clean() );
+        return str_replace(array( "\r", "\n" ), '', ob_get_clean());
     }
 
     /**
@@ -305,13 +312,14 @@ class PwdGen extends Settings {
      *
      * @access public
      * @return array
-     * @since 1.1.0
-     * @param array $input Key-value pairs.
+     * @since  1.1.0
+     * @param  array $input Key-value pairs.
      */
-    public function validate_settings( $input ): array {
-        foreach ( array_keys( $this->options ) as $k ) {
-            if ( isset( $input[ $k ] ) ) {
-                $input[ $k ] = wp_filter_nohtml_kses( $input[ $k ] );
+    public function validateSettings( $input ): array
+    {
+        foreach ( array_keys($this->options) as $k ) {
+            if (isset($input[ $k ]) ) {
+                $input[ $k ] = wp_filter_nohtml_kses($input[ $k ]);
             }
         }
         return $input;

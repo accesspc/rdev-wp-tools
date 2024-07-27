@@ -2,14 +2,13 @@
 /**
  * Define the internationalization functionality
  *
- * @package Rdev\WpTools
- * @subpackage Rdev\WpTools\Core
- * @since 1.0.0
+ * @package Rdev\WpTools\Core
+ * @since   1.0.0
  */
 
 namespace Rdev\WpTools\Core;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH') ) {
     exit;
 }
 
@@ -18,20 +17,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class I18n {
+class I18n
+{
 
     /**
      * Load plugin text domain for translations
      *
-     * @access  public
-     * @return  void
-     * @since   1.0.0
+     * @access public
+     * @return void
+     * @since  1.0.0
      */
-    public static function load_plugin_textdomain(): void {
+    public static function loadPluginTextdomain(): void
+    {
         load_plugin_textdomain(
             RDWT_DOMAIN,
             false,
-            dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
+            dirname(plugin_basename(__FILE__), 2) . '/languages/'
         );
     }
 }

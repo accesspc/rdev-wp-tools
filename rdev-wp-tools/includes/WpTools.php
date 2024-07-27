@@ -2,11 +2,10 @@
 /**
  * This is the main class of the plugin
  *
- * @link https://reiciunas.dev/plugins/rdev-wp-tools/
- * @since 2.0.0
- *
  * @package Rdev\WpTools
- * @subpackage Rdev\WpTools
+ * 
+ * @link  https://reiciunas.dev/plugins/rdev-wp-tools/
+ * @since 2.0.0
  */
 
 namespace Rdev\WpTools;
@@ -21,14 +20,15 @@ use Rdev\WpTools\Modules\PwdGen;
  *
  * @since 2.0.0
  */
-class WpTools {
+class WpTools
+{
 
     /**
      * Google Analytics Object
      *
      * @access public
-     * @since 1.1.0
-     * @var \Rdev\WpTools\Modules\GA
+     * @since  1.1.0
+     * @var    \Rdev\WpTools\Modules\GA
      */
     public $ga;
 
@@ -36,8 +36,8 @@ class WpTools {
      * Password Generator Object
      *
      * @access public
-     * @since 1.1.0
-     * @var \Rdev\WpTools\Modules\PwdGen
+     * @since  1.1.0
+     * @var    \Rdev\WpTools\Modules\PwdGen
      */
     public $pwdgen;
 
@@ -45,8 +45,8 @@ class WpTools {
      * Settings Object
      *
      * @access public
-     * @since 1.0.0
-     * @var \Rdev\WpTools\Admin\Settings
+     * @since  1.0.0
+     * @var    \Rdev\WpTools\Admin\Settings
      */
     public $settings;
 
@@ -54,8 +54,8 @@ class WpTools {
      * UI Object
      *
      * @access public
-     * @since 1.0.0
-     * @var \Rdev\WpTools\Core\UI
+     * @since  1.0.0
+     * @var    \Rdev\WpTools\Core\UI
      */
     public $ui;
 
@@ -64,11 +64,12 @@ class WpTools {
      *
      * @access public
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
-    public function __construct() {
-        $this->load_dependencies();
-        $this->add_hooks();
+    public function __construct()
+    {
+        $this->loadDependencies();
+        $this->addHooks();
     }
 
     /**
@@ -76,10 +77,11 @@ class WpTools {
      *
      * @access public
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
-    public function add_hooks(): void {
-        add_action( 'plugins_loaded', array( '\Rdev\WpTools\Core\I18n', 'load_plugin_textdomain' ) );
+    public function addHooks(): void
+    {
+        add_action('plugins_loaded', array( '\Rdev\WpTools\Core\I18n', 'loadPluginTextdomain' ));
     }
 
     /**
@@ -87,9 +89,10 @@ class WpTools {
      *
      * @access public
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
-    public function load_dependencies(): void {
+    public function loadDependencies(): void
+    {
         $this->settings = new Settings();
 
         $this->ga     = new GA();

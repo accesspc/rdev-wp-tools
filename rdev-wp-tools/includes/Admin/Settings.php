@@ -109,7 +109,7 @@ class Settings {
         register_setting(
             'rdwt_plugin',
             'rdwt',
-            array( $this, 'validate_settings' )
+            array( $this, 'validateSettings' )
         );
 
         add_settings_section(
@@ -372,7 +372,7 @@ class Settings {
      * @since 1.0.0
      * @param array $input array to validate.
      */
-    public function validate_settings( $input ): array {
+    public function validateSettings( $input ): array {
         return $input;
     }
 }
