@@ -3,7 +3,7 @@
  * Plugin Name: Rdev WP Tools
  * Plugin URI: https://github.com/accesspc/rdev-wp-tools
  * Description: RDev bloat-less WordPress tools.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Robertas Reiciunas
  * Author URI: https://reiciunas.dev/
  * License: GPL v3
@@ -61,7 +61,7 @@ if (! defined('RDWT_URL') ) {
 }
 
 if (! defined('RDWT_VERSION') ) {
-    define('RDWT_VERSION', '2.0.0');
+    define('RDWT_VERSION', '2.0.1');
 }
 
 /**
