@@ -190,69 +190,30 @@ class PwdGen extends Settings
             )
         );
 
-        add_settings_field(
-            'pwdgen_inc_numbers',
-            '',
-            array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-pwdgen-section',
-            array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'pwdgen_inc_numbers',
-                'label_for' => 'pwdgen_inc_numbers',
-                'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __('Numbers', 'rdwt'),
-                'type'      => 'checkbox',
-            )
+        $pwdgen_inc = array(
+            'pwdgen_inc_numbers' => __('Numbers', 'rdwt'),
+            'pwdgen_inc_lower' => __('Lower case letters', 'rdwt'),
+            'pwdgen_inc_upper' => __('Upper case letters', 'rdwt'),
+            'pwdgen_inc_symbols' => __('Symbols', 'rdwt'),
         );
 
-        add_settings_field(
-            'pwdgen_inc_lower',
-            '',
-            array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-pwdgen-section',
-            array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'pwdgen_inc_lower',
-                'label_for' => 'pwdgen_inc_lower',
-                'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __('Lower case letters', 'rdwt'),
-                'type'      => 'checkbox',
-            )
-        );
-
-        add_settings_field(
-            'pwdgen_inc_upper',
-            '',
-            array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-pwdgen-section',
-            array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'pwdgen_inc_upper',
-                'label_for' => 'pwdgen_inc_upper',
-                'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __('Upper case letters', 'rdwt'),
-                'type'      => 'checkbox',
-            )
-        );
-
-        add_settings_field(
-            'pwdgen_inc_symbols',
-            '',
-            array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-pwdgen-section',
-            array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'pwdgen_inc_symbols',
-                'label_for' => 'pwdgen_inc_symbols',
-                'page'      => 'rdwt_pwdgen',
-                'sub_desc'  => __('Symbols', 'rdwt'),
-                'type'      => 'checkbox',
-            )
-        );
+        foreach ($pwdgen_inc as $id => $sub_desc) {
+            add_settings_field(
+                $id,
+                '',
+                array( $this, 'renderSettingsField' ),
+                'rdwt-settings',
+                'rdwt-settings-pwdgen-section',
+                array(
+                    'class'     => 'rdwt-setting',
+                    'id'        => $id,
+                    'label_for' => $id,
+                    'page'      => 'rdwt_pwdgen',
+                    'sub_desc'  => $sub_desc,
+                    'type'      => 'checkbox',
+                )
+            );
+        }
     }
 
     /**
