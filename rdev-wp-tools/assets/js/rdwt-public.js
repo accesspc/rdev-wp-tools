@@ -32,22 +32,21 @@
                     {
                         let generatedPassword = '';
 
+                        const cr = window.crypto || window.msCrypto;
+                        var arr = new Uint8Array(1);
+
                         for ( let i = 0; i < length; i ++ ) {
                             if (lower) {
-                                let val = Math.random();
-                                  generatedPassword += String.fromCharCode(Math.floor(val * 26) + 97);
+                                generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 26) + 97);
                             }
                             if (upper) {
-                                val = Math.random();
-                                generatedPassword += String.fromCharCode(Math.floor(val * 26) + 65);
+                                generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 26) + 65);
                             }
                             if (number) {
-                                val = Math.random();
-                                 generatedPassword += String.fromCharCode(Math.floor(val * 10) + 48);
+                                 generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 10) + 48);
                             }
                             if (symbol) {
-                                val = Math.random();
-                                generatedPassword += symbols[Math.floor(val * symbols.length)];
+                                generatedPassword += symbols[Math.floor(cr.getRandomValues(arr)[0] / 256 * symbols.length)];
                             }
                         }
 
