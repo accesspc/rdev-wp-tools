@@ -36,7 +36,7 @@ class Settings
      * @since  1.0.0
      * @var    string
      */
-    protected string $option_name = 'rdwt';
+    protected string $optionName = 'rdwt';
 
     /**
      * RDWT Options
@@ -198,8 +198,8 @@ class Settings
     public function init(): void
     {
         // If no options exist, create them.
-        if (! get_option($this->option_name) ) {
-            update_option($this->option_name, $this->getDefaultOptions());
+        if (! get_option($this->optionName) ) {
+            update_option($this->optionName, $this->getDefaultOptions());
         }
     }
 
@@ -339,7 +339,7 @@ class Settings
         }
 
         if (! isset($args['value']) ) {
-            $options = get_option($this->option_name, $this->getDefaultOptions());
+            $options = get_option($this->optionName, $this->getDefaultOptions());
 
             $args['value'] = $options[ $args['id'] ];
         }

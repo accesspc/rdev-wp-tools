@@ -39,7 +39,7 @@ class GA extends Settings
      * @since  1.0.0
      * @var    string
      */
-    protected string $option_name = 'rdwt_ga';
+    protected string $optionName = 'rdwt_ga';
 
     /**
      * RDWT Options
@@ -91,7 +91,7 @@ class GA extends Settings
     {
         register_setting(
             'rdwt_plugin_settings_ga',
-            $this->option_name,
+            $this->optionName,
             array( $this, 'validateSettings' )
         );
 
@@ -110,11 +110,14 @@ class GA extends Settings
         );
 
         // Settings section and fields.
+        $page = 'rdwt-settings-ga';
+        $section = 'rdwt-settings-ga-section';
+
         add_settings_section(
-            'rdwt-settings-ga-section',
+            $section,
             __('Google Analytics', 'rdwt'),
             array( $this, 'renderSectionGA' ),
-            'rdwt-settings-ga',
+            $page,
             array(
                 'after_section' => '<hr/>',
             ),
@@ -124,8 +127,8 @@ class GA extends Settings
             'ga_enable',
             __('Enable', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings-ga',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'id'        => 'ga_enable',
@@ -143,8 +146,8 @@ class GA extends Settings
             'ga_id',
             __('GA Tracking ID', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings-ga',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'desc'      => array(
@@ -173,8 +176,8 @@ class GA extends Settings
             'ga_location',
             __('Tracking code location', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings-ga',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'desc'      => __(
@@ -220,7 +223,7 @@ class GA extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option_name, $this->getDefaultOptions());
+        $options = get_option($this->optionName, $this->getDefaultOptions());
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
@@ -256,7 +259,7 @@ class GA extends Settings
      */
     public function renderTrackingCode(): void
     {
-        $options = get_option($this->option_name, $this->getDefaultOptions());
+        $options = get_option($this->optionName, $this->getDefaultOptions());
 
         ViewGA::renderScript($options);
     }
