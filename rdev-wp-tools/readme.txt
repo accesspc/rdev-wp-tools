@@ -39,6 +39,10 @@ Add some useful tools to your Wordpress site.
 
 == Changelog ==
 
+= v2.0.0 =
+* Refactor: using php namespaces
+* Feat: SettingsField class
+
 = 1.2.0 =
 * Feat: settings link on plugins page
 

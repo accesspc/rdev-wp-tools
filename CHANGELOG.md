@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.0
+
+* Refactor: using php namespaces
+* Feat: SettingsField class
+
 ## v1.2.0
 
 * Feat: settings link on plugins page
