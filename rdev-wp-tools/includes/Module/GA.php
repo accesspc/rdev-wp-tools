@@ -95,20 +95,6 @@ class GA extends Settings
             array( $this, 'validateSettings' )
         );
 
-        add_settings_field(
-            'ga_overview',
-            __('Google Analytics', 'rdwt'),
-            array( $this, 'renderSettingsField' ),
-            'rdwt',
-            'rdwt-settings-overview',
-            array(
-                'html' => ViewGA::getOverview(),
-                'id'   => 'ga_overview',
-                'page' => 'rdwt_overview',
-                'type' => 'raw',
-            ),
-        );
-
         // Settings section and fields.
         $page = 'rdwt-settings-ga';
         $section = 'rdwt-settings-ga-section';
@@ -116,7 +102,7 @@ class GA extends Settings
         add_settings_section(
             $section,
             __('Google Analytics', 'rdwt'),
-            array( $this, 'renderSectionGA' ),
+            array( 'Rdev\WpTools\View\GA', 'renderSection'),
             $page,
             array(
                 'after_section' => '<hr/>',
@@ -236,18 +222,6 @@ class GA extends Settings
                 add_action('wp_footer', array( &$this, 'renderTrackingCode' ));
             }
         }
-    }
-
-    /**
-     * Settings section callback.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function renderSectionGA(): void
-    {
-        esc_html_e('These are the settings for Googla Analytics', 'rdwt');
     }
 
     /**
