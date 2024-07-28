@@ -74,7 +74,7 @@ class PwdGen
             </p>
         </div>
         <?php
-        return ob_get_clean();
+        return str_replace(array( "\r", "\n"), '', ob_get_clean());
     }
 
     /**
@@ -121,7 +121,7 @@ class PwdGen
             <div class="pwdgen-list"></div>
         </div>
         <?php
-        return ob_get_clean();
+        return str_replace(array( "\r", "\n"), '', ob_get_clean());
     }
 
 }

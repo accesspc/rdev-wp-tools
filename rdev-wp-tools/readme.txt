@@ -39,6 +39,9 @@ Add some useful tools to your Wordpress site.
 
 == Changelog ==
 
+= v2.0.1 =
+* Fix: strip ob_get_clean of new lines
+
 = v2.0.0 =
 * Refactor: using php namespaces
 * Feat: SettingsField class

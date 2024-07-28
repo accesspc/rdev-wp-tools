@@ -73,7 +73,7 @@ class GA
             </ul>
         </div>
         <?php
-        return ob_get_clean();
+        return str_replace(array( "\r", "\n"), '', ob_get_clean());
     }
 
     /**
