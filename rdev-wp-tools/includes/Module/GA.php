@@ -39,7 +39,7 @@ class GA extends Settings
      * @since  1.0.0
      * @var    string
      */
-    protected string $option = 'rdwt_ga';
+    protected string $option_name = 'rdwt_ga';
 
     /**
      * RDWT Options
@@ -90,8 +90,8 @@ class GA extends Settings
     public function addSettings(): void
     {
         register_setting(
-            'rdwt_plugin_settings',
-            $this->option,
+            'rdwt_plugin_settings_ga',
+            $this->option_name,
             array( $this, 'validateSettings' )
         );
 
@@ -106,7 +106,7 @@ class GA extends Settings
                 'id'   => 'ga_overview',
                 'page' => 'rdwt_overview',
                 'type' => 'raw',
-            )
+            ),
         );
 
         // Settings section and fields.
@@ -114,7 +114,7 @@ class GA extends Settings
             'rdwt-settings-ga-section',
             __('Google Analytics', 'rdwt'),
             array( $this, 'renderSectionGA' ),
-            'rdwt-settings',
+            'rdwt-settings-ga',
             array(
                 'after_section' => '<hr/>',
             ),
@@ -124,7 +124,7 @@ class GA extends Settings
             'ga_enable',
             __('Enable', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-ga',
             'rdwt-settings-ga-section',
             array(
                 'class'     => 'rdwt-setting',
@@ -136,14 +136,14 @@ class GA extends Settings
                     'rdwt'
                 ),
                 'type'      => 'checkbox',
-            )
+            ),
         );
 
         add_settings_field(
             'ga_id',
             __('GA Tracking ID', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-ga',
             'rdwt-settings-ga-section',
             array(
                 'class'     => 'rdwt-setting',
@@ -166,14 +166,14 @@ class GA extends Settings
                 'page'      => 'rdwt_ga',
                 'sub_desc'  => '',
                 'type'      => 'text',
-            )
+            ),
         );
 
         add_settings_field(
             'ga_location',
             __('Tracking code location', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-ga',
             'rdwt-settings-ga-section',
             array(
                 'class'     => 'rdwt-setting',
@@ -205,7 +205,7 @@ class GA extends Settings
                 ),
                 'page'      => 'rdwt_ga',
                 'type'      => 'radio',
-            )
+            ),
         );
     }
 
@@ -220,7 +220,7 @@ class GA extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->option_name, $this->getDefaultOptions());
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
@@ -242,7 +242,7 @@ class GA extends Settings
      * @return void
      * @since  1.0.0
      */
-    public static function renderSectionGA(): void
+    public function renderSectionGA(): void
     {
         esc_html_e('These are the settings for Googla Analytics', 'rdwt');
     }
@@ -256,7 +256,7 @@ class GA extends Settings
      */
     public function renderTrackingCode(): void
     {
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->option_name, $this->getDefaultOptions());
 
         ViewGA::renderScript($options);
     }

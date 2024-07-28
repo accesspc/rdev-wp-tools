@@ -39,7 +39,7 @@ class PwdGen extends Settings
      * @since  1.1.0
      * @var    string
      */
-    protected string $option = 'rdwt_pwdgen';
+    protected string $option_name = 'rdwt_pwdgen';
 
     /**
      * RDWT Options
@@ -103,8 +103,8 @@ class PwdGen extends Settings
     public function addSettings(): void
     {
         register_setting(
-            'rdwt_plugin_settings',
-            $this->option,
+            'rdwt_plugin_settings_pwdgen',
+            $this->option_name,
             array( $this, 'validateSettings' )
         );
 
@@ -119,7 +119,7 @@ class PwdGen extends Settings
                 'id'   => 'pwdgen_overview',
                 'page' => 'rdwt_overview',
                 'type' => 'raw',
-            )
+            ),
         );
 
         // Settings section and fields.
@@ -127,17 +127,17 @@ class PwdGen extends Settings
             'rdwt-settings-pwdgen-section',
             __('Password Generator', 'rdwt'),
             array( $this, 'renderSectionPwdGen' ),
-            'rdwt-settings',
+            'rdwt-settings-pwdgen',
             array(
                 'after_section' => '<hr/>',
-            )
+            ),
         );
 
         add_settings_field(
             'pwdgen_enable',
             __('Enable', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-pwdgen',
             'rdwt-settings-pwdgen-section',
             array(
                 'class'     => 'rdwt-setting',
@@ -149,14 +149,14 @@ class PwdGen extends Settings
                     'rdwt'
                 ),
                 'type'      => 'checkbox',
-            )
+            ),
         );
 
         add_settings_field(
             'pwdgen_count',
             __('Number of passwords', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-pwdgen',
             'rdwt-settings-pwdgen-section',
             array(
                 'class'     => 'rdwt-setting rdwt-range pwdgen-counter',
@@ -168,14 +168,14 @@ class PwdGen extends Settings
                 'step'      => 1,
                 'sub_desc'  => $this->options['pwdgen_count'],
                 'type'      => 'range',
-            )
+            ),
         );
 
         add_settings_field(
             'pwdgen_length',
             __('Password length', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
+            'rdwt-settings-pwdgen',
             'rdwt-settings-pwdgen-section',
             array(
                 'class'     => 'rdwt-setting rdwt-range',
@@ -187,7 +187,7 @@ class PwdGen extends Settings
                 'step'      => 1,
                 'sub_desc'  => $this->options['pwdgen_length'],
                 'type'      => 'range',
-            )
+            ),
         );
 
         $pwdgen_inc = array(
@@ -202,7 +202,7 @@ class PwdGen extends Settings
                 $id,
                 '',
                 array( $this, 'renderSettingsField' ),
-                'rdwt-settings',
+                'rdwt-settings-pwdgen',
                 'rdwt-settings-pwdgen-section',
                 array(
                     'class'     => 'rdwt-setting',
@@ -227,7 +227,7 @@ class PwdGen extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->option_name, $this->getDefaultOptions());
 
         if (isset($options['pwdgen_enable']) && $options['pwdgen_enable'] ) {
             add_shortcode($this->shortcodeTag, array( $this, 'renderShortcode' ));
@@ -255,7 +255,7 @@ class PwdGen extends Settings
      */
     public function renderShortcode(): string
     {
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->option_name, $this->getDefaultOptions());
         $opts    = array();
 
         foreach ( $options as $k => $v ) {
