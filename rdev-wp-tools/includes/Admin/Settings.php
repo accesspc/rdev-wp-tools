@@ -95,8 +95,8 @@ class Settings
         }
 
         add_menu_page(
-            esc_html__('Rdev WP Tools', 'rdwt'),
-            esc_html__('Rdev WP Tools', 'rdwt'),
+            __('Rdev WP Tools', 'rdwt'),
+            __('Rdev WP Tools', 'rdwt'),
             'manage_options',
             RDWT_SLUG,
             array( 'Rdev\WpTools\View\Admin', 'renderOverview' ),
@@ -216,14 +216,14 @@ class Settings
     {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url('admin.php?page=rdwt'),
+            admin_url('admin.php?page=' . RDWT_SLUG),
             __('Overview', 'rdwt')
         );
         array_unshift($links, $settings_link);
 
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url('admin.php?page=rdwt-settings'),
+            admin_url('admin.php?page=' . RDWT_SLUG . '-settings'),
             __('Settings', 'rdwt')
         );
         array_unshift($links, $settings_link);
