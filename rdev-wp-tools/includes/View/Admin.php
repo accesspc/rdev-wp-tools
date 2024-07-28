@@ -129,7 +129,6 @@ class Admin
             default:
                 settings_fields('rdwt_plugin_settings');
                 do_settings_sections('rdwt-settings');
-                // submit_button();
                 break;
             }
             ?>
