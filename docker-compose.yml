@@ -25,7 +25,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./rdwt:/var/www/html/wp-content/plugins/rdwt
+      - ./rdev-wp-tools:/var/www/html/wp-content/plugins/rdev-wp-tools
 
 volumes:
   data-mysql:
