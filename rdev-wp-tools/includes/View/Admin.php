@@ -52,9 +52,10 @@ class Admin
     {
         ?>
         <div class="wrap rdwt-admin-wrap">
-            <h1 class="rdwt-title"><?php esc_html_e('Rdev WP Tools', 'rdwt'); ?></h1>
+            <h1 class="rdwt-title">
+                <?php echo esc_html(get_admin_page_title()); ?>
+            </h1>
             <?php settings_errors(); ?>
-            <h2 class="nav-tab-wrapper">&nbsp;</h2>
 
             <form method="post" action="options.php">
 
@@ -77,21 +78,64 @@ class Admin
      */
     public static function renderSettings(): void
     {
+        $default_tab = null;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
+
         ?>
         <div class="wrap rdwt-admin-wrap">
-            <h1 class="rdwt-title"><?php esc_html_e('Settings', 'rdwt'); ?></h1>
-            <?php settings_errors(); ?>
-            <h2 class="nav-tab-wrapper">&nbsp;</h2>
+        <h1 class="rdwt-title"><?php esc_html_e('Settings', 'rdwt'); ?></h1>
+        <?php settings_errors(); ?>
 
-            <form method="post" action="options.php">
+        <nav class="nav-tab-wrapper">
+            <a href="?page=<?php echo RDWT_SLUG; ?>-settings"
+            class="nav-tab <?php
+            if ($tab === null) :
+                ?>nav-tab-active<?php
+            endif;
+            ?>">Overview</a>
 
-                <?php
-                    settings_fields('rdwt_plugin_settings');
-                    do_settings_sections('rdwt-settings');
-                    submit_button();
-                ?>
+            <a href="?page=<?php echo RDWT_SLUG; ?>-settings&tab=ga"
+            class="nav-tab <?php
+            if ($tab === 'ga') :
+                ?>nav-tab-active<?php
+            endif;
+            ?>">Google Analytics</a>
 
-            </form>
+            <a href="?page=<?php echo RDWT_SLUG; ?>-settings&tab=pwdgen"
+            class="nav-tab <?php
+            if ($tab === 'pwdgen') :
+                ?>nav-tab-active<?php
+            endif;
+            ?>">Password Generator</a>
+        </nav>
+
+        <form method="post" action="options.php">
+            <div class="tab-content">
+
+            <?php
+            switch ($tab) {
+            case 'ga':
+                settings_fields('rdwt_plugin_settings_ga');
+                do_settings_sections('rdwt-settings-ga');
+                submit_button();
+                break;
+
+            case 'pwdgen':
+                settings_fields('rdwt_plugin_settings_pwdgen');
+                do_settings_sections('rdwt-settings-pwdgen');
+                submit_button();
+                break;
+
+            default:
+                settings_fields('rdwt_plugin_settings');
+                do_settings_sections('rdwt-settings');
+                // submit_button();
+                break;
+            }
+            ?>
+
+            </div>
+        </form>
         </div>
         <?php
     }
