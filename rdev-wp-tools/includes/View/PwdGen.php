@@ -42,42 +42,6 @@ class PwdGen
     }
 
     /**
-     * Get: Overview page.
-     *
-     * @access public
-     * @return string
-     * @since  2.0.0
-     */
-    public static function getOverview(): string
-    {
-        ob_start();
-        ?>
-        <div class="rdwt-section-field">
-            This tool allows you to place a password generator shortcode anywhere
-            on the site.</br><a href="?page=rdwt-settings">Settings</a>
-            page allows you to change the following settings for the shortcode:
-            <ul>
-                <li>Number of password: <code>1-10</code></li>
-                <li>Password length: <code>8-32</code></li>
-                <li>Include any combination of the following:
-                    <ul>
-                        <li>Numbers: <code>[0-9]</code></li>
-                        <li>Lower case letters: <code>[a-z]</code></li>
-                        <li>Upper case letters: <code>[A-Z]</code></li>
-                        <li>Symbols: <code>!@#$%^&*(){}[]=&lt;&gt;/,.</code></li>
-                    </ul>
-                </li>
-            </ul>
-            <p>
-                Shortcode to insert anywhere on the site:
-                <code>[rdwt_pwdgen]</code>
-            </p>
-        </div>
-        <?php
-        return str_replace(array( "\r", "\n"), '', ob_get_clean());
-    }
-
-    /**
      * Get: Shortcode.
      *
      * @param array $options Shortcode options.
@@ -124,4 +88,18 @@ class PwdGen
         return str_replace(array( "\r", "\n"), '', ob_get_clean());
     }
 
+    /**
+     * Render: Settings section.
+     *
+     * @access public
+     * @return void
+     * @since  2.1.0
+     */
+    public static function renderSection(): void
+    {
+        ?>
+        This tool allows you to place a password generator shortcode anywhere
+        on the site.
+        <?php
+    }
 }

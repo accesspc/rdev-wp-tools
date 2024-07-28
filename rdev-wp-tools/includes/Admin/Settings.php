@@ -36,7 +36,7 @@ class Settings
      * @since  1.0.0
      * @var    string
      */
-    protected string $option = 'rdwt';
+    protected string $optionName = 'rdwt';
 
     /**
      * RDWT Options
@@ -95,8 +95,8 @@ class Settings
         }
 
         add_menu_page(
-            esc_html__('Rdev WP Tools', 'rdwt'),
-            esc_html__('Rdev WP Tools', 'rdwt'),
+            __('Rdev WP Tools', 'rdwt'),
+            __('Rdev WP Tools', 'rdwt'),
             'manage_options',
             RDWT_SLUG,
             array( 'Rdev\WpTools\View\Admin', 'renderOverview' ),
@@ -198,8 +198,8 @@ class Settings
     public function init(): void
     {
         // If no options exist, create them.
-        if (! get_option($this->option) ) {
-            update_option($this->option, $this->getDefaultOptions());
+        if (! get_option($this->optionName) ) {
+            update_option($this->optionName, $this->getDefaultOptions());
         }
     }
 
@@ -216,14 +216,14 @@ class Settings
     {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url('admin.php?page=rdwt'),
+            admin_url('admin.php?page=' . RDWT_SLUG),
             __('Overview', 'rdwt')
         );
         array_unshift($links, $settings_link);
 
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url('admin.php?page=rdwt-settings'),
+            admin_url('admin.php?page=' . RDWT_SLUG . '-settings'),
             __('Settings', 'rdwt')
         );
         array_unshift($links, $settings_link);
@@ -339,7 +339,7 @@ class Settings
         }
 
         if (! isset($args['value']) ) {
-            $options = get_option($this->option, $this->getDefaultOptions());
+            $options = get_option($this->optionName, $this->getDefaultOptions());
 
             $args['value'] = $options[ $args['id'] ];
         }

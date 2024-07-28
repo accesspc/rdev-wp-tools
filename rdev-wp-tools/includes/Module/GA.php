@@ -39,7 +39,7 @@ class GA extends Settings
      * @since  1.0.0
      * @var    string
      */
-    protected string $option = 'rdwt_ga';
+    protected string $optionName = 'rdwt_ga';
 
     /**
      * RDWT Options
@@ -90,31 +90,20 @@ class GA extends Settings
     public function addSettings(): void
     {
         register_setting(
-            'rdwt_plugin_settings',
-            $this->option,
+            'rdwt_plugin_settings_ga',
+            $this->optionName,
             array( $this, 'validateSettings' )
         );
 
-        add_settings_field(
-            'ga_overview',
-            __('Google Analytics', 'rdwt'),
-            array( $this, 'renderSettingsField' ),
-            'rdwt',
-            'rdwt-settings-overview',
-            array(
-                'html' => ViewGA::getOverview(),
-                'id'   => 'ga_overview',
-                'page' => 'rdwt_overview',
-                'type' => 'raw',
-            )
-        );
-
         // Settings section and fields.
+        $page = 'rdwt-settings-ga';
+        $section = 'rdwt-settings-ga-section';
+
         add_settings_section(
-            'rdwt-settings-ga-section',
+            $section,
             __('Google Analytics', 'rdwt'),
-            array( $this, 'renderSectionGA' ),
-            'rdwt-settings',
+            array( 'Rdev\WpTools\View\GA', 'renderSection'),
+            $page,
             array(
                 'after_section' => '<hr/>',
             ),
@@ -124,8 +113,8 @@ class GA extends Settings
             'ga_enable',
             __('Enable', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'id'        => 'ga_enable',
@@ -136,15 +125,15 @@ class GA extends Settings
                     'rdwt'
                 ),
                 'type'      => 'checkbox',
-            )
+            ),
         );
 
         add_settings_field(
             'ga_id',
             __('GA Tracking ID', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'desc'      => array(
@@ -166,15 +155,15 @@ class GA extends Settings
                 'page'      => 'rdwt_ga',
                 'sub_desc'  => '',
                 'type'      => 'text',
-            )
+            ),
         );
 
         add_settings_field(
             'ga_location',
             __('Tracking code location', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            'rdwt-settings',
-            'rdwt-settings-ga-section',
+            $page,
+            $section,
             array(
                 'class'     => 'rdwt-setting',
                 'desc'      => __(
@@ -205,7 +194,7 @@ class GA extends Settings
                 ),
                 'page'      => 'rdwt_ga',
                 'type'      => 'radio',
-            )
+            ),
         );
     }
 
@@ -220,7 +209,7 @@ class GA extends Settings
     {
         parent::init();
 
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->optionName, $this->getDefaultOptions());
 
         if (isset($options['ga_enable']) && $options['ga_enable'] ) {
 
@@ -236,18 +225,6 @@ class GA extends Settings
     }
 
     /**
-     * Settings section callback.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public static function renderSectionGA(): void
-    {
-        esc_html_e('These are the settings for Googla Analytics', 'rdwt');
-    }
-
-    /**
      * GA: Render tracking code.
      *
      * @access public
@@ -256,7 +233,7 @@ class GA extends Settings
      */
     public function renderTrackingCode(): void
     {
-        $options = get_option($this->option, $this->getDefaultOptions());
+        $options = get_option($this->optionName, $this->getDefaultOptions());
 
         ViewGA::renderScript($options);
     }

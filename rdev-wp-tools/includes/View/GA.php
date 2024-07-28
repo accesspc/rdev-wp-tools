@@ -42,41 +42,6 @@ class GA
     }
 
     /**
-     * Get: Overview page.
-     *
-     * @access public
-     * @return string
-     * @since  2.0.0
-     */
-    public static function getOverview(): string
-    {
-        ob_start();
-        ?>
-        <div class="rdwt-section-field">
-            This tool allows you to place a Google Analytics tracking code on your
-            website.<br/>
-            <a href="?page=rdwt-settings">Settings</a> page allows you to change
-            the following settings:
-            <ul>
-                <li>GA Tracking ID: can be created on
-                    <a href="https://analytics.google.com/" target="_blank">
-                        Google Analytics
-                    </a> page</li>
-                <li>Code placement location:
-                    <ul>
-                        <li>Inside website's <code>&lt;head&gt;</code> element using
-                        <code>wp_head</code></li>
-                        <li>At the bottom of website's <code>&lt;body&gt;</code>
-                        element using <code>wp_footer</code></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <?php
-        return str_replace(array( "\r", "\n"), '', ob_get_clean());
-    }
-
-    /**
      * Render: Script.
      *
      * @param array $options Script options.
@@ -106,4 +71,18 @@ class GA
         <?php
     }
 
+    /**
+     * Render: Settings section.
+     *
+     * @access public
+     * @return void
+     * @since  2.1.0
+     */
+    public static function renderSection(): void
+    {
+        ?>
+        This tool allows you to place a Google Analytics tracking code on your
+        website.
+        <?php
+    }
 }

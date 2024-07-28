@@ -1,32 +1,3 @@
 # Changelog
 
-## v2.0.1
-
-* Fix: strip ob_get_clean of new lines
-
-## v2.0.0
-
-* Refactor: using php namespaces
-* Feat: SettingsField class
-
-## v1.2.0
-
-* Feat: settings link on plugins page
-
-## v1.1.2
-
-* Version bump
-
-## v1.1.1
-
-* Feat: Admin overview section definition
-* Fix: Password Generator shortcode html cleanup
-
-## v1.1.0
-
-* Feat: Password Generator
-
-## v1.0.0
-
-* Initial Release.
-* Feat: Google Analytics 4 tracking code
+Check [rdev-wp-tools](./rdev-wp-tools/readme.txt)
