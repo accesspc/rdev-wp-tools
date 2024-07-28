@@ -34,19 +34,19 @@
 
                         for ( let i = 0; i < length; i ++ ) {
                             if (lower) {
-                                const val = Math.random();
+                                let val = Math.random();
                                   generatedPassword += String.fromCharCode(Math.floor(val * 26) + 97);
                             }
                             if (upper) {
-                                const val = Math.random();
+                                val = Math.random();
                                 generatedPassword += String.fromCharCode(Math.floor(val * 26) + 65);
                             }
                             if (number) {
-                                const val = Math.random();
+                                val = Math.random();
                                  generatedPassword += String.fromCharCode(Math.floor(val * 10) + 48);
                             }
                             if (symbol) {
-                                const val = Math.random();
+                                val = Math.random();
                                 generatedPassword += symbols[Math.floor(val * symbols.length)];
                             }
                         }
