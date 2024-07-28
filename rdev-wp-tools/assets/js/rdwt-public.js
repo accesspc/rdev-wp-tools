@@ -33,7 +33,7 @@
                         let generatedPassword = '';
 
                         const cr = window.crypto || window.msCrypto;
-                        var arr = new Uint8Array(1);
+                        const arr = new Uint8Array(1);
 
                         for ( let i = 0; i < length; i ++ ) {
                             if (lower) {
