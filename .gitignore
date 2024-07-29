@@ -1,3 +1,6 @@
+# sonar scanner
+.scannerwork
+
 # Numerous always-ignore extensions
 *.diff
 *.err
