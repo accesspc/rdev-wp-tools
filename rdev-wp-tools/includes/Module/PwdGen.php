@@ -41,6 +41,15 @@ class PwdGen extends Settings
     protected string $module = 'pwdgen';
 
     /**
+     * RDWT module title.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $moduleTitle = 'Password Generator';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -103,8 +112,8 @@ class PwdGen extends Settings
 
         add_submenu_page(
             RDWT_SLUG,
-            __('Password Generator', 'rdwt'),
-            __('Password Generator', 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
             'manage_options',
             RDWT_SLUG . '-' . $this->module,
             array( $this, 'renderSettings' ),
@@ -143,11 +152,11 @@ class PwdGen extends Settings
 
         // Settings section and fields.
         $page = 'rdwt-settings-' . $this->module;
-        $section = 'rdwt-settings-' . $this->module . '-section';
+        $section = $page . '-section';
 
         add_settings_section(
             $section,
-            __('Password Generator', 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
             array($this, 'renderSection'),
             $page,
             array(
@@ -296,8 +305,6 @@ class PwdGen extends Settings
     public function init(): void
     {
         parent::init();
-
-        $options = get_option($this->optionName, $this->getDefaultOptions());
 
         if ($this->isEnabled()) {
             add_shortcode($this->shortcodeTag, array( $this, 'renderShortcode' ));

@@ -39,6 +39,15 @@ class Settings
     protected string $module = 'settings';
 
     /**
+     * RDWT module title.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $moduleTitle = 'Rdev WP Tools';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -86,8 +95,8 @@ class Settings
         }
 
         add_menu_page(
-            __('Rdev WP Tools', 'rdwt'),
-            __('Rdev WP Tools', 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
             'manage_options',
             RDWT_SLUG,
             array( $this, 'renderSettings' ),

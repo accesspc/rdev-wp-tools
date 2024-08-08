@@ -41,6 +41,15 @@ class GA extends Settings
     protected string $module = 'ga';
 
     /**
+     * RDWT module title.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $moduleTitle = 'Google Analytics';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -90,8 +99,8 @@ class GA extends Settings
 
         add_submenu_page(
             RDWT_SLUG,
-            __('Google Analytics', 'rdwt'),
-            __('Google Analytics', 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
             'manage_options',
             RDWT_SLUG . '-' . $this->module,
             array( $this, 'renderSettings' ),
@@ -130,11 +139,11 @@ class GA extends Settings
 
         // Settings section and fields.
         $page = 'rdwt-settings-' . $this->module;
-        $section = 'rdwt-settings-' . $this->module . '-section';
+        $section = $page . '-section';
 
         add_settings_section(
             $section,
-            __('Google Analytics', 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
             array($this, 'renderSection'),
             $page,
             array(
