@@ -154,7 +154,7 @@ class Settings
                 'after_section' => '<hr/>',
             )
         );
-        
+
         add_settings_field(
             'ga',
             __('Google Analytics', 'rdwt'),

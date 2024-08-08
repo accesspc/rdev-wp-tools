@@ -327,7 +327,7 @@ class GA extends Settings
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
-        
+
             gtag('config', '<?php echo $options['ga_id']; ?>');
         </script>
         <!-- End: Google tag (gtag.js) -->
