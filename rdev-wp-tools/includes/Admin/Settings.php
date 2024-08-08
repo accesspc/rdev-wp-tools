@@ -30,6 +30,15 @@ class Settings
 {
 
     /**
+     * RDWT module name.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $module = 'settings';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -45,7 +54,10 @@ class Settings
      * @since  1.0.0
      * @var    array
      */
-    protected array $options = array();
+    protected array $options = array(
+        'ga'     => false,
+        'pwdgen' => false,
+    );
 
     /**
      * Main construct function.
@@ -58,6 +70,30 @@ class Settings
     {
         $this->addHooks();
         $this->init();
+    }
+
+    /**
+     * Add admin menu for RDWT.
+     *
+     * @access public
+     * @return void
+     * @since  1.0.0
+     */
+    public function addAdminMenu(): void
+    {
+        if (! current_user_can('manage_options') ) {
+            return;
+        }
+
+        add_menu_page(
+            __('Rdev WP Tools', 'rdwt'),
+            __('Rdev WP Tools', 'rdwt'),
+            'manage_options',
+            RDWT_SLUG,
+            array( $this, 'renderSettings' ),
+            '',
+            80
+        );
     }
 
     /**
@@ -82,39 +118,6 @@ class Settings
     }
 
     /**
-     * Add admin menu for RDWT.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function addAdminMenu(): void
-    {
-        if (! current_user_can('manage_options') ) {
-            return;
-        }
-
-        add_menu_page(
-            __('Rdev WP Tools', 'rdwt'),
-            __('Rdev WP Tools', 'rdwt'),
-            'manage_options',
-            RDWT_SLUG,
-            array( 'Rdev\WpTools\View\Admin', 'renderOverview' ),
-            '',
-            80
-        );
-
-        add_submenu_page(
-            RDWT_SLUG,
-            __('Rdev', 'rdwt'),
-            __('Settings', 'rdwt'),
-            'manage_options',
-            RDWT_SLUG . '-settings',
-            array( 'Rdev\WpTools\View\Admin', 'renderSettings' ),
-        );
-    }
-
-    /**
      * Register settings / options.
      *
      * @access public
@@ -125,19 +128,62 @@ class Settings
     {
         register_setting(
             'rdwt_plugin',
-            'rdwt',
+            $this->optionName,
             array( $this, 'validateSettings' )
         );
 
+        // Settings section and fields
+        $page = 'rdwt';
+        $section = 'rdwt-settings-section';
+
         add_settings_section(
-            'rdwt-settings-overview',
-            __('Overview', 'rdwt'),
+            $section,
+            __('Modules', 'rdwt'),
             array( $this, 'renderSectionOverview' ),
-            'rdwt',
+            $page,
             array(
                 'after_section' => '<hr/>',
             )
         );
+        
+        add_settings_field(
+            'ga',
+            __('Google Analytics', 'rdwt'),
+            array( $this, 'renderSettingsField' ),
+            $page,
+            $section,
+            array(
+                'class'     => 'rdwt-setting',
+                'id'        => 'ga',
+                'label_for' => 'ga',
+                'page'      => $page,
+                'sub_desc'  => __(
+                    'Check to place the tracking code on website',
+                    'rdwt'
+                ),
+                'type'      => 'checkbox',
+            ),
+        );
+
+        add_settings_field(
+            'pwdgen',
+            __('Password Generator', 'rdwt'),
+            array( $this, 'renderSettingsField' ),
+            $page,
+            $section,
+            array(
+                'class'     => 'rdwt-setting',
+                'id'        => 'pwdgen',
+                'label_for' => 'pwdgen',
+                'page'      => $page,
+                'sub_desc'  => __(
+                    'Check to enable Password Generator shortcode',
+                    'rdwt'
+                ),
+                'type'      => 'checkbox',
+            ),
+        );
+
     }
 
     /**
@@ -204,6 +250,24 @@ class Settings
     }
 
     /**
+     * Is module enabled.
+     *
+     * @access public
+     * @return bool
+     * @since  2.2.0
+     */
+    public function isEnabled(): bool
+    {
+        $options = get_option('rdwt');
+        if (in_array($this->module, array_keys($options))) {
+            if ($options[$this->module]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Plugin action links callback.
      *
      * @param array $links Action links.
@@ -245,6 +309,47 @@ class Settings
             'bloat-less WordPress plugin.',
             'rdwt'
         );
+    }
+
+    /**
+     * Render: Settings page.
+     *
+     * @access public
+     * @return void
+     * @since  2.0.0
+     */
+    public function renderSettings(): void
+    {
+        $default_tab = null;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
+
+        ?>
+        <div class="wrap rdwt-admin-wrap">
+            <h1 class="rdwt-title">
+                <?php echo esc_html(get_admin_page_title()); ?>
+            </h1>
+            <?php settings_errors(); ?>
+
+            <nav class="nav-tab-wrapper">
+                <a href="?page=<?php echo RDWT_SLUG; ?>"
+                class="nav-tab <?php
+                if ($tab === null) :
+                    ?>nav-tab-active<?php
+                endif;
+                ?>">Overview</a>
+            </nav>
+
+            <form method="post" action="options.php">
+
+                <?php
+                    settings_fields('rdwt_plugin');
+                    do_settings_sections('rdwt');
+                    submit_button();
+                ?>
+
+            </form>
+        </div>
+        <?php
     }
 
     /**
@@ -356,6 +461,9 @@ class Settings
      */
     public function validateSettings( $input ): array
     {
+        if ($input == null) {
+            return array();
+        }
         return $input;
     }
 }
