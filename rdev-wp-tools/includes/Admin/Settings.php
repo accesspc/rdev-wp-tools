@@ -259,10 +259,9 @@ class Settings
     public function isEnabled(): bool
     {
         $options = get_option('rdwt');
-        if (in_array($this->module, array_keys($options))) {
-            if ($options[$this->module]) {
+        if (in_array($this->module, array_keys($options))
+            && $options[$this->module]) {
                 return true;
-            }
         }
         return false;
     }
