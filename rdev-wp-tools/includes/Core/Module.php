@@ -126,7 +126,7 @@ class Module
      */
     public function addSettings(): void
     {
-        
+        // Place holder
     }
 
     /**
@@ -183,7 +183,7 @@ class Module
      */
     public function renderSettings(): void
     {
-
+        // Place holder
     }
 
     /**
