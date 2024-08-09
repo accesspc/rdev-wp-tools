@@ -13,9 +13,11 @@
 
 namespace Rdev\WpTools\Core;
 
+// phpcs:disable
 if (! defined('ABSPATH')) {
     exit;
 }
+// phpcs:enable
 
 /**
  * Class: UI

@@ -15,9 +15,11 @@ namespace Rdev\WpTools\Module;
 
 use Rdev\WpTools\Core\Module;
 
+// phpcs:disable
 if (! defined('ABSPATH')) {
     exit;
 }
+// phpcs:enable
 
 /**
  * Class: PwdGen
