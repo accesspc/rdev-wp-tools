@@ -302,7 +302,7 @@ class PwdGen extends Module
         <?php settings_errors(); ?>
 
         <nav class="nav-tab-wrapper">
-            <a href="?page=<?php echo RDWT_SLUG; ?>-pwdgen"
+            <a href="?page=<?php echo $this->settingsPage; ?>"
             class="nav-tab <?php
             if ($tab === null) :
                 ?>nav-tab-active<?php
