@@ -5,7 +5,8 @@
     $(
         function () {
             $('.rdwt-pwdgen-generate').on(
-                'click', function () {
+                'click',
+                function () {
                     // Get options from hidden inputs
                     const count = $('input.pwdgen-count').val();
                     const length = $('input.pwdgen-length').val();
@@ -20,7 +21,7 @@
                     $('.pwdgen-list').html('');
 
                     // Generate pwd
-                    for ( let i = 0; i < count; i ++ ) {
+                    for ( let i = 0; i < count; i++ ) {
                         pwd = generatePassword(inc_lower, inc_upper, inc_numbers, inc_symbols, length);
                         $('.pwdgen-list').append(
                             '<div class="pwdgen-item"><code>' + $('<div/>').text(pwd) .html() + '</code></div>'
@@ -35,17 +36,17 @@
                         const cr = window.crypto || window.msCrypto;
                         const arr = new Uint8Array(1);
 
-                        for ( let i = 0; i < length; i ++ ) {
-                            if (lower) {
+                        for ( let i = 0; i < length; i++ ) {
+                            if (lower === '1') {
                                 generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 26) + 97);
                             }
-                            if (upper) {
+                            if (upper === '1') {
                                 generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 26) + 65);
                             }
-                            if (number) {
+                            if (number === '1') {
                                  generatedPassword += String.fromCharCode(Math.floor(cr.getRandomValues(arr)[0] / 256 * 10) + 48);
                             }
-                            if (symbol) {
+                            if (symbol === '1') {
                                 generatedPassword += symbols[Math.floor(cr.getRandomValues(arr)[0] / 256 * symbols.length)];
                             }
                         }

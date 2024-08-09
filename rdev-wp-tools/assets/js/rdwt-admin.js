@@ -5,7 +5,8 @@
     $(
         function () {
             $('.rdwt-range input').on(
-                'input', function () {
+                'input',
+                function () {
                     $(this).next('.sub-desc').html(this.value);
                 }
             );
