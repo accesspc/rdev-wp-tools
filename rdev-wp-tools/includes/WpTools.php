@@ -15,8 +15,8 @@ namespace Rdev\WpTools;
 
 use Rdev\WpTools\Admin\Settings;
 use Rdev\WpTools\Core\UI;
-use Rdev\WpTools\Module\GA;
-use Rdev\WpTools\Module\PwdGen;
+use Rdev\WpTools\Modules\GA;
+use Rdev\WpTools\Modules\PwdGen;
 
 /**
  * Class: WpTools
