@@ -314,12 +314,26 @@ class PwdGen extends Module
         <form method="post" action="options.php">
             <div class="tab-content">
 
-            <?php
-                settings_fields($this->optionGroup);
-                do_settings_sections('rdwt-settings-' . $this->module);
-                submit_button();
-            ?>
-
+                <?php
+                    settings_fields($this->optionGroup);
+                    do_settings_sections('rdwt-settings-' . $this->module);
+                ?>
+                <p class="submit rdwt-multi-buttons">
+                    <?php
+                    submit_button(
+                        __('Save Changes', 'rdwt'),
+                        'primary',
+                        'submit',
+                        false,
+                    );
+                    submit_button(
+                        __('Reset Defaults', 'rdwt'),
+                        'secondary',
+                        'reset',
+                        false,
+                    );
+                    ?>
+                </p>
             </div>
         </form>
         </div>
@@ -360,6 +374,20 @@ class PwdGen extends Module
      */
     public function validateSettings($input): array
     {
+        if (isset($_POST['reset'])) {
+            add_settings_error(
+                $this->optionGroup,
+                'reset-defaults',
+                __(
+                    'Module settings reset to defaults.',
+                    'rdwt'
+                ),
+                'warning'
+            );
+
+            return $this->options;
+        }
+
         $total_inc = 0;
 
         foreach (array_keys($this->options) as $k) {
