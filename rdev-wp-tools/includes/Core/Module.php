@@ -182,7 +182,7 @@ class Module
         if (in_array($this->module, array_keys($options))
             && $options[$this->module]
         ) {
-                return true;
+            return true;
         }
         return false;
     }

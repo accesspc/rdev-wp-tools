@@ -89,12 +89,12 @@ class SettingsFields
                 name='<?php echo esc_attr($args['name']); ?>'
                 value='<?php echo esc_attr($option['value']); ?>'
                 class='<?php echo implode(' ', $args['classes']); ?>'
-            <?php
-                checked(esc_attr($option['value']), $args['value']);
-            ?>
+                <?php
+                    checked(esc_attr($option['value']), $args['value']);
+                ?>
             />
             <?php
-            echo wp_kses_post($option['desc']);
+                echo wp_kses_post($option['desc']);
             ?>
             </div>
             <?php

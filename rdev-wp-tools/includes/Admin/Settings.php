@@ -190,10 +190,10 @@ class Settings extends Module
                 $section,
                 array(
                     'class'     => 'rdwt-setting',
-                    'id'        =>  $obj['id'],
-                    'label_for' =>  $obj['id'],
+                    'id'        => $obj['id'],
+                    'label_for' => $obj['id'],
                     'page'      => $page,
-                    'sub_desc'  =>  $obj['sub_desc'],
+                    'sub_desc'  => $obj['sub_desc'],
                     'type'      => 'checkbox',
                 ),
             );
@@ -250,13 +250,6 @@ class Settings extends Module
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
             admin_url('admin.php?page=' . RDWT_SLUG),
-            __('Overview', 'rdwt')
-        );
-        array_unshift($links, $settings_link);
-
-        $settings_link = sprintf(
-            '<a href="%s">%s</a>',
-            admin_url('admin.php?page=' . RDWT_SLUG . '-settings'),
             __('Settings', 'rdwt')
         );
         array_unshift($links, $settings_link);
@@ -320,5 +313,4 @@ class Settings extends Module
         </div>
         <?php
     }
-
 }
