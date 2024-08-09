@@ -3,14 +3,14 @@
  * Settings Fields
  * php version 7.3.0
  *
- * @category Admin
- * @package  Rdev\WpTools\Admin
+ * @category Core
+ * @package  Rdev\WpTools\Core
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools
  */
 
-namespace Rdev\WpTools\Admin;
+namespace Rdev\WpTools\Core;
 
 if (! defined('ABSPATH') ) {
     exit;
@@ -19,8 +19,8 @@ if (! defined('ABSPATH') ) {
 /**
  * The admin-settings fields specific functionality of the plugin
  *
- * @category Admin
- * @package  Rdev\WpTools\Admin
+ * @category Core
+ * @package  Rdev\WpTools\Core
  * @author   Robertas Reiciunas <accesspc@gmail.com>
  * @license  GPL-3.0 http://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://github.com/accesspc/rdev-wp-tools

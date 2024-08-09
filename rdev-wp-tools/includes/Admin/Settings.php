@@ -12,6 +12,8 @@
 
 namespace Rdev\WpTools\Admin;
 
+use Rdev\WpTools\Core\Module;
+
 if (! defined('ABSPATH') ) {
     exit;
 }
@@ -26,8 +28,26 @@ if (! defined('ABSPATH') ) {
  * @link     https://github.com/accesspc/rdev-wp-tools
  * @since    1.1.0
  */
-class Settings
+class Settings extends Module
 {
+
+    /**
+     * RDWT module name.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $module = 'settings';
+
+    /**
+     * RDWT module title.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $moduleTitle = 'Rdev WP Tools';
 
     /**
      * RDWT option name.
@@ -45,7 +65,10 @@ class Settings
      * @since  1.0.0
      * @var    array
      */
-    protected array $options = array();
+    protected array $options = array(
+        'ga'     => false,
+        'pwdgen' => false,
+    );
 
     /**
      * Main construct function.
@@ -58,6 +81,30 @@ class Settings
     {
         $this->addHooks();
         $this->init();
+    }
+
+    /**
+     * Add admin menu for RDWT.
+     *
+     * @access public
+     * @return void
+     * @since  1.0.0
+     */
+    public function addAdminMenu(): void
+    {
+        if (! current_user_can('manage_options') ) {
+            return;
+        }
+
+        add_menu_page(
+            __($this->moduleTitle, 'rdwt'),
+            __($this->moduleTitle, 'rdwt'),
+            'manage_options',
+            RDWT_SLUG,
+            array( $this, 'renderSettings' ),
+            '',
+            80
+        );
     }
 
     /**
@@ -82,39 +129,6 @@ class Settings
     }
 
     /**
-     * Add admin menu for RDWT.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function addAdminMenu(): void
-    {
-        if (! current_user_can('manage_options') ) {
-            return;
-        }
-
-        add_menu_page(
-            __('Rdev WP Tools', 'rdwt'),
-            __('Rdev WP Tools', 'rdwt'),
-            'manage_options',
-            RDWT_SLUG,
-            array( 'Rdev\WpTools\View\Admin', 'renderOverview' ),
-            '',
-            80
-        );
-
-        add_submenu_page(
-            RDWT_SLUG,
-            __('Rdev', 'rdwt'),
-            __('Settings', 'rdwt'),
-            'manage_options',
-            RDWT_SLUG . '-settings',
-            array( 'Rdev\WpTools\View\Admin', 'renderSettings' ),
-        );
-    }
-
-    /**
      * Register settings / options.
      *
      * @access public
@@ -125,19 +139,60 @@ class Settings
     {
         register_setting(
             'rdwt_plugin',
-            'rdwt',
+            $this->optionName,
             array( $this, 'validateSettings' )
         );
 
+        // Settings section and fields
+        $page = 'rdwt';
+        $section = 'rdwt-settings-section';
+
         add_settings_section(
-            'rdwt-settings-overview',
-            __('Overview', 'rdwt'),
+            $section,
+            __('Modules', 'rdwt'),
             array( $this, 'renderSectionOverview' ),
-            'rdwt',
+            $page,
             array(
                 'after_section' => '<hr/>',
             )
         );
+
+        $modules = array(
+            array(
+                'id' => 'ga',
+                'title' => __('Google Analytics', 'rdwt'),
+                'sub_desc' => __(
+                    'Check to place the tracking code on website',
+                    'rdwt'
+                ),
+            ),
+            array(
+                'id' => 'pwdgen',
+                'title' => __('Password Generator', 'rdwt'),
+                'sub_desc' => __(
+                    'Check to enable Password Generator shortcode',
+                    'rdwt'
+                ),
+            ),
+        );
+
+        foreach ($modules as $obj) {
+            add_settings_field(
+                $obj['id'],
+                $obj['title'],
+                array( $this, 'renderSettingsField' ),
+                $page,
+                $section,
+                array(
+                    'class'     => 'rdwt-setting',
+                    'id'        =>  $obj['id'],
+                    'label_for' =>  $obj['id'],
+                    'page'      => $page,
+                    'sub_desc'  =>  $obj['sub_desc'],
+                    'type'      => 'checkbox',
+                ),
+            );
+        }
     }
 
     /**
@@ -174,33 +229,6 @@ class Settings
             RDWT_VERSION,
             'all'
         );
-    }
-
-    /**
-     * Retrieve default options / settings.
-     *
-     * @access public
-     * @return array
-     * @since  1.0.0
-     */
-    public function getDefaultOptions(): array
-    {
-        return apply_filters('rdwt_default_options', $this->options);
-    }
-
-    /**
-     * Init
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function init(): void
-    {
-        // If no options exist, create them.
-        if (! get_option($this->optionName) ) {
-            update_option($this->optionName, $this->getDefaultOptions());
-        }
     }
 
     /**
@@ -248,114 +276,44 @@ class Settings
     }
 
     /**
-     * Settings field callback.
-     *
-     * @param array $args Settings arguments.
+     * Render: Settings page.
      *
      * @access public
      * @return void
-     * @since  1.0.0
+     * @since  2.0.0
      */
-    public function renderSettingsField( $args ): void
+    public function renderSettings(): void
     {
-        $this->setNameAndValue($args);
+        $default_tab = null;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 
-        $args = wp_parse_args($args, array( 'classes' => array() ));
+        ?>
+        <div class="wrap rdwt-admin-wrap">
+            <h1 class="rdwt-title">
+                <?php echo esc_html(get_admin_page_title()); ?>
+            </h1>
+            <?php settings_errors(); ?>
 
-        if (empty($args['id']) || empty($args['page']) ) {
-            return;
-        }
+            <nav class="nav-tab-wrapper">
+                <a href="?page=<?php echo RDWT_SLUG; ?>"
+                class="nav-tab <?php
+                if ($tab === null) :
+                    ?>nav-tab-active<?php
+                endif;
+                ?>">Overview</a>
+            </nav>
 
-        switch ( $args['type'] ) {
-        case 'checkbox':
-            SettingsFields::renderCheckbox($args);
-            break;
+            <form method="post" action="options.php">
 
-        case 'radio':
-            SettingsFields::renderRadio($args);
-            break;
+                <?php
+                    settings_fields('rdwt_plugin');
+                    do_settings_sections('rdwt');
+                    submit_button();
+                ?>
 
-        case 'range':
-            SettingsFields::renderRange($args);
-            break;
-
-        case 'raw':
-            if (! isset($args['html']) ) {
-                break;
-            }
-            echo wp_kses_post($args['html']);
-            break;
-
-        case 'text':
-            SettingsFields::renderText($args);
-            break;
-
-        default:
-            break;
-        }
-
-        if (isset($args['sub_desc']) && ! empty($args['sub_desc']) ) {
-            echo '<span class="sub-desc">';
-            echo wp_kses_post($args['sub_desc']);
-            echo '</span>';
-        }
-
-        if (isset($args['desc']) && ! empty($args['desc']) ) {
-            echo '<div class="description">';
-            if (is_array($args['desc']) ) {
-
-                array_walk(
-                    $args['desc'],
-                    function ( &$line ) {
-                        $line = sprintf('<div>%s</div>', wp_kses_post($line));
-                    }
-                );
-                echo implode('', $args['desc']);
-
-            } else {
-                echo wp_kses_post($args['desc']);
-            }
-            echo '</div>';
-        }
+            </form>
+        </div>
+        <?php
     }
 
-    /**
-     * Set name and value from settings / options.
-     *
-     * @param array $args Key-value pairs.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function setNameAndValue( &$args ): void
-    {
-        if (! isset($args['name']) ) {
-            $args['name'] = sprintf(
-                '%s[%s]',
-                esc_attr($args['page']),
-                esc_attr($args['id'])
-            );
-        }
-
-        if (! isset($args['value']) ) {
-            $options = get_option($this->optionName, $this->getDefaultOptions());
-
-            $args['value'] = $options[ $args['id'] ];
-        }
-    }
-
-    /**
-     * Validate settings / options.
-     *
-     * @param array $input array to validate.
-     *
-     * @access public
-     * @return array
-     * @since  1.0.0
-     */
-    public function validateSettings( $input ): array
-    {
-        return $input;
-    }
 }

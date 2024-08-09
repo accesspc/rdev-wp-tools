@@ -9,8 +9,8 @@ Author URI: https://reiciunas.dev/
 Contributors: accesspc
 Requires at least: 4.9
 Tested up to: 6.5
-Stable tag: 2.1.0
-Version: 2.1.0
+Stable tag: 2.2.0
+Version: 2.2.0
 Requires PHP: 7.3.33
 Text Domain: rdwt
 Domain Path: /languages
@@ -38,6 +38,10 @@ Add some useful tools to your Wordpress site.
 2. Settings page for Google Analytics and Password Generator
 
 == Changelog ==
+
+= v2.2.0 =
+* Refactor: settings menu and sections
+* Feat: Load modules based on selection
 
 = v2.1.0 =
 * Feat: Admin menu tabs

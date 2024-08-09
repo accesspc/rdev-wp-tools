@@ -12,8 +12,7 @@
 
 namespace Rdev\WpTools\Module;
 
-use Rdev\WpTools\Admin\Settings;
-use Rdev\WpTools\View\GA as ViewGA;
+use Rdev\WpTools\Core\Module;
 
 if (! defined('ABSPATH') ) {
     exit;
@@ -29,8 +28,26 @@ if (! defined('ABSPATH') ) {
  * @link     https://github.com/accesspc/rdev-wp-tools
  * @since    1.0.0
  */
-class GA extends Settings
+class GA extends Module
 {
+
+    /**
+     * RDWT module name.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $module = 'ga';
+
+    /**
+     * RDWT module title.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $moduleTitle = 'Google Analytics';
 
     /**
      * RDWT option name.
@@ -49,36 +66,9 @@ class GA extends Settings
      * @var    array
      */
     protected array $options = array(
-        'ga_enable'   => false,
         'ga_id'       => '',
         'ga_location' => 'header',
     );
-
-    /**
-     * Main construct function.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function __construct()
-    {
-        $this->addHooks();
-    }
-
-    /**
-     * Add Settings hooks.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function addHooks(): void
-    {
-        add_action('admin_init', array( $this, 'addSettings' ));
-
-        add_action('init', array( $this, 'init' ));
-    }
 
     /**
      * Register settings / options.
@@ -90,41 +80,22 @@ class GA extends Settings
     public function addSettings(): void
     {
         register_setting(
-            'rdwt_plugin_settings_ga',
+            'rdwt_plugin_settings_' . $this->module,
             $this->optionName,
             array( $this, 'validateSettings' )
         );
 
         // Settings section and fields.
-        $page = 'rdwt-settings-ga';
-        $section = 'rdwt-settings-ga-section';
+        $page = 'rdwt-settings-' . $this->module;
+        $section = $page . '-section';
 
         add_settings_section(
             $section,
-            __('Google Analytics', 'rdwt'),
-            array( 'Rdev\WpTools\View\GA', 'renderSection'),
+            __($this->moduleTitle, 'rdwt'),
+            array($this, 'renderSection'),
             $page,
             array(
                 'after_section' => '<hr/>',
-            ),
-        );
-
-        add_settings_field(
-            'ga_enable',
-            __('Enable', 'rdwt'),
-            array( $this, 'renderSettingsField' ),
-            $page,
-            $section,
-            array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'ga_enable',
-                'label_for' => 'ga_enable',
-                'page'      => 'rdwt_ga',
-                'sub_desc'  => __(
-                    'Check to place the tracking code on website',
-                    'rdwt'
-                ),
-                'type'      => 'checkbox',
             ),
         );
 
@@ -152,7 +123,7 @@ class GA extends Settings
                 ),
                 'id'        => 'ga_id',
                 'label_for' => 'ga_id',
-                'page'      => 'rdwt_ga',
+                'page'      => $this->optionName,
                 'sub_desc'  => '',
                 'type'      => 'text',
             ),
@@ -192,7 +163,7 @@ class GA extends Settings
                         ),
                     ),
                 ),
-                'page'      => 'rdwt_ga',
+                'page'      => $this->optionName,
                 'type'      => 'radio',
             ),
         );
@@ -211,7 +182,7 @@ class GA extends Settings
 
         $options = get_option($this->optionName, $this->getDefaultOptions());
 
-        if (isset($options['ga_enable']) && $options['ga_enable'] ) {
+        if ($this->isEnabled()) {
 
             $location = isset($options['ga_location'])
                 ? $options['ga_location'] : 'header';
@@ -225,6 +196,64 @@ class GA extends Settings
     }
 
     /**
+     * Render: Settings section.
+     *
+     * @access public
+     * @return void
+     * @since  2.1.0
+     */
+    public function renderSection(): void
+    {
+        ?>
+        This tool allows you to place a Google Analytics tracking code on your
+        website.
+        <?php
+    }
+
+    /**
+     * Render: Settings page.
+     *
+     * @access public
+     * @return void
+     * @since  2.2.0
+     */
+    public function renderSettings(): void
+    {
+        $default_tab = null;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
+
+        ?>
+        <div class="wrap rdwt-admin-wrap">
+        <h1 class="rdwt-title">
+            <?php echo esc_html(get_admin_page_title()); ?>
+        </h1>
+        <?php settings_errors(); ?>
+
+        <nav class="nav-tab-wrapper">
+            <a href="?page=<?php echo RDWT_SLUG; ?>-ga"
+            class="nav-tab <?php
+            if ($tab === null) :
+                ?>nav-tab-active<?php
+            endif;
+            ?>">Settings</a>
+        </nav>
+
+        <form method="post" action="options.php">
+            <div class="tab-content">
+
+            <?php
+                settings_fields('rdwt_plugin_settings_' . $this->module);
+                do_settings_sections('rdwt-settings-' . $this->module);
+                submit_button();
+            ?>
+
+            </div>
+        </form>
+        </div>
+        <?php
+    }
+
+    /**
      * GA: Render tracking code.
      *
      * @access public
@@ -235,7 +264,22 @@ class GA extends Settings
     {
         $options = get_option($this->optionName, $this->getDefaultOptions());
 
-        ViewGA::renderScript($options);
+        ?>
+        <!-- Google tag (gtag.js) -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id=<?php
+                echo $options['ga_id'];
+            ?>">
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '<?php echo $options['ga_id']; ?>');
+        </script>
+        <!-- End: Google tag (gtag.js) -->
+        <?php
     }
 
     /**
