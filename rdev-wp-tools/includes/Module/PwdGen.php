@@ -338,7 +338,7 @@ class PwdGen extends Module
         $opts    = array();
 
         foreach ($options as $k => $v) {
-            $opts[ str_replace('pwdgen_', '', $k) ] = $v;
+            $opts[str_replace('pwdgen_', '', $k)] = $v;
         }
 
         return $this->getShortcode($options);
@@ -356,8 +356,10 @@ class PwdGen extends Module
     public function validateSettings($input): array
     {
         foreach (array_keys($this->options) as $k) {
-            if (isset($input[ $k ])) {
-                $input[ $k ] = wp_filter_nohtml_kses($input[ $k ]);
+            if (isset($input[$k])) {
+                $input[$k] = wp_filter_nohtml_kses($input[$k]);
+            } else {
+                $input[$k] = 0;
             }
         }
         return $input;

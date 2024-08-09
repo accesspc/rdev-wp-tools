@@ -292,7 +292,7 @@ class Module
         if (! isset($args['value'])) {
             $options = get_option($this->optionName, $this->getDefaultOptions());
 
-            $args['value'] = $options[ $args['id'] ];
+            $args['value'] = $options[$args['id']];
         }
     }
 
