@@ -75,8 +75,8 @@ class GA extends Module
      * @var    array
      */
     protected array $options = array(
-        'ga_id'       => '',
-        'ga_location' => 'header',
+        'id'       => '',
+        'location' => 'header',
     );
 
     /**
@@ -105,7 +105,7 @@ class GA extends Module
         );
 
         add_settings_field(
-            'ga_id',
+            'id',
             __('GA Tracking ID', 'rdwt'),
             array( $this, 'renderSettingsField' ),
             $page,
@@ -126,8 +126,8 @@ class GA extends Module
                         'rdwt'
                     ),
                 ),
-                'id'        => 'ga_id',
-                'label_for' => 'ga_id',
+                'id'        => 'id',
+                'label_for' => 'id',
                 'page'      => $this->optionName,
                 'sub_desc'  => '',
                 'type'      => 'text',
@@ -135,7 +135,7 @@ class GA extends Module
         );
 
         add_settings_field(
-            'ga_location',
+            'location',
             __('Tracking code location', 'rdwt'),
             array( $this, 'renderSettingsField' ),
             $page,
@@ -148,8 +148,8 @@ class GA extends Module
                     'performance. If in doubt, go with the head option.',
                     'rdwt'
                 ),
-                'id'        => 'ga_location',
-                'label_for' => 'ga_location',
+                'id'        => 'location',
+                'label_for' => 'location',
                 'options'   => array(
                     array(
                         'value' => 'header',
@@ -188,8 +188,8 @@ class GA extends Module
         $options = get_option($this->optionName, $this->getDefaultOptions());
 
         if ($this->isEnabled()) {
-            $location = isset($options['ga_location'])
-                ? $options['ga_location'] : 'header';
+            $location = isset($options['location'])
+                ? $options['location'] : 'header';
 
             if ('header' === $location) {
                 add_action('wp_head', array( &$this, 'renderTrackingCode' ));
@@ -272,7 +272,7 @@ class GA extends Module
         <!-- Google tag (gtag.js) -->
         <script async
             src="https://www.googletagmanager.com/gtag/js?id=<?php
-                echo $options['ga_id'];
+                echo $options['id'];
             ?>">
         </script>
         <script>
@@ -280,7 +280,7 @@ class GA extends Module
             function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', '<?php echo $options['ga_id']; ?>');
+            gtag('config', '<?php echo $options['id']; ?>');
         </script>
         <!-- End: Google tag (gtag.js) -->
         <?php
@@ -297,11 +297,11 @@ class GA extends Module
      */
     public function validateSettings($input): array
     {
-        if (isset($input['ga_id'])) {
-            $input['ga_id'] = wp_filter_nohtml_kses($input['ga_id']);
+        if (isset($input['id'])) {
+            $input['id'] = wp_filter_nohtml_kses($input['id']);
 
-            if (preg_match('/^GTM-/i', $input['ga_id'])) {
-                $input['ga_id'] = '';
+            if (preg_match('/^GTM-/i', $input['id'])) {
+                $input['id'] = '';
 
                 $message  = esc_html__(
                     'Error: your tracking code begins with',
@@ -314,7 +314,7 @@ class GA extends Module
                 );
 
                 add_settings_error(
-                    'ga_id',
+                    'id',
                     'invalid-tracking-code',
                     $message,
                     'error'
