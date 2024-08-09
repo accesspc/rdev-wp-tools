@@ -12,7 +12,7 @@
 
 namespace Rdev\WpTools\Module;
 
-use Rdev\WpTools\Admin\Settings;
+use Rdev\WpTools\Core\Module;
 
 if (! defined('ABSPATH') ) {
     exit;
@@ -28,7 +28,7 @@ if (! defined('ABSPATH') ) {
  * @link     https://github.com/accesspc/rdev-wp-tools
  * @since    1.1.0
  */
-class PwdGen extends Settings
+class PwdGen extends Module
 {
 
     /**
@@ -82,58 +82,6 @@ class PwdGen extends Settings
      * @var    string
      */
     public $shortcodeTag = 'rdwt_pwdgen';
-
-    /**
-     * Main construct function.
-     *
-     * @access public
-     * @return void
-     * @since  1.1.0
-     */
-    public function __construct()
-    {
-        if ($this->isEnabled()) {
-            $this->addHooks();
-        }
-    }
-
-    /**
-     * Add admin submenu.
-     *
-     * @access public
-     * @return void
-     * @since  2.2.0
-     */
-    public function addAdminMenu(): void
-    {
-        if (! current_user_can('manage_options') ) {
-            return;
-        }
-
-        add_submenu_page(
-            RDWT_SLUG,
-            __($this->moduleTitle, 'rdwt'),
-            __($this->moduleTitle, 'rdwt'),
-            'manage_options',
-            RDWT_SLUG . '-' . $this->module,
-            array( $this, 'renderSettings' ),
-        );
-    }
-
-    /**
-     * Add Settings hooks.
-     *
-     * @access public
-     * @return void
-     * @since  1.1.0
-     */
-    public function addHooks(): void
-    {
-        add_action('admin_menu', array( $this, 'addAdminMenu' ));
-        add_action('admin_init', array( $this, 'addSettings' ));
-
-        add_action('init', array( $this, 'init' ));
-    }
 
     /**
      * Register settings / options.

@@ -12,6 +12,8 @@
 
 namespace Rdev\WpTools\Admin;
 
+use Rdev\WpTools\Core\Module;
+
 if (! defined('ABSPATH') ) {
     exit;
 }
@@ -26,7 +28,7 @@ if (! defined('ABSPATH') ) {
  * @link     https://github.com/accesspc/rdev-wp-tools
  * @since    1.1.0
  */
-class Settings
+class Settings extends Module
 {
 
     /**
@@ -155,44 +157,42 @@ class Settings
             )
         );
 
-        add_settings_field(
-            'ga',
-            __('Google Analytics', 'rdwt'),
-            array( $this, 'renderSettingsField' ),
-            $page,
-            $section,
+        $modules = array(
             array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'ga',
-                'label_for' => 'ga',
-                'page'      => $page,
-                'sub_desc'  => __(
+                'id' => 'ga',
+                'title' => __('Google Analytics', 'rdwt'),
+                'sub_desc' => __(
                     'Check to place the tracking code on website',
                     'rdwt'
                 ),
-                'type'      => 'checkbox',
             ),
-        );
-
-        add_settings_field(
-            'pwdgen',
-            __('Password Generator', 'rdwt'),
-            array( $this, 'renderSettingsField' ),
-            $page,
-            $section,
             array(
-                'class'     => 'rdwt-setting',
-                'id'        => 'pwdgen',
-                'label_for' => 'pwdgen',
-                'page'      => $page,
-                'sub_desc'  => __(
+                'id' => 'pwdgen',
+                'title' => __('Password Generator', 'rdwt'),
+                'sub_desc' => __(
                     'Check to enable Password Generator shortcode',
                     'rdwt'
                 ),
-                'type'      => 'checkbox',
             ),
         );
 
+        foreach ($modules as $obj) {
+            add_settings_field(
+                $obj['id'],
+                $obj['title'],
+                array( $this, 'renderSettingsField' ),
+                $page,
+                $section,
+                array(
+                    'class'     => 'rdwt-setting',
+                    'id'        =>  $obj['id'],
+                    'label_for' =>  $obj['id'],
+                    'page'      => $page,
+                    'sub_desc'  =>  $obj['sub_desc'],
+                    'type'      => 'checkbox',
+                ),
+            );
+        }
     }
 
     /**
@@ -229,50 +229,6 @@ class Settings
             RDWT_VERSION,
             'all'
         );
-    }
-
-    /**
-     * Retrieve default options / settings.
-     *
-     * @access public
-     * @return array
-     * @since  1.0.0
-     */
-    public function getDefaultOptions(): array
-    {
-        return apply_filters('rdwt_default_options', $this->options);
-    }
-
-    /**
-     * Init
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function init(): void
-    {
-        // If no options exist, create them.
-        if (! get_option($this->optionName) ) {
-            update_option($this->optionName, $this->getDefaultOptions());
-        }
-    }
-
-    /**
-     * Is module enabled.
-     *
-     * @access public
-     * @return bool
-     * @since  2.2.0
-     */
-    public function isEnabled(): bool
-    {
-        $options = get_option('rdwt');
-        if (in_array($this->module, array_keys($options))
-            && $options[$this->module]) {
-                return true;
-        }
-        return false;
     }
 
     /**
@@ -360,118 +316,4 @@ class Settings
         <?php
     }
 
-    /**
-     * Settings field callback.
-     *
-     * @param array $args Settings arguments.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function renderSettingsField( $args ): void
-    {
-        $this->setNameAndValue($args);
-
-        $args = wp_parse_args($args, array( 'classes' => array() ));
-
-        if (empty($args['id']) || empty($args['page']) ) {
-            return;
-        }
-
-        switch ( $args['type'] ) {
-        case 'checkbox':
-            SettingsFields::renderCheckbox($args);
-            break;
-
-        case 'radio':
-            SettingsFields::renderRadio($args);
-            break;
-
-        case 'range':
-            SettingsFields::renderRange($args);
-            break;
-
-        case 'raw':
-            if (! isset($args['html']) ) {
-                break;
-            }
-            echo wp_kses_post($args['html']);
-            break;
-
-        case 'text':
-            SettingsFields::renderText($args);
-            break;
-
-        default:
-            break;
-        }
-
-        if (isset($args['sub_desc']) && ! empty($args['sub_desc']) ) {
-            echo '<span class="sub-desc">';
-            echo wp_kses_post($args['sub_desc']);
-            echo '</span>';
-        }
-
-        if (isset($args['desc']) && ! empty($args['desc']) ) {
-            echo '<div class="description">';
-            if (is_array($args['desc']) ) {
-
-                array_walk(
-                    $args['desc'],
-                    function ( &$line ) {
-                        $line = sprintf('<div>%s</div>', wp_kses_post($line));
-                    }
-                );
-                echo implode('', $args['desc']);
-
-            } else {
-                echo wp_kses_post($args['desc']);
-            }
-            echo '</div>';
-        }
-    }
-
-    /**
-     * Set name and value from settings / options.
-     *
-     * @param array $args Key-value pairs.
-     *
-     * @access public
-     * @return void
-     * @since  1.0.0
-     */
-    public function setNameAndValue( &$args ): void
-    {
-        if (! isset($args['name']) ) {
-            $args['name'] = sprintf(
-                '%s[%s]',
-                esc_attr($args['page']),
-                esc_attr($args['id'])
-            );
-        }
-
-        if (! isset($args['value']) ) {
-            $options = get_option($this->optionName, $this->getDefaultOptions());
-
-            $args['value'] = $options[ $args['id'] ];
-        }
-    }
-
-    /**
-     * Validate settings / options.
-     *
-     * @param array $input array to validate.
-     *
-     * @access public
-     * @return array
-     * @since  1.0.0
-     */
-    public function validateSettings( $input ): array
-    {
-        if ($input == null) {
-            return array();
-        }
-        return $input;
-    }
 }
