@@ -93,14 +93,13 @@ class GA extends Module
         parent::addSettings();
 
         // Settings section and fields.
-        $page = 'rdwt-settings-' . $this->module;
-        $section = $page . '-section';
+        $section = $this->settingsPage . '-section';
 
         add_settings_section(
             $section,
             __($this->moduleTitle, 'rdwt'),
             array($this, 'renderSection'),
-            $page,
+            $this->settingsPage,
             array(
                 'after_section' => '<hr/>',
             ),
@@ -110,7 +109,7 @@ class GA extends Module
             'id',
             __('GA Tracking ID', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            $page,
+            $this->settingsPage,
             $section,
             array(
                 'class'     => 'rdwt-setting',
@@ -140,7 +139,7 @@ class GA extends Module
             'location',
             __('Tracking code location', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            $page,
+            $this->settingsPage,
             $section,
             array(
                 'class'     => 'rdwt-setting',
@@ -245,29 +244,29 @@ class GA extends Module
         </nav>
 
         <form method="post" action="options.php">
-            <div class="tab-content">
+        <div class="tab-content">
 
-                <?php
-                    settings_fields($this->optionGroup);
-                    do_settings_sections('rdwt-settings-' . $this->module);
-                ?>
-                <p class="submit rdwt-multi-buttons">
-                    <?php
-                    submit_button(
-                        __('Save Changes', 'rdwt'),
-                        'primary',
-                        'submit',
-                        false,
-                    );
-                    submit_button(
-                        __('Reset Defaults', 'rdwt'),
-                        'secondary',
-                        'reset',
-                        false,
-                    );
-                    ?>
-                </p>
-            </div>
+        <?php
+            settings_fields($this->optionGroup);
+            do_settings_sections($this->settingsPage);
+        ?>
+        <p class="submit rdwt-multi-buttons">
+            <?php
+            submit_button(
+                __('Save Changes', 'rdwt'),
+                'primary',
+                'submit',
+                false,
+            );
+            submit_button(
+                __('Reset Defaults', 'rdwt'),
+                'secondary',
+                'reset',
+                false,
+            );
+            ?>
+        </p>
+        </div>
         </form>
         </div>
         <?php
@@ -351,6 +350,7 @@ class GA extends Module
                 );
             }
         }
+
         return $input;
     }
 }

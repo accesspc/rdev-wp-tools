@@ -151,14 +151,13 @@ class Settings extends Module
         parent::addSettings();
 
         // Settings section and fields
-        $page = 'rdwt';
         $section = 'rdwt-settings-section';
 
         add_settings_section(
             $section,
             __('Modules', 'rdwt'),
             array( $this, 'renderSectionOverview' ),
-            $page,
+            $this->settingsPage,
             array(
                 'after_section' => '<hr/>',
             )
@@ -188,13 +187,13 @@ class Settings extends Module
                 $obj['id'],
                 $obj['title'],
                 array( $this, 'renderSettingsField' ),
-                $page,
+                $this->settingsPage,
                 $section,
                 array(
                     'class'     => 'rdwt-setting',
                     'id'        => $obj['id'],
                     'label_for' => $obj['id'],
-                    'page'      => $page,
+                    'page'      => $this->settingsPage,
                     'sub_desc'  => $obj['sub_desc'],
                     'type'      => 'checkbox',
                 ),
@@ -289,29 +288,31 @@ class Settings extends Module
 
         ?>
         <div class="wrap rdwt-admin-wrap">
-            <h1 class="rdwt-title">
-                <?php echo esc_html(get_admin_page_title()); ?>
-            </h1>
-            <?php settings_errors(); ?>
+        <h1 class="rdwt-title">
+            <?php echo esc_html(get_admin_page_title()); ?>
+        </h1>
+        <?php settings_errors(); ?>
 
-            <nav class="nav-tab-wrapper">
-                <a href="?page=<?php echo RDWT_SLUG; ?>"
-                class="nav-tab <?php
-                if ($tab === null) :
-                    ?>nav-tab-active<?php
-                endif;
-                ?>">Overview</a>
-            </nav>
+        <nav class="nav-tab-wrapper">
+            <a href="?page=<?php echo RDWT_SLUG; ?>"
+            class="nav-tab <?php
+            if ($tab === null) :
+                ?>nav-tab-active<?php
+            endif;
+            ?>">Overview</a>
+        </nav>
 
-            <form method="post" action="options.php">
+        <form method="post" action="options.php">
+        <div class="tab-content">
 
-                <?php
-                    settings_fields($this->optionGroup);
-                    do_settings_sections('rdwt');
-                    submit_button();
-                ?>
+        <?php
+            settings_fields($this->optionGroup);
+            do_settings_sections($this->settingsPage);
+            submit_button();
+        ?>
 
-            </form>
+        </div>
+        </form>
         </div>
         <?php
     }

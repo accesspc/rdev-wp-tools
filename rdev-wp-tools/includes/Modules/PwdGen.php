@@ -106,14 +106,13 @@ class PwdGen extends Module
         parent::addSettings();
 
         // Settings section and fields.
-        $page = 'rdwt-settings-' . $this->module;
-        $section = $page . '-section';
+        $section = $this->settingsPage . '-section';
 
         add_settings_section(
             $section,
             __($this->moduleTitle, 'rdwt'),
             array($this, 'renderSection'),
-            $page,
+            $this->settingsPage,
             array(
                 'after_section' => '<hr/>',
             ),
@@ -125,7 +124,7 @@ class PwdGen extends Module
             'count',
             __('Number of passwords', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            $page,
+            $this->settingsPage,
             $section,
             array(
                 'class'     => 'rdwt-setting rdwt-range pwdgen-counter',
@@ -144,7 +143,7 @@ class PwdGen extends Module
             'length',
             __('Password length', 'rdwt'),
             array( $this, 'renderSettingsField' ),
-            $page,
+            $this->settingsPage,
             $section,
             array(
                 'class'     => 'rdwt-setting rdwt-range',
@@ -190,7 +189,7 @@ class PwdGen extends Module
                 $obj['id'],
                 '',
                 array( $this, 'renderSettingsField' ),
-                $page,
+                $this->settingsPage,
                 $section,
                 array(
                     'class'     => 'rdwt-setting',
@@ -312,29 +311,29 @@ class PwdGen extends Module
         </nav>
 
         <form method="post" action="options.php">
-            <div class="tab-content">
+        <div class="tab-content">
 
-                <?php
-                    settings_fields($this->optionGroup);
-                    do_settings_sections('rdwt-settings-' . $this->module);
-                ?>
-                <p class="submit rdwt-multi-buttons">
-                    <?php
-                    submit_button(
-                        __('Save Changes', 'rdwt'),
-                        'primary',
-                        'submit',
-                        false,
-                    );
-                    submit_button(
-                        __('Reset Defaults', 'rdwt'),
-                        'secondary',
-                        'reset',
-                        false,
-                    );
-                    ?>
-                </p>
-            </div>
+        <?php
+            settings_fields($this->optionGroup);
+            do_settings_sections($this->settingsPage);
+        ?>
+        <p class="submit rdwt-multi-buttons">
+            <?php
+            submit_button(
+                __('Save Changes', 'rdwt'),
+                'primary',
+                'submit',
+                false,
+            );
+            submit_button(
+                __('Reset Defaults', 'rdwt'),
+                'secondary',
+                'reset',
+                false,
+            );
+            ?>
+        </p>
+        </div>
         </form>
         </div>
         <?php

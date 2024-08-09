@@ -77,6 +77,15 @@ class Module
     protected array $options = array();
 
     /**
+     * RDWT settings page name.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $settingsPage = 'rdwt';
+
+    /**
      * Main construct function.
      *
      * @access public
@@ -85,6 +94,8 @@ class Module
      */
     public function __construct()
     {
+        $this->settingsPage = RDWT_SLUG . '-' . $this->module;
+
         if ($this->isEnabled()) {
             $this->addHooks();
         }
