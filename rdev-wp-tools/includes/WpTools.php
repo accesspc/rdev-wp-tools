@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the main class of the plugin
  * php version 7.3.0
@@ -29,7 +30,6 @@ use Rdev\WpTools\Module\PwdGen;
  */
 class WpTools
 {
-
     /**
      * Google Analytics Object
      *

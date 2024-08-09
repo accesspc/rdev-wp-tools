@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Settings Fields
  * php version 7.3.0
@@ -12,7 +13,7 @@
 
 namespace Rdev\WpTools\Core;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -29,7 +30,6 @@ if (! defined('ABSPATH') ) {
 
 class SettingsFields
 {
-
     /**
      * Main construct function.
      *
@@ -39,7 +39,6 @@ class SettingsFields
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -61,7 +60,7 @@ class SettingsFields
             value='1'
             class='<?php echo implode(' ', $args['classes']); ?>'
             <?php
-            if (isset($args['value']) ) {
+            if (isset($args['value'])) {
                 checked('1', $args['value']);
             }
             ?>
@@ -80,7 +79,7 @@ class SettingsFields
      */
     public static function renderRadio($args): void
     {
-        foreach ( $args['options'] as $option ) {
+        foreach ($args['options'] as $option) {
             ?>
             <div class="rdwt-radio">
             <input

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The public-facing functionality of the plugin
  * php version 7.3.0
@@ -12,7 +13,7 @@
 
 namespace Rdev\WpTools\Core;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -28,7 +29,6 @@ if (! defined('ABSPATH') ) {
  */
 class UI
 {
-
     /**
      * Main construct function
      *

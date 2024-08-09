@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Rdev WP Tools
  * Plugin URI: https://github.com/accesspc/rdev-wp-tools
@@ -34,34 +35,34 @@
 
 namespace Rdev\WpTools;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 /**
  * Define constants
  */
-if (! defined('RDWT_BASE') ) {
+if (! defined('RDWT_BASE')) {
     define('RDWT_BASE', plugin_basename(__FILE__));
 }
 
-if (! defined('RDWT_DIR') ) {
+if (! defined('RDWT_DIR')) {
     define('RDWT_DIR', plugin_dir_path(__FILE__));
 }
 
-if (! defined('RDWT_DOMAIN') ) {
+if (! defined('RDWT_DOMAIN')) {
     define('RDWT_DOMAIN', 'rdwt');
 }
 
-if (! defined('RDWT_SLUG') ) {
+if (! defined('RDWT_SLUG')) {
     define('RDWT_SLUG', basename(__DIR__));
 }
 
-if (! defined('RDWT_URL') ) {
+if (! defined('RDWT_URL')) {
     define('RDWT_URL', plugin_dir_url(__FILE__));
 }
 
-if (! defined('RDWT_VERSION') ) {
+if (! defined('RDWT_VERSION')) {
     define('RDWT_VERSION', '2.2.0');
 }
 

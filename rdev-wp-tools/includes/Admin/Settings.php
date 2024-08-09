@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Settings
  * php version 7.3.0
@@ -14,7 +15,7 @@ namespace Rdev\WpTools\Admin;
 
 use Rdev\WpTools\Core\Module;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -30,7 +31,6 @@ if (! defined('ABSPATH') ) {
  */
 class Settings extends Module
 {
-
     /**
      * RDWT module name.
      *
@@ -101,7 +101,7 @@ class Settings extends Module
      */
     public function addAdminMenu(): void
     {
-        if (! current_user_can('manage_options') ) {
+        if (! current_user_can('manage_options')) {
             return;
         }
 
@@ -245,7 +245,7 @@ class Settings extends Module
      * @return array
      * @since  1.2.0
      */
-    public function pluginActionLinks( $links ): array
+    public function pluginActionLinks($links): array
     {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',

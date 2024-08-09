@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Internationalization functionality
  * php version 7.3.0
@@ -12,7 +13,7 @@
 
 namespace Rdev\WpTools\Core;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -28,7 +29,6 @@ if (! defined('ABSPATH') ) {
  */
 class I18n
 {
-
     /**
      * Load plugin text domain for translations
      *

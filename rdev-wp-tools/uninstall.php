@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fired when the plugin is uninstalled.
  * php version 7.3.0
@@ -29,12 +30,12 @@
  * @since    1.0.0
  */
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // If uninstall not called from WordPress, then exit.
-if (! defined('WP_UNINSTALL_PLUGIN') ) {
+if (! defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
 

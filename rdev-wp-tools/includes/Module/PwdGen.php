@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Password Generator
  * php version 7.3.0
@@ -14,7 +15,7 @@ namespace Rdev\WpTools\Module;
 
 use Rdev\WpTools\Core\Module;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -30,7 +31,6 @@ if (! defined('ABSPATH') ) {
  */
 class PwdGen extends Module
 {
-
     /**
      * RDWT module name.
      *
@@ -337,7 +337,7 @@ class PwdGen extends Module
         );
         $opts    = array();
 
-        foreach ( $options as $k => $v ) {
+        foreach ($options as $k => $v) {
             $opts[ str_replace('pwdgen_', '', $k) ] = $v;
         }
 
@@ -353,10 +353,10 @@ class PwdGen extends Module
      * @return array
      * @since  1.1.0
      */
-    public function validateSettings( $input ): array
+    public function validateSettings($input): array
     {
-        foreach ( array_keys($this->options) as $k ) {
-            if (isset($input[ $k ]) ) {
+        foreach (array_keys($this->options) as $k) {
+            if (isset($input[ $k ])) {
                 $input[ $k ] = wp_filter_nohtml_kses($input[ $k ]);
             }
         }

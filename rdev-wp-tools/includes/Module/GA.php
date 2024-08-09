@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Google Analytics
  * php version 7.3.0
@@ -14,7 +15,7 @@ namespace Rdev\WpTools\Module;
 
 use Rdev\WpTools\Core\Module;
 
-if (! defined('ABSPATH') ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
@@ -30,7 +31,6 @@ if (! defined('ABSPATH') ) {
  */
 class GA extends Module
 {
-
     /**
      * RDWT module name.
      *
@@ -188,11 +188,10 @@ class GA extends Module
         $options = get_option($this->optionName, $this->getDefaultOptions());
 
         if ($this->isEnabled()) {
-
             $location = isset($options['ga_location'])
                 ? $options['ga_location'] : 'header';
 
-            if ('header' === $location ) {
+            if ('header' === $location) {
                 add_action('wp_head', array( &$this, 'renderTrackingCode' ));
             } else {
                 add_action('wp_footer', array( &$this, 'renderTrackingCode' ));
@@ -296,12 +295,12 @@ class GA extends Module
      * @return array
      * @since  1.0.0
      */
-    public function validateSettings( $input ): array
+    public function validateSettings($input): array
     {
-        if (isset($input['ga_id']) ) {
+        if (isset($input['ga_id'])) {
             $input['ga_id'] = wp_filter_nohtml_kses($input['ga_id']);
 
-            if (preg_match('/^GTM-/i', $input['ga_id']) ) {
+            if (preg_match('/^GTM-/i', $input['ga_id'])) {
                 $input['ga_id'] = '';
 
                 $message  = esc_html__(
