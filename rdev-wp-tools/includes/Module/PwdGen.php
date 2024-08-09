@@ -75,12 +75,12 @@ class PwdGen extends Module
      * @var    array
      */
     protected array $options = array(
-        'pwdgen_count'       => 3,
-        'pwdgen_length'      => 16,
-        'pwdgen_inc_numbers' => true,
-        'pwdgen_inc_lower'   => true,
-        'pwdgen_inc_upper'   => true,
-        'pwdgen_inc_symbols' => false,
+        'count'       => 3,
+        'length'      => 16,
+        'inc_numbers' => true,
+        'inc_lower'   => true,
+        'inc_upper'   => true,
+        'inc_symbols' => false,
     );
 
     /**
@@ -117,62 +117,64 @@ class PwdGen extends Module
             ),
         );
 
+        $options = get_option($this->optionName, $this->getDefaultOptions());
+
         add_settings_field(
-            'pwdgen_count',
+            'count',
             __('Number of passwords', 'rdwt'),
             array( $this, 'renderSettingsField' ),
             $page,
             $section,
             array(
                 'class'     => 'rdwt-setting rdwt-range pwdgen-counter',
-                'id'        => 'pwdgen_count',
-                'label_for' => 'pwdgen_count',
+                'id'        => 'count',
+                'label_for' => 'count',
                 'max'       => 10,
                 'min'       => 1,
                 'page'      => $this->optionName,
                 'step'      => 1,
-                'sub_desc'  => $this->options['pwdgen_count'],
+                'sub_desc'  => $options['count'],
                 'type'      => 'range',
             ),
         );
 
         add_settings_field(
-            'pwdgen_length',
+            'length',
             __('Password length', 'rdwt'),
             array( $this, 'renderSettingsField' ),
             $page,
             $section,
             array(
                 'class'     => 'rdwt-setting rdwt-range',
-                'id'        => 'pwdgen_length',
-                'label_for' => 'pwdgen_length',
+                'id'        => 'length',
+                'label_for' => 'length',
                 'max'       => 32,
                 'min'       => 8,
                 'page'      => $this->optionName,
                 'step'      => 1,
-                'sub_desc'  => $this->options['pwdgen_length'],
+                'sub_desc'  => $options['length'],
                 'type'      => 'range',
             ),
         );
 
         $pwdgen_inc = array(
             array(
-                'id' => 'pwdgen_inc_numbers',
+                'id' => 'inc_numbers',
                 'desc' => '',
                 'sub_desc' => __('Numbers <code>[0-9]</code>', 'rdwt'),
             ),
             array(
-                'id' => 'pwdgen_inc_lower',
+                'id' => 'inc_lower',
                 'desc' => '',
                 'sub_desc' => __('Lower case letters <code>[a-z]</code>', 'rdwt'),
             ),
             array(
-                'id' => 'pwdgen_inc_upper',
+                'id' => 'inc_upper',
                 'desc' => '',
                 'sub_desc' => __('Upper case letters <code>[A-Z]</code>', 'rdwt'),
             ),
             array(
-                'id' => 'pwdgen_inc_symbols',
+                'id' => 'inc_symbols',
                 'desc' => '',
                 'sub_desc' => __(
                     'Symbols <code>!@#$%^&*(){}[]=&lt;&gt;/,.</code>',
@@ -217,27 +219,27 @@ class PwdGen extends Module
         <div class="rdwt-pwdgen">
             <input
                 type="hidden" class="pwdgen-count" name="pwdgen-count"
-                value="<?php esc_html_e($options['pwdgen_count']); ?>"
+                value="<?php esc_html_e($options['count']); ?>"
             />
             <input
                 type="hidden" class="pwdgen-length" name="pwdgen-length"
-                value="<?php esc_html_e($options['pwdgen_length']); ?>"
+                value="<?php esc_html_e($options['length']); ?>"
             />
             <input
                 type="hidden" class="pwdgen-inc_numbers" name="pwdgen-inc_numbers"
-                value="<?php esc_html_e($options['pwdgen_inc_numbers']); ?>"
+                value="<?php esc_html_e($options['inc_numbers']); ?>"
             />
             <input
                 type="hidden" class="pwdgen-inc_lower" name="pwdgen-inc_lower"
-                value="<?php esc_html_e($options['pwdgen_inc_lower']); ?>"
+                value="<?php esc_html_e($options['inc_lower']); ?>"
             />
             <input
                 type="hidden" class="pwdgen-inc_upper" name="pwdgen-inc_upper"
-                value="<?php esc_html_e($options['pwdgen_inc_upper']); ?>"
+                value="<?php esc_html_e($options['inc_upper']); ?>"
             />
             <input
                 type="hidden" class="pwdgen-inc_symbols" name="pwdgen-inc_symbols"
-                value="<?php esc_html_e($options['pwdgen_inc_symbols']); ?>"
+                value="<?php esc_html_e($options['inc_symbols']); ?>"
             />
             <div class="wp-block-button rdwt-pwdgen-generate">
                 <a class="wp-block-button__link wp-element-button">Generate</a>
@@ -356,13 +358,35 @@ class PwdGen extends Module
      */
     public function validateSettings($input): array
     {
+        $total_inc = 0;
+
         foreach (array_keys($this->options) as $k) {
             if (isset($input[$k])) {
                 $input[$k] = wp_filter_nohtml_kses($input[$k]);
             } else {
                 $input[$k] = 0;
             }
+
+            if (str_starts_with($k, 'inc_') && $input[$k] > 0) {
+                $total_inc++;
+            }
         }
+
+        if ($total_inc == 0) {
+            add_settings_error(
+                $this->optionGroup,
+                'inc_',
+                __(
+                    'Password must contain at least one group of characters.' .
+                    ' Reseting to defaults.',
+                    'rdwt'
+                ),
+                'error'
+            );
+
+            return $this->options;
+        }
+
         return $input;
     }
 }
