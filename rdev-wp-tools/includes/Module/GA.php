@@ -50,6 +50,15 @@ class GA extends Module
     protected string $moduleTitle = 'Google Analytics';
 
     /**
+     * RDWT option group.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $optionGroup = 'rdwt_module_ga';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -79,11 +88,7 @@ class GA extends Module
      */
     public function addSettings(): void
     {
-        register_setting(
-            'rdwt_plugin_settings_' . $this->module,
-            $this->optionName,
-            array( $this, 'validateSettings' )
-        );
+        parent::addSettings();
 
         // Settings section and fields.
         $page = 'rdwt-settings-' . $this->module;
@@ -242,7 +247,7 @@ class GA extends Module
             <div class="tab-content">
 
             <?php
-                settings_fields('rdwt_plugin_settings_' . $this->module);
+                settings_fields($this->optionGroup);
                 do_settings_sections('rdwt-settings-' . $this->module);
                 submit_button();
             ?>

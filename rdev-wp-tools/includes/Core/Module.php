@@ -48,6 +48,15 @@ class Module
     protected string $moduleTitle = 'Module';
 
     /**
+     * RDWT option group.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $optionGroup = 'rdwt_module';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -126,7 +135,11 @@ class Module
      */
     public function addSettings(): void
     {
-        // Place holder
+        register_setting(
+            $this->optionGroup,
+            $this->optionName,
+            array($this, 'validateSettings')
+        );
     }
 
     /**

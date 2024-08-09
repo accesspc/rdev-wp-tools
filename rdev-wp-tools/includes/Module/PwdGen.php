@@ -50,6 +50,15 @@ class PwdGen extends Module
     protected string $moduleTitle = 'Password Generator';
 
     /**
+     * RDWT option group.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $optionGroup = 'rdwt_module_pwdgen';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -92,11 +101,7 @@ class PwdGen extends Module
      */
     public function addSettings(): void
     {
-        register_setting(
-            'rdwt_plugin_settings_' . $this->module,
-            $this->optionName,
-            array( $this, 'validateSettings' )
-        );
+        parent::addSettings();
 
         // Settings section and fields.
         $page = 'rdwt-settings-' . $this->module;
@@ -306,7 +311,7 @@ class PwdGen extends Module
             <div class="tab-content">
 
             <?php
-                settings_fields('rdwt_plugin_settings_' . $this->module);
+                settings_fields($this->optionGroup);
                 do_settings_sections('rdwt-settings-' . $this->module);
                 submit_button();
             ?>
@@ -326,7 +331,10 @@ class PwdGen extends Module
      */
     public function renderShortcode(): string
     {
-        $options = get_option($this->optionName, $this->getDefaultOptions());
+        $options = array_merge(
+            $this->getDefaultOptions(),
+            get_option($this->optionName, $this->getDefaultOptions()),
+        );
         $opts    = array();
 
         foreach ( $options as $k => $v ) {

@@ -50,6 +50,15 @@ class Settings extends Module
     protected string $moduleTitle = 'Rdev WP Tools';
 
     /**
+     * RDWT option group.
+     *
+     * @access protected
+     * @since  2.2.0
+     * @var    string
+     */
+    protected string $optionGroup = 'rdwt_modules';
+
+    /**
      * RDWT option name.
      *
      * @access protected
@@ -137,11 +146,7 @@ class Settings extends Module
      */
     public function addSettings(): void
     {
-        register_setting(
-            'rdwt_plugin',
-            $this->optionName,
-            array( $this, 'validateSettings' )
-        );
+        parent::addSettings();
 
         // Settings section and fields
         $page = 'rdwt';
@@ -306,7 +311,7 @@ class Settings extends Module
             <form method="post" action="options.php">
 
                 <?php
-                    settings_fields('rdwt_plugin');
+                    settings_fields($this->optionGroup);
                     do_settings_sections('rdwt');
                     submit_button();
                 ?>
