@@ -335,7 +335,8 @@ class PwdGen extends Module
             $this->getDefaultOptions(),
             get_option($this->optionName, $this->getDefaultOptions()),
         );
-        $opts    = array();
+
+        $opts = array();
 
         foreach ($options as $k => $v) {
             $opts[str_replace('pwdgen_', '', $k)] = $v;
