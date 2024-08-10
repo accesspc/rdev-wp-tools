@@ -216,63 +216,6 @@ class GA extends Module
     }
 
     /**
-     * Render: Settings page.
-     *
-     * @access public
-     * @return void
-     * @since  2.2.0
-     */
-    public function renderSettings(): void
-    {
-        $default_tab = null;
-        $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
-
-        ?>
-        <div class="wrap rdwt-admin-wrap">
-        <h1 class="rdwt-title">
-            <?php echo esc_html(get_admin_page_title()); ?>
-        </h1>
-        <?php settings_errors(); ?>
-
-        <nav class="nav-tab-wrapper">
-            <a href="?page=<?php echo $this->settingsPage; ?>"
-            class="nav-tab <?php
-            if ($tab === null) :
-                ?>nav-tab-active<?php
-            endif;
-            ?>">Settings</a>
-        </nav>
-
-        <form method="post" action="options.php">
-        <div class="tab-content">
-
-        <?php
-            settings_fields($this->optionGroup);
-            do_settings_sections($this->settingsPage);
-        ?>
-        <p class="submit rdwt-multi-buttons">
-            <?php
-            submit_button(
-                __('Save Changes', 'rdwt'),
-                'primary',
-                'submit',
-                false,
-            );
-            submit_button(
-                __('Reset Defaults', 'rdwt'),
-                'secondary',
-                'reset',
-                false,
-            );
-            ?>
-        </p>
-        </div>
-        </form>
-        </div>
-        <?php
-    }
-
-    /**
      * GA: Render tracking code.
      *
      * @access public
