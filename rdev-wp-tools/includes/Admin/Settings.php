@@ -15,12 +15,6 @@ namespace Rdev\WpTools\Admin;
 
 use Rdev\WpTools\Core\Module;
 
-// phpcs:disable
-if (! defined('ABSPATH')) {
-    exit;
-}
-// phpcs:enable
-
 /**
  * The admin-settings specific functionality of the plugin
  *

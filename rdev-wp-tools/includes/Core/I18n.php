@@ -13,12 +13,6 @@
 
 namespace Rdev\WpTools\Core;
 
-// phpcs:disable
-if (! defined('ABSPATH')) {
-    exit;
-}
-// phpcs:enable
-
 /**
  * Class: I18n
  *
@@ -43,7 +37,7 @@ class I18n
         load_plugin_textdomain(
             RDWT_DOMAIN,
             false,
-            dirname(plugin_basename(__FILE__), 2) . '/languages/'
+            dirname(plugin_basename(__FILE__), 3) . '/languages/'
         );
     }
 }
