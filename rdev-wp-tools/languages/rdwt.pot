@@ -1,0 +1,145 @@
+# Copyright (C) 2024 Robertas Reiciunas
+# This file is distributed under the GPL v3.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rdev WP Tools 2.2.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rdev-wp-tools\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-12T18:02:05+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: rdwt\n"
+
+#. Plugin Name of the plugin
+#: rdev-wp-tools.php
+msgid "Rdev WP Tools"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: rdev-wp-tools.php
+msgid "https://github.com/accesspc/rdev-wp-tools"
+msgstr ""
+
+#. Description of the plugin
+#: rdev-wp-tools.php
+msgid "RDev bloat-less WordPress tools."
+msgstr ""
+
+#. Author of the plugin
+#: rdev-wp-tools.php
+msgid "Robertas Reiciunas"
+msgstr ""
+
+#. Author URI of the plugin
+#: rdev-wp-tools.php
+msgid "https://reiciunas.dev/"
+msgstr ""
+
+#: includes/Admin/Settings.php:158
+msgid "Modules"
+msgstr ""
+
+#: includes/Admin/Settings.php:169
+msgid "Google Analytics"
+msgstr ""
+
+#: includes/Admin/Settings.php:170
+msgid "Check to place the tracking code on website"
+msgstr ""
+
+#: includes/Admin/Settings.php:177
+msgid "Password Generator"
+msgstr ""
+
+#: includes/Admin/Settings.php:178
+msgid "Check to enable Password Generator shortcode"
+msgstr ""
+
+#: includes/Admin/Settings.php:254
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:270
+msgid "Rdev WP Tools is a collection of tools in a single bloat-less WordPress plugin."
+msgstr ""
+
+#: includes/Core/Module.php:242
+msgid "Save Changes"
+msgstr ""
+
+#: includes/Core/Module.php:248
+msgid "Reset Defaults"
+msgstr ""
+
+#: includes/Modules/GA.php:110
+msgid "GA Tracking ID"
+msgstr ""
+
+#: includes/Modules/GA.php:117
+msgid "Enter your Google Tracking ID. Note: the Tracking ID also may be referred to as Tag ID, Measurement ID, or Property ID."
+msgstr ""
+
+#: includes/Modules/GA.php:123
+msgid "Supported ID formats include AW-XXXXXXXXX, G-XXXXXXXXX, GT-XXXXXXXXX, and UA-XXXXXXXXX. Google Tag Manager (GTM-XXXXXXXXX) currently is not supported."
+msgstr ""
+
+#: includes/Modules/GA.php:140
+msgid "Tracking code location"
+msgstr ""
+
+#: includes/Modules/GA.php:146
+msgid "Tip: Google recommends including the tracking code in the page head, but including it in the footer can benefit page performance. If in doubt, go with the head option."
+msgstr ""
+
+#: includes/Modules/GA.php:157
+msgid "Include tracking code in page head (via <code>wp_head</code>)"
+msgstr ""
+
+#: includes/Modules/GA.php:165
+msgid "Include tracking code in page footer (via <code>wp_footer</code>)"
+msgstr ""
+
+#: includes/Modules/GA.php:262
+#: includes/Modules/PwdGen.php:323
+msgid "Module settings reset to defaults."
+msgstr ""
+
+#: includes/Modules/GA.php:278
+msgid "Error: your tracking code begins with"
+msgstr ""
+
+#: includes/Modules/GA.php:282
+msgid "(for Google Tag Manager), which is not supported. Please try again with a supported tracking code."
+msgstr ""
+
+#: includes/Modules/PwdGen.php:125
+msgid "Number of passwords"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:144
+msgid "Password length"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:165
+msgid "Numbers <code>[0-9]</code>"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:170
+msgid "Lower case letters <code>[a-z]</code>"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:175
+msgid "Upper case letters <code>[A-Z]</code>"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:180
+msgid "Symbols <code>!@#$%^&*(){}[]=&lt;&gt;/,.</code>"
+msgstr ""
+
+#: includes/Modules/PwdGen.php:351
+msgid "Password must contain at least one group of characters. Reseting to defaults."
+msgstr ""

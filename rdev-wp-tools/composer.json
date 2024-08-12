@@ -18,5 +18,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+        "make-pot": "./vendor/bin/wp i18n make-pot . languages/rdwt.pot"
     }
 }
