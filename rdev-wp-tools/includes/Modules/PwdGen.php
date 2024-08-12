@@ -277,8 +277,8 @@ class PwdGen extends Module
     public function renderSection(): void
     {
         ?>
-        This tool allows you to place a password generator shortcode anywhere
-        on the site.
+        This tool allows you to place a password generator shortcode
+        <code>[rdwt_pwdgen]</code> anywhere on the site.
         <?php
     }
 

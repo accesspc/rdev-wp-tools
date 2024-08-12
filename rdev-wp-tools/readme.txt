@@ -9,8 +9,8 @@ Author URI: https://reiciunas.dev/
 Contributors: accesspc
 Requires at least: 4.9
 Tested up to: 6.5
-Stable tag: 2.2.0
-Version: 2.2.0
+Stable tag: 2.2.1
+Version: 2.2.1
 Requires PHP: 7.3.33
 Text Domain: rdwt
 Domain Path: /languages
@@ -29,43 +29,47 @@ Add some useful tools to your Wordpress site.
 ### How to install the plugin ###
 
 
-1. Upload the plugin to your blog and activate
-2. Visit the settings to configure your options
+1. Upload the plugin to your blog and activate.
+2. Visit the settings to configure your options.
 
 == Screenshots ==
 
-1. Overview page for Rdev WP Tools plugin (TBD)
-2. Settings page for Google Analytics and Password Generator
+1. Overview page for Rdev WP Tools plugin modules.
+2. Settings page for Google Analytics.
+3. Settings page for Password Generator.
 
 == Changelog ==
 
+= v2.2.1 =
+* Fix: missing shortcode example in settings.
+
 = v2.2.0 =
-* Refactor: settings menu and sections
-* Feat: Load modules based on selection
+* Refactor: settings menu and sections.
+* Feat: Load modules based on selection.
 
 = v2.1.0 =
-* Feat: Admin menu tabs
+* Feat: Admin menu tabs.
 
 = v2.0.1 =
-* Fix: strip ob_get_clean of new lines
+* Fix: strip ob_get_clean of new lines.
 
 = v2.0.0 =
-* Refactor: using php namespaces
-* Feat: SettingsField class
+* Refactor: using php namespaces.
+* Feat: SettingsField class.
 
 = 1.2.0 =
-* Feat: settings link on plugins page
+* Feat: settings link on plugins page.
 
 = 1.1.2 =
-* Version bump
+* Version bump.
 
 = 1.1.1 =
-* Feat: Admin overview section definition
-* Fix: Password Generator shortcode html cleanup
+* Feat: Admin overview section definition.
+* Fix: Password Generator shortcode html cleanup.
 
 = 1.1.0 =
-* Feat: Password Generator
+* Feat: Password Generator.
 
 = 1.0.0 =
 * Initial Release.
-* Feat: Google Analytics 4 tracking code
+* Feat: Google Analytics 4 tracking code.
