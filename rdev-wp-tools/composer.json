@@ -20,6 +20,8 @@
         }
     },
     "scripts": {
-        "make-pot": "./vendor/bin/wp i18n make-pot . languages/rdwt.pot"
+        "make-pot": "./vendor/bin/wp i18n make-pot . languages/rdwt.pot",
+        "make-php": "./vendor/bin/wp i18n make-php languages/",
+        "make-mo": "./vendor/bin/wp i18n make-mo languages/"
     }
 }
