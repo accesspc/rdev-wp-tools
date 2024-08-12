@@ -1,6 +1,0 @@
-{
-    "sonarlint.connectedMode.project": {
-        "connectionId": "accesspc",
-        "projectKey": "accesspc_rdev-wp-tools"
-    }
-}
