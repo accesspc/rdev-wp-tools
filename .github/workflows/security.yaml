@@ -1,6 +1,5 @@
 ---
-name: Security Scans
-run-name: Security Scans run by ${{ github.actor }}
+name: security
 on: [pull_request, push, workflow_dispatch]
 jobs:
 
